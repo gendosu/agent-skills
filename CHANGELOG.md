@@ -5,6 +5,45 @@ All notable changes to the CCCP plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0] - 2026-02-04
+
+### Breaking Changes
+
+- **Repository Structure**: Migrated all agents and commands to unified skills architecture
+  - Moved `agents/git-operations-specialist.md` → `skills/git-operations-specialist/SKILL.md`
+  - Moved `agents/project-manager.md` → `skills/project-manager/SKILL.md`
+  - Moved `commands/commit.md` → `skills/commit/SKILL.md`
+  - Moved `commands/micro-commit.md` → `skills/micro-commit/SKILL.md`
+  - Moved `commands/pull-request.md` → `skills/pull-request/SKILL.md`
+  - Moved `commands/todo-task-planning.md` → `skills/todo-task-planning/SKILL.md`
+  - Moved `commands/todo-task-run.md` → `skills/todo-task-run/SKILL.md`
+  - Deleted `agents/` directory
+  - Deleted `commands/` directory
+
+### Changed
+
+- **plugin.json**: Simplified configuration to use skills-only architecture
+  - Removed `agents` array (now part of skills)
+  - Removed `commands` array (now part of skills)
+  - Retained `skills` directory reference
+
+### Technical Details
+
+- **Agent Skills Compliance**: Fully compliant with [Agent Skills](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview) open standard
+- **Agent Skills**: Converted agents to skills with `context: fork` frontmatter
+- **Command Skills**: Converted commands to skills with usage documentation in body
+- **Frontmatter Updates**:
+  - Removed obsolete fields: `mode`, `arguments` (moved to body)
+  - Added required fields: `name`, `user-invocable: true`
+  - Added optional fields: `argument-hint`, `context: fork`
+  - Preserved functional fields: `trigger_words`, `model` (user decision)
+  - Arguments documentation moved from frontmatter to body
+
+### Migration Guide
+
+- **For Plugin Users**: No action required - command invocation syntax (`/cccp:command-name`) remains unchanged
+- **For Plugin Developers**: Update any direct file path references to new `skills/` structure
+
 ## [2.2.0] - 2026-01-31
 
 ### Added

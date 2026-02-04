@@ -1,12 +1,18 @@
 ---
+name: todo-task-run
 description: Execute tasks from TODO file - Generic task runner [/todo-task-run xxx]
-mode: run
-arguments:
-  - name: file_path
-    type: string
-    required: true
-    description: Path to the TODO file to execute
+argument-hint: <file_path>
+user-invocable: true
 ---
+
+## Usage
+
+```
+/cccp:todo-task-run <file_path>
+```
+
+### Arguments
+- `file_path` (required): Path to the TODO file to execute
 
 ## 📋 Development Rules
 

@@ -57,11 +57,17 @@ git clone https://github.com/gendosu/agent-skills.git
 /plugin install /path/to/agent-skills
 ```
 
-## 機能
+## スキル
 
-### Git操作スペシャリストエージェント
+このプラグインは、タイプ別に整理された統合されたスキルコレクションを提供します：
 
-`git-operations-specialist` エージェントは以下を提供します：
+### エージェントスキル
+
+エージェントスキルは、専門タスクのために特定のモデルを使用し、独立したコンテキストで実行されます：
+
+#### Git操作スペシャリスト (`/cccp:git-operations-specialist`)
+
+以下を含むエキスパートGit操作：
 
 - **Git履歴分析**: コミット履歴、ブランチ関係、ファイル変更を分析
 - **競合解決**: 適切な戦略でマージ競合を解決するガイダンス
@@ -69,19 +75,25 @@ git clone https://github.com/gendosu/agent-skills.git
 - **高度なGit操作**: インタラクティブリベース、チェリーピック、スタッシュ管理、reflog操作
 - **GitHub CLI操作**: PR作成・管理、Issue追跡、API操作
 
-### コマンド
+#### プロジェクトマネージャー (`/cccp:project-manager`)
 
-#### コミットコマンド (`/commit`)
+プロジェクト管理とタスク組織のスペシャリスト。
+
+### コマンドスキル
+
+コマンドスキルは、ワークフロー操作と開発自動化を提供します：
+
+#### コミットコマンド (`/cccp:commit`)
 - 適切なコミットメッセージでステージされた変更をコミット
 - Conventional Commitフォーマットとプロジェクトガイドラインに従う
 
-#### マイクロコミットコマンド (`/micro-commit`)
+#### マイクロコミットコマンド (`/cccp:micro-commit`)
 - テスト駆動開発サイクルに従った細粒度のコミットを作成
 - 関連する変更を論理的にグループ化
 - 清潔で意味のあるコミット履歴を保持
 - 1コミット1変更の原則に従う
 
-#### プルリクエストコマンド (`/pull-request`)
+#### プルリクエストコマンド (`/cccp:pull-request`)
 - 現在のブランチに対して新しいプルリクエストを作成
 - 既存のプルリクエストを最新の変更で更新
 - プルリクエストをGitHub Issueにリンク
@@ -89,7 +101,7 @@ git clone https://github.com/gendosu/agent-skills.git
 
 #### Todoタスクワークフロー
 
-このプラグインはタスク管理のための2段階ワークフローを提供します：
+このプラグインは、タスク管理のための2段階ワークフローを提供します：
 
 **第1段階：計画 (`/cccp:todo-task-planning`)**
 - 要件を分析して実行可能なタスクに変換
@@ -127,22 +139,39 @@ git clone https://github.com/gendosu/agent-skills.git
 ```
 このコマンドが生成されたタスクを実行します。
 
+### テンプレートスキル
+
+テンプレートスキルは、リファレンス資料と標準フォーマットを提供します：
+
+#### キーガイドライン (`/cccp:key-guidelines`)
+- コア開発ガイドラインとベストプラクティス
+- 一貫した開発標準のためのリファレンス資料
+
+#### Todoアウトプットテンプレート (`/cccp:todo-output-template`)
+- 標準的なTODO.mdフォーマット仕様
+- 一貫したタスク計画構造を保証
+
 ## 使用方法
 
-### Git操作スペシャリストを使用
+すべてのスキルは `/cccp:` プレフィックスを使用したスラッシュコマンド構文で呼び出します：
 
-エージェントはGit関連の支援をリクエストするときに自動的に呼び出されます：
+### エージェントスキル
+
+エージェントスキルは、明示的またはコンテキストに基づいて自動的に呼び出すことができます：
 
 ```
+/cccp:git-operations-specialist        # Git操作スペシャリストを明示的に呼び出し
+/cccp:project-manager                  # プロジェクトマネージャーを明示的に呼び出し
+
+# エージェントスキルはコンテキストに基づいて自動的に呼び出されます：
 "このフィーチャーブランチのgit履歴を分析して"
 "このマージ競合の解決を手伝って"
-"現在のブランチに対するプルリクエストを作成して"
 "このプロジェクトのブランチ戦略を提案して"
 ```
 
-### コマンドを使用
+### コマンドスキル
 
-スラッシュコマンド構文を使用してコマンドを呼び出します：
+コマンドスキルはオプションの引数とともに直接呼び出します：
 
 ```
 /cccp:commit                           # ステージされた変更をコミット
@@ -156,24 +185,44 @@ git clone https://github.com/gendosu/agent-skills.git
 /cccp:todo-task-run TODO.md --no-pr    # PR作成なしでタスクを実行
 ```
 
+### テンプレートスキル
+
+テンプレートスキルはリファレンス情報を提供します：
+
+```
+/cccp:key-guidelines                   # コア開発ガイドラインを表示
+/cccp:todo-output-template             # TODO.mdフォーマット仕様を表示
+```
+
+## ドキュメント
+
+TODOタスクワークフローの詳細については、以下を参照してください：
+
+- **[TODO Task Development Guide JP](docs/todo-task-development-guide.jp.md)** - 以下を網羅した包括的ガイド：
+  - 基本概念とFeasibility Markers
+  - `todo-task-planning` コマンド詳細
+  - `todo-task-run` コマンド詳細
+  - 実践的なワークフローとベストプラクティス
+  - よくある間違いとトラブルシューティング
+
 ## プロジェクト構造
 
 ```
 cccp/
 ├── .claude-plugin/
 │   └── plugin.json                    # プラグイン設定
-├── agents/
-│   ├── git-operations-specialist.md   # Git操作エージェント
-│   └── project-manager.md             # プロジェクト管理エージェント
-├── commands/
-│   ├── commit.md                      # コミットコマンド
-│   ├── micro-commit.md                # マイクロコミットコマンド
-│   ├── pull-request.md                # プルリクエストコマンド
-│   ├── todo-task-planning.md          # タスク計画コマンド
-│   └── todo-task-run.md               # タスク実行コマンド
-├── skills/
-│   └── key-guidelines/
-│       └── SKILL.md                   # コアガイドラインスキル
+├── skills/                            # 全スキル（エージェント、コマンド、テンプレート）
+│   ├── git-operations-specialist/     # Git操作エージェントスキル
+│   ├── project-manager/               # プロジェクト管理エージェントスキル
+│   ├── commit/                        # コミットコマンドスキル
+│   ├── micro-commit/                  # マイクロコミットコマンドスキル
+│   ├── pull-request/                  # プルリクエストコマンドスキル
+│   ├── todo-task-planning/            # タスク計画コマンドスキル
+│   ├── todo-task-run/                 # タスク実行コマンドスキル
+│   ├── key-guidelines/                # コアガイドラインテンプレートスキル
+│   └── todo-output-template/          # TODOアウトプットフォーマットテンプレートスキル
+├── docs/
+│   └── todo-task-development-guide.md # 包括的なTODOタスクガイド
 ├── LICENSE                            # MITライセンス
 └── README.md                          # このファイル
 ```

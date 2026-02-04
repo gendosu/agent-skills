@@ -1,10 +1,22 @@
 ---
+name: pull-request
 description: プルリク作成 or 更新
+argument-hint: "[issue-number]"
 arguments:
   - name: issue_number
     description: 関連するGitHub Issue番号
     required: false
+user-invocable: true
 ---
+
+## Usage
+
+```
+/cccp:pull-request [issue_number]
+```
+
+### Arguments
+- `issue_number` (optional): 関連するGitHub Issue番号
 
 ## Agents
 
