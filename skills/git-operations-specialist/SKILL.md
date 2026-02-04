@@ -1,6 +1,9 @@
 ---
 name: git-operations-specialist
-description: Use this agent when you need to perform Git operations such as committing changes, creating branches, merging, resolving conflicts, managing remotes, or any other Git-related tasks. Examples: <example>Context: User has made changes to multiple files and wants to commit them with a proper message. user: 'I've updated the database schema and added new API endpoints. Can you help me commit these changes?' assistant: 'I'll use the git-operations-specialist agent to help you commit your changes with an appropriate commit message.' <commentary>Since the user needs help with Git operations (committing changes), use the git-operations-specialist agent.</commentary></example> <example>Context: User wants to create a new feature branch for development. user: 'I need to create a new branch called feature/user-authentication and switch to it' assistant: 'I'll use the git-operations-specialist agent to create and switch to the new feature branch.' <commentary>Since the user needs Git branch operations, use the git-operations-specialist agent.</commentary></example>
+description: >
+  Use this agent when you need to perform Git operations such as committing changes,
+  creating branches, merging, resolving conflicts, managing remotes, or any other
+  Git-related tasks.
 model: Haiku
 trigger_words:
   - git
@@ -25,6 +28,8 @@ trigger_words:
   - プッシュ
   - プルリク
   - プルリクエスト
+context: fork
+user-invocable: true
 ---
 
 ## Core Guidelines

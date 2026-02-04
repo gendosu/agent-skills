@@ -1,5 +1,7 @@
 ---
+name: micro-commit
 description: Split git changes into context-based micro-commits
+user-invocable: true
 ---
 
 This approach is inspired by **Lucas Rocha's micro-commit** methodology, which emphasizes breaking down changes into small, logical, and independently meaningful commits.

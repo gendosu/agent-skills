@@ -1,20 +1,20 @@
 ---
+name: todo-task-planning
 description: Execute task planning based on the specified file and manage questions[/cccp:todo-task-planning file_path --pr --branch branch_name]
-mode: plan
-arguments:
-  - name: file_path
-    type: string
-    required: true
-    description: Path to the file for task planning execution
-  - name: pr
-    type: boolean
-    required: false
-    description: Create a pull request after task completion. When specified, tasks will include branch creation (auto-generated if --branch not specified), commits, and PR creation
-  - name: branch
-    type: string
-    required: false
-    description: Branch name to create and use for task execution. Creates the specified branch and commits all changes to it. Can be used independently or with --pr option
+argument-hint: <file_path> [--pr] [--branch <name>]
+user-invocable: true
 ---
+
+## Usage
+
+```
+/cccp:todo-task-planning <file_path> [--pr] [--branch <name>]
+```
+
+### Arguments
+- `file_path` (required): Path to the file for task planning execution
+- `--pr` (optional): Create a pull request after task completion. When specified, tasks will include branch creation (auto-generated if --branch not specified), commits, and PR creation
+- `--branch <name>` (optional): Branch name to create and use for task execution. Creates the specified branch and commits all changes to it. Can be used independently or with --pr option
 
 ## 🎯 Command Overview
 

@@ -1,5 +1,7 @@
 ---
+name: commit
 description: git stageされている内容でコミット
+user-invocable: true
 ---
 
 Commits staged changes with an appropriate commit message using the git-operations-specialist agent.

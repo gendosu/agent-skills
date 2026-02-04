@@ -57,11 +57,17 @@ Then install the plugin in Claude Code:
 /plugin install /path/to/agent-skills
 ```
 
-## Features
+## Skills
 
-### Git Operations Specialist Agent
+This plugin provides a unified collection of skills organized by type:
 
-The `git-operations-specialist` agent provides:
+### Agent Skills
+
+Agent skills run in isolated context with specific models for specialized tasks:
+
+#### Git Operations Specialist (`/cccp:git-operations-specialist`)
+
+Expert Git operations including:
 
 - **Git History Analysis**: Analyze commit history, branch relationships, and file changes
 - **Conflict Resolution**: Guide through merge conflicts with appropriate strategies
@@ -69,19 +75,25 @@ The `git-operations-specialist` agent provides:
 - **Advanced Git Operations**: Interactive rebase, cherry-picking, stash management, reflog operations
 - **GitHub CLI Operations**: PR creation/management, issue tracking, API operations
 
-### Commands
+#### Project Manager (`/cccp:project-manager`)
 
-#### Commit Command (`/commit`)
+Project management and task organization specialist.
+
+### Command Skills
+
+Command skills provide workflow operations and development automation:
+
+#### Commit Command (`/cccp:commit`)
 - Commit staged changes with appropriate commit messages
 - Follows conventional commit format and project guidelines
 
-#### Micro-Commit Command (`/micro-commit`)
+#### Micro-Commit Command (`/cccp:micro-commit`)
 - Create fine-grained commits following test-driven development cycles
 - Group related changes logically
 - Maintain clean and meaningful commit history
 - Follow one change per commit principle
 
-#### Pull Request Command (`/pull-request`)
+#### Pull Request Command (`/cccp:pull-request`)
 - Create new pull requests for the current branch
 - Update existing pull requests with latest changes
 - Link pull requests to GitHub issues
@@ -127,22 +139,39 @@ This command analyzes the requirements and automatically generates an executable
 ```
 This command executes the generated tasks.
 
+### Template Skills
+
+Template skills provide reference materials and standard formats:
+
+#### Key Guidelines (`/cccp:key-guidelines`)
+- Core development guidelines and best practices
+- Reference material for consistent development standards
+
+#### Todo Output Template (`/cccp:todo-output-template`)
+- Standard TODO.md format specification
+- Ensures consistent task planning structure
+
 ## Usage
 
-### Using the Git Operations Specialist
+All skills are invoked using the slash command syntax with the `/cccp:` prefix:
 
-The agent is automatically invoked when you request Git-related assistance:
+### Agent Skills
+
+Agent skills can be invoked explicitly or automatically based on context:
 
 ```
+/cccp:git-operations-specialist        # Explicitly invoke Git operations specialist
+/cccp:project-manager                  # Explicitly invoke project manager
+
+# Agent skills are also automatically invoked based on context:
 "Analyze the git history for this feature branch"
 "Help me resolve this merge conflict"
-"Create a pull request for the current branch"
 "Suggest a branching strategy for this project"
 ```
 
-### Using Commands
+### Command Skills
 
-Invoke any command by using the slash command syntax:
+Invoke command skills directly with optional arguments:
 
 ```
 /cccp:commit                           # Commit staged changes
@@ -154,6 +183,15 @@ Invoke any command by using the slash command syntax:
 /cccp:todo-task-planning TODO.md       # Phase 1: Plan and create TODO.md
 /cccp:todo-task-run TODO.md            # Phase 2: Execute tasks from TODO.md
 /cccp:todo-task-run TODO.md --no-pr    # Execute without creating PR
+```
+
+### Template Skills
+
+Template skills provide reference information:
+
+```
+/cccp:key-guidelines                   # View core development guidelines
+/cccp:todo-output-template             # View TODO.md format specification
 ```
 
 ## Documentation
@@ -173,20 +211,18 @@ For detailed information about the TODO Task workflow, see:
 cccp/
 ├── .claude-plugin/
 │   └── plugin.json                    # Plugin configuration
-├── agents/
-│   ├── git-operations-specialist.md   # Git operations agent
-│   └── project-manager.md             # Project management agent
-├── commands/
-│   ├── commit.md                      # Commit command
-│   ├── micro-commit.md                # Micro-commit command
-│   ├── pull-request.md                # Pull request command
-│   ├── todo-task-planning.md          # Task planning command
-│   └── todo-task-run.md               # Task execution command
+├── skills/                            # All skills (agents, commands, templates)
+│   ├── git-operations-specialist/     # Git operations agent skill
+│   ├── project-manager/               # Project management agent skill
+│   ├── commit/                        # Commit command skill
+│   ├── micro-commit/                  # Micro-commit command skill
+│   ├── pull-request/                  # Pull request command skill
+│   ├── todo-task-planning/            # Task planning command skill
+│   ├── todo-task-run/                 # Task execution command skill
+│   ├── key-guidelines/                # Core guidelines template skill
+│   └── todo-output-template/          # TODO output format template skill
 ├── docs/
 │   └── todo-task-development-guide.md # Comprehensive TODO Task guide
-├── skills/
-│   └── key-guidelines/
-│       └── SKILL.md                   # Core guidelines skill
 ├── LICENSE                            # MIT License
 └── README.md                          # This file
 ```
