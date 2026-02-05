@@ -7,7 +7,7 @@ description: |
 
 # TODO Output Template
 
-This template shows the expected output format for `/cccp:todo-task-planning` command results.
+This template shows the expected output format for `/todo-task-planning` command results.
 
 ## Overview
 
@@ -76,7 +76,7 @@ The output template demonstrates:
     - 💡 Add v-model bindings for editable fields (name, email, bio)
     - 💡 Call PATCH /api/user/:id with updated data on submit
 - [ ] ✅ Commit after implementation complete
-  - 💡 Execute cccp:micro-commit to commit changes by context
+  - 💡 Execute micro-commit to commit changes by context
   - 💡 Estimated time: 2-3 minutes
 
 ### ⏳ Pending Tasks (Waiting for Dependencies)

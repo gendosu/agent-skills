@@ -65,7 +65,7 @@ git clone https://github.com/gendosu/agent-skills.git
 
 エージェントスキルは、専門タスクのために特定のモデルを使用し、独立したコンテキストで実行されます：
 
-#### Git操作スペシャリスト (`/cccp:git-operations-specialist`)
+#### Git操作スペシャリスト (`/git-operations-specialist`)
 
 以下を含むエキスパートGit操作：
 
@@ -75,7 +75,7 @@ git clone https://github.com/gendosu/agent-skills.git
 - **高度なGit操作**: インタラクティブリベース、チェリーピック、スタッシュ管理、reflog操作
 - **GitHub CLI操作**: PR作成・管理、Issue追跡、API操作
 
-#### プロジェクトマネージャー (`/cccp:project-manager`)
+#### プロジェクトマネージャー (`/project-manager`)
 
 プロジェクト管理とタスク組織のスペシャリスト。
 
@@ -83,17 +83,17 @@ git clone https://github.com/gendosu/agent-skills.git
 
 コマンドスキルは、ワークフロー操作と開発自動化を提供します：
 
-#### コミットコマンド (`/cccp:commit`)
+#### コミットコマンド (`/commit`)
 - 適切なコミットメッセージでステージされた変更をコミット
 - Conventional Commitフォーマットとプロジェクトガイドラインに従う
 
-#### マイクロコミットコマンド (`/cccp:micro-commit`)
+#### マイクロコミットコマンド (`/micro-commit`)
 - テスト駆動開発サイクルに従った細粒度のコミットを作成
 - 関連する変更を論理的にグループ化
 - 清潔で意味のあるコミット履歴を保持
 - 1コミット1変更の原則に従う
 
-#### プルリクエストコマンド (`/cccp:pull-request`)
+#### プルリクエストコマンド (`/pull-request`)
 - 現在のブランチに対して新しいプルリクエストを作成
 - 既存のプルリクエストを最新の変更で更新
 - プルリクエストをGitHub Issueにリンク
@@ -103,13 +103,13 @@ git clone https://github.com/gendosu/agent-skills.git
 
 このプラグインは、タスク管理のための2段階ワークフローを提供します：
 
-**第1段階：計画 (`/cccp:todo-task-planning`)**
+**第1段階:計画 (`/todo-task-planning`)**
 - 要件を分析して実行可能なタスクに変換
 - チェックボックス形式のTODOリストを構造化して作成
 - TDD方法論を使用して複雑な要件を分解
 - 明確なタスク依存関係と優先順位を定義
 
-**第2段階：実行 (`/cccp:todo-task-run`)**
+**第2段階:実行 (`/todo-task-run`)**
 - 事前作成されたTODO.mdファイルからタスクを実行
 - Git操作（ブランチ作成、コミット、プッシュ）を管理
 - タスク進捗でプルリクエストを作成・更新
@@ -117,7 +117,7 @@ git clone https://github.com/gendosu/agent-skills.git
 
 **ワークフロー図：**
 ```
-要件 → /cccp:todo-task-planning → TODO.md → /cccp:todo-task-run → プルリクエスト
+要件 → /todo-task-planning → TODO.md → /todo-task-run → プルリクエスト
 ```
 
 **実装例：**
@@ -129,13 +129,13 @@ git clone https://github.com/gendosu/agent-skills.git
 
 **Step 2: タスク計画を実行**
 ```bash
-/cccp:todo-task-planning TODO.md
+/todo-task-planning TODO.md
 ```
 このコマンドが要件を分析して、実行可能なタスクリストを自動生成します。
 
 **Step 3: タスク実行を実行**
 ```bash
-/cccp:todo-task-run TODO.md
+/todo-task-run TODO.md
 ```
 このコマンドが生成されたタスクを実行します。
 
@@ -143,25 +143,25 @@ git clone https://github.com/gendosu/agent-skills.git
 
 テンプレートスキルは、リファレンス資料と標準フォーマットを提供します：
 
-#### キーガイドライン (`/cccp:key-guidelines`)
+#### キーガイドライン (`/key-guidelines`)
 - コア開発ガイドラインとベストプラクティス
 - 一貫した開発標準のためのリファレンス資料
 
-#### Todoアウトプットテンプレート (`/cccp:todo-output-template`)
+#### Todoアウトプットテンプレート (`/todo-output-template`)
 - 標準的なTODO.mdフォーマット仕様
 - 一貫したタスク計画構造を保証
 
 ## 使用方法
 
-すべてのスキルは `/cccp:` プレフィックスを使用したスラッシュコマンド構文で呼び出します：
+すべてのスキルはスラッシュコマンド構文で呼び出します:
 
 ### エージェントスキル
 
 エージェントスキルは、明示的またはコンテキストに基づいて自動的に呼び出すことができます：
 
 ```
-/cccp:git-operations-specialist        # Git操作スペシャリストを明示的に呼び出し
-/cccp:project-manager                  # プロジェクトマネージャーを明示的に呼び出し
+/git-operations-specialist        # Git操作スペシャリストを明示的に呼び出し
+/project-manager                  # プロジェクトマネージャーを明示的に呼び出し
 
 # エージェントスキルはコンテキストに基づいて自動的に呼び出されます：
 "このフィーチャーブランチのgit履歴を分析して"
@@ -174,15 +174,15 @@ git clone https://github.com/gendosu/agent-skills.git
 コマンドスキルはオプションの引数とともに直接呼び出します：
 
 ```
-/cccp:commit                           # ステージされた変更をコミット
-/cccp:micro-commit                     # 細粒度のコミットを作成
-/cccp:pull-request                     # プルリクエストを作成または更新
-/cccp:pull-request 123                 # Issue #123にリンクされたPRを作成
+/commit                           # ステージされた変更をコミット
+/micro-commit                     # 細粒度のコミットを作成
+/pull-request                     # プルリクエストを作成または更新
+/pull-request 123                 # Issue #123にリンクされたPRを作成
 
 # 2段階のタスクワークフロー：
-/cccp:todo-task-planning TODO.md       # 第1段階：計画してTODO.mdを作成
-/cccp:todo-task-run TODO.md            # 第2段階：TODO.mdからタスクを実行
-/cccp:todo-task-run TODO.md --no-pr    # PR作成なしでタスクを実行
+/todo-task-planning TODO.md       # 第1段階：計画してTODO.mdを作成
+/todo-task-run TODO.md            # 第2段階：TODO.mdからタスクを実行
+/todo-task-run TODO.md --no-pr    # PR作成なしでタスクを実行
 ```
 
 ### テンプレートスキル
@@ -190,8 +190,8 @@ git clone https://github.com/gendosu/agent-skills.git
 テンプレートスキルはリファレンス情報を提供します：
 
 ```
-/cccp:key-guidelines                   # コア開発ガイドラインを表示
-/cccp:todo-output-template             # TODO.mdフォーマット仕様を表示
+/key-guidelines                   # コア開発ガイドラインを表示
+/todo-output-template             # TODO.mdフォーマット仕様を表示
 ```
 
 ## ドキュメント

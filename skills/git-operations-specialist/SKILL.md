@@ -34,7 +34,7 @@ user-invocable: true
 
 ## Core Guidelines
 
-Before starting any task, read and follow `/cccp:key-guidelines`
+Before starting any task, read and follow `/key-guidelines`
 
 ---
 

@@ -5,6 +5,17 @@ All notable changes to the CCCP plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.1] - 2026-02-05
+
+### Changed
+
+- **Documentation**: Removed `cccp:` plugin prefix from all documentation
+  - Updated 14 Markdown files (442 pattern replacements)
+  - Removed `/cccp:` prefix from slash commands (204 instances → `/`)
+  - Removed `cccp:` prefix from agent/skill references (238 instances)
+  - Maintained consistency across README, CHANGELOG, skill definitions, and guides
+  - No functional changes - command invocation syntax remains backward compatible
+
 ## [3.0.0] - 2026-02-04
 
 ### Breaking Changes
@@ -41,7 +52,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Migration Guide
 
-- **For Plugin Users**: No action required - command invocation syntax (`/cccp:command-name`) remains unchanged
+- **For Plugin Users**: No action required - command invocation syntax (`/command-name`) remains unchanged
 - **For Plugin Developers**: Update any direct file path references to new `skills/` structure
 
 ## [2.2.0] - 2026-01-31
@@ -75,7 +86,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **todo-output-template**: New skill file for TODO.md output template examples
   - Complete 82-line template with structure documentation
-  - Accessible via `/cccp:todo-output-template` command
+  - Accessible via `/todo-output-template` command
   - Extracted from todo-task-planning.md for better maintainability (commit 02b3b5d)
 
 ### Changed
@@ -107,11 +118,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **todo-task-run**: Removed PR and git push functionality - now a pure generic task runner
   - Removed `--no-pr` and `--no-push` command arguments
-  - Removed PR creation/update functionality (use `/cccp:pull-request` separately)
+  - Removed PR creation/update functionality (use `/pull-request` separately)
   - Removed git push operations from task execution workflow
   - Removed git fetch from initial setup
-  - Removed `cccp:git-operations-specialist` agent type from classification rules
-  - Removed `/cccp:micro-commit` usage from task completion procedures
+  - Removed `git-operations-specialist` agent type from classification rules
+  - Removed `/micro-commit` usage from task completion procedures
 
 ### Changed
 
@@ -141,7 +152,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - **todo-task-planning**: Removed automatic git commit from planning phase
-  - Removed Phase 4 Step 10 which executed cccp:micro-commit after TODO.md update
+  - Removed Phase 4 Step 10 which executed micro-commit after TODO.md update
   - Planning command now focuses purely on task planning without git operations
   - Git operations remain the responsibility of todo-task-run command during task execution
   - Ensures planning commands don't modify git history unexpectedly

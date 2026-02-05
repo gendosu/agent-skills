@@ -8,17 +8,17 @@ Commits staged changes with an appropriate commit message using the git-operatio
 
 ## Core Guidelines
 
-Before starting any task, read and follow `/cccp:key-guidelines`
+Before starting any task, read and follow `/key-guidelines`
 
 ---
 
 ## Agents
 
-- use cccp:git-operations-specialist agent
+- use git-operations-specialist agent
 
 ## Agent Instructions
 
-**IMPORTANT: Use the cccp:git-operations-specialist agent (via Task tool) for ALL git-related operations in this command.**
+**IMPORTANT: Use the git-operations-specialist agent (via Task tool) for ALL git-related operations in this command.**
 
 Analyze the staged changes and safely commit them with an appropriate commit message.
 

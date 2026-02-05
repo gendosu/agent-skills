@@ -8,7 +8,7 @@ user-invocable: true
 ## Usage
 
 ```
-/cccp:todo-task-run <file_path>
+/todo-task-run <file_path>
 ```
 
 ### Arguments
@@ -35,18 +35,18 @@ user-invocable: true
 
 ## Core Guidelines
 
-Before starting any task, read and follow `/cccp:key-guidelines`
+Before starting any task, read and follow `/key-guidelines`
 
 ## Command Overview
 
-The `/cccp:todo-task-run` command is designed as a **generic task runner** - it takes a pre-existing TODO.md file and systematically executes ALL tasks defined within it until completion.
+The `/todo-task-run` command is designed as a **generic task runner** - it takes a pre-existing TODO.md file and systematically executes ALL tasks defined within it until completion.
 
 ### Role and Responsibility
 - **Complete Execution**: Execute ALL tasks in TODO.md sequentially until every task is marked `- [x]`
 - **Progress Management**: Orchestrate task execution, manage progress, and coordinate the overall workflow
 - **Continuous Operation**: Continue executing tasks until completion or blocker - NEVER stop prematurely
 - **Not for planning**: This command does NOT create tasks or convert requirements into actionable items
-- **Task planning**: Use `/cccp:todo-task-planning` to convert requirements into a structured TODO.md before using this command
+- **Task planning**: Use `/todo-task-planning` to convert requirements into a structured TODO.md before using this command
 - **Task Runner Focus**: Act as a task runner, delegating individual work to sub-agents as much as possible
 
 ### Execution Guarantee
@@ -57,12 +57,12 @@ This command guarantees:
 4. ✅ **Incomplete tasks will NOT be left unfinished** without user awareness
 
 ### Relationship with todo-task-planning
-1. **Planning phase** (`/cccp:todo-task-planning`): Analyze requirements → Create TODO.md with actionable tasks
+1. **Planning phase** (`/todo-task-planning`): Analyze requirements → Create TODO.md with actionable tasks
 2. **Execution phase** (this command): Orchestrate task execution → Manage progress → Integrate completion status → Coordinate overall workflow
 
 ### Command Invocation
 ```
-/cccp:todo-task-run TODO.md
+/todo-task-run TODO.md
 ```
 
 ## Processing Flow
