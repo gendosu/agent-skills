@@ -5,6 +5,17 @@ All notable changes to the CCCP plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.1] - 2026-02-05
+
+### Changed
+
+- **Documentation**: Removed `cccp:` plugin prefix from all documentation
+  - Updated 14 Markdown files (442 pattern replacements)
+  - Removed `/cccp:` prefix from slash commands (204 instances → `/`)
+  - Removed `cccp:` prefix from agent/skill references (238 instances)
+  - Maintained consistency across README, CHANGELOG, skill definitions, and guides
+  - No functional changes - command invocation syntax remains backward compatible
+
 ## [3.0.0] - 2026-02-04
 
 ### Breaking Changes
