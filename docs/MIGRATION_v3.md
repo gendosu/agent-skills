@@ -165,7 +165,7 @@ user-invocable: true
 
 Plugin users need to take **no action**. The following are guaranteed:
 
-- ✅ **Command invocation syntax unchanged**: `/cccp:skill-name` continues to work
+- ✅ **Command invocation syntax unchanged**: `/skill-name` continues to work
 - ✅ **All existing skills continue to work**: No functionality lost
 - ✅ **Automatic migration**: Plugin handles internal structure changes transparently
 - ✅ **Backward compatibility**: Skill names and behaviors remain identical
@@ -182,16 +182,16 @@ Plugin users need to take **no action**. The following are guaranteed:
 
 **v2.x**:
 ```
-/cccp:commit
-/cccp:git-operations-specialist
-/cccp:todo-task-planning
+/commit
+/git-operations-specialist
+/todo-task-planning
 ```
 
 **v3.0.0** (same):
 ```
-/cccp:commit
-/cccp:git-operations-specialist
-/cccp:todo-task-planning
+/commit
+/git-operations-specialist
+/todo-task-planning
 ```
 
 ---
@@ -206,7 +206,7 @@ This section is for developers who extend the plugin with custom skills.
 
 1. **Update file path references**
    - パス参照がある場合は更新が必要
-   - Name-based references (`/cccp:skill-name`) は変更不要
+   - Name-based references (`/skill-name`) は変更不要
 
 2. **Update frontmatter in custom skills**
    - Add required `name` field
@@ -326,7 +326,7 @@ rm -rf commands/
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `name` | string | Skill name (used in `/cccp:name`) |
+| `name` | string | Skill name (used in `/name`) |
 | `description` | string | Skill description |
 | `user-invocable` | boolean | Always `true` for user-callable skills |
 
@@ -367,7 +367,7 @@ rm -rf commands/
 
 - ✅ **Trigger words**: Agent auto-invocation works (git-operations-specialist, project-manager)
 - ✅ **Model preferences**: Custom model settings preserved (Haiku for git-operations-specialist)
-- ✅ **Internal references**: All `/cccp:*` references working
+- ✅ **Internal references**: All `/*` references working
 - ✅ **Documentation**: Skill bodies unchanged
 
 ---
@@ -376,7 +376,7 @@ rm -rf commands/
 
 ### Issue 1: Skill not found after upgrade
 
-**Symptom**: `/cccp:skill-name` returns "Skill not found"
+**Symptom**: `/skill-name` returns "Skill not found"
 
 **Cause**: Plugin cache issue
 
@@ -432,7 +432,7 @@ trigger_words:
 
 ### Q1: Do I need to update my existing skill invocations?
 
-**A**: No. Skill invocation syntax (`/cccp:skill-name`) remains unchanged.
+**A**: No. Skill invocation syntax (`/skill-name`) remains unchanged.
 
 ### Q2: Are there any performance changes?
 

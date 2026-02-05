@@ -346,7 +346,7 @@ TODO Task Pluginは、Markdownのチェックボックス形式でタスクの�
 `todo-task-planning`コマンドの基本構文は以下の通りです。
 
 ```bash
-/cccp:todo-task-planning <file_path> [--pr] [--branch <branch_name>]
+/todo-task-planning <file_path> [--pr] [--branch <branch_name>]
 ```
 
 **構文要素**:
@@ -382,7 +382,7 @@ TODO Task Pluginは、Markdownのチェックボックス形式でタスクの�
 
 **実行コマンド**:
 ```bash
-/cccp:todo-task-planning requirements.md
+/todo-task-planning requirements.md
 ```
 
 **実行結果**:
@@ -413,7 +413,7 @@ TODO Task Pluginは、Markdownのチェックボックス形式でタスクの�
 
 **実行コマンド**:
 ```bash
-/cccp:todo-task-planning requirements.md --pr
+/todo-task-planning requirements.md --pr
 ```
 
 **実行結果**:
@@ -444,7 +444,7 @@ TODO Task Pluginは、Markdownのチェックボックス形式でタスクの�
 
 **実行コマンド**:
 ```bash
-/cccp:todo-task-planning requirements.md --branch feature/user-auth
+/todo-task-planning requirements.md --branch feature/user-auth
 ```
 
 **実行結果**:
@@ -475,7 +475,7 @@ TODO Task Pluginは、Markdownのチェックボックス形式でタスクの�
 
 **実行コマンド**:
 ```bash
-/cccp:todo-task-planning user-feature-spec.md --pr --branch
+/todo-task-planning user-feature-spec.md --pr --branch
 ```
 
 **実行結果**:
@@ -522,7 +522,7 @@ TODO Task Pluginは、Markdownのチェックボックス形式でタスクの�
 4. 各タスクにFeasibility Markersを付与
 5. 計画結果を`docs/memory/planning/`ディレクトリに保存
 
-**Phase 0.3: cccp:project-manager エージェント（質問管理フェーズ）**
+**Phase 0.3: project-manager エージェント（質問管理フェーズ）**
 1. Plan エージェントの計画結果を読み取る
 2. 不明確な要件や技術的詳細に関する質問を生成
 3. 質問をユーザーに提示し、回答を収集
@@ -551,7 +551,7 @@ TODOファイルの冒頭には、実行サマリーが記載されます。
 ```markdown
 ## 📊 実行サマリー（2026-01-24更新）
 
-- [x] **Phase 0完了**: Explore, Plan, cccp:project-manager エージェント実行完了
+- [x] **Phase 0完了**: Explore, Plan, project-manager エージェント実行完了
 - [x] **調査完了**: 5ファイル調査
 - [x] **計画完了**: 3フェーズ8タスクの実装計画策定
 - [x] **ユーザー質問解決**: 2質問回答完了
@@ -636,7 +636,7 @@ TODOファイルの冒頭には、実行サマリーが記載されます。
 `todo-task-run`コマンドの基本構文は以下の通りです。
 
 ```bash
-/cccp:todo-task-run <todo_file_path> [--no-pr] [--no-push]
+/todo-task-run <todo_file_path> [--no-pr] [--no-push]
 ```
 
 **構文要素**:
@@ -672,7 +672,7 @@ TODOファイルを読み取り、タスクを実行し、PRを自動作成す�
 
 **実行コマンド**:
 ```bash
-/cccp:todo-task-run TODO.md
+/todo-task-run TODO.md
 ```
 
 **実行結果**:
@@ -694,7 +694,7 @@ PRを作成せず、ローカル環境でタスクを実行する例です。
 
 **実行コマンド**:
 ```bash
-/cccp:todo-task-run TODO.md --no-pr --no-push
+/todo-task-run TODO.md --no-pr --no-push
 ```
 
 **実行結果**:
@@ -731,7 +731,7 @@ PRを作成せず、ローカル環境でタスクを実行する例です。
 3. タスクをエージェントに分類（Explore、Plan、Implementation）
 4. タスクを順次実行
 5. 各タスク完了後、チェックボックスを`- [x]`に更新
-6. タスク完了ごとにコミット（`/cccp:micro-commit`使用）
+6. タスク完了ごとにコミット（`/micro-commit`使用）
 
 **Phase 4: 完了処理**
 1. すべてのタスクが完了したことを確認
@@ -950,7 +950,7 @@ git checkout -b feature/user-auth
 要件ファイルからタスク計画を生成します。
 
 ```bash
-/cccp:todo-task-planning TODO.md --pr
+/todo-task-planning TODO.md --pr
 ```
 
 **ステップ4: 生成されたTODOファイル確認**
@@ -1004,7 +1004,7 @@ git checkout -b feature/user-auth
 生成されたタスクリストを実行します。
 
 ```bash
-/cccp:todo-task-run TODO.md
+/todo-task-run TODO.md
 ```
 
 **ステップ6: PR確認とレビュー依頼**
@@ -1057,7 +1057,7 @@ git checkout -b bugfix/login-token-expiry
 修正タスクの計画を生成します（ブランチは既存を使用）。
 
 ```bash
-/cccp:todo-task-planning BUG-FIX.md --pr
+/todo-task-planning BUG-FIX.md --pr
 ```
 
 **ステップ4: 生成されたTODOファイル確認**
@@ -1093,7 +1093,7 @@ git checkout -b bugfix/login-token-expiry
 **ステップ5: todo-task-run実行**
 
 ```bash
-/cccp:todo-task-run BUG-FIX.md
+/todo-task-run BUG-FIX.md
 ```
 
 このワークフローでは、既存ブランチでのバグ修正をタスク計画化し、体系的に修正を実施します。
@@ -1122,13 +1122,13 @@ requirements/
 
 ```bash
 # Feature A: ユーザープロフィール機能
-/cccp:todo-task-planning requirements/feature-a-user-profile.md --pr --branch feature/user-profile
+/todo-task-planning requirements/feature-a-user-profile.md --pr --branch feature/user-profile
 
 # Feature B: ダッシュボード機能
-/cccp:todo-task-planning requirements/feature-b-dashboard.md --pr --branch feature/dashboard
+/todo-task-planning requirements/feature-b-dashboard.md --pr --branch feature/dashboard
 
 # Feature C: 通知機能
-/cccp:todo-task-planning requirements/feature-c-notifications.md --pr --branch feature/notifications
+/todo-task-planning requirements/feature-c-notifications.md --pr --branch feature/notifications
 ```
 
 **ステップ3: 生成されたTODOファイルの構成**
@@ -1149,19 +1149,19 @@ TODO-notifications.md
 ```bash
 # 優先度1: ユーザープロフィール機能
 git checkout -b feature/user-profile
-/cccp:todo-task-run TODO-user-profile.md
+/todo-task-run TODO-user-profile.md
 
 # 優先度2: ダッシュボード機能
 git checkout main
 git pull origin main
 git checkout -b feature/dashboard
-/cccp:todo-task-run TODO-dashboard.md
+/todo-task-run TODO-dashboard.md
 
 # 優先度3: 通知機能
 git checkout main
 git pull origin main
 git checkout -b feature/notifications
-/cccp:todo-task-run TODO-notifications.md
+/todo-task-run TODO-notifications.md
 ```
 
 **ステップ5: 各PRの進捗追跡**
@@ -1312,11 +1312,11 @@ Feasibility Markersの意味や重要性を理解していないためです。
 
 # ✅ 正しい理解
 # 「--prを指定すると、TODOリストにPR作成タスクが追加される」
-/cccp:todo-task-planning TODO.md --pr
+/todo-task-planning TODO.md --pr
 # → TODOファイルに「プルリクエストを作成」タスクが追加される
 
 # 実際のPR作成はrunコマンド実行時
-/cccp:todo-task-run TODO.md
+/todo-task-run TODO.md
 # → すべてのタスク完了後、PRが自動作成される
 ```
 
@@ -1345,7 +1345,7 @@ git reset --hard HEAD~1
   - 📁 Files: `src/utils/jwt.ts`
 
 # 修正を実行
-/cccp:todo-task-run TODO.md
+/todo-task-run TODO.md
 ```
 
 #### ❌ 誤り7: 複数のTODOファイルを同時に実行
@@ -1363,17 +1363,17 @@ git reset --hard HEAD~1
 
 ```bash
 # ❌ 誤った実行（ブランチ切り替えなし）
-/cccp:todo-task-run TODO-feature-a.md
-/cccp:todo-task-run TODO-feature-b.md  # ← 同じブランチで別のTODOを実行してしまう
+/todo-task-run TODO-feature-a.md
+/todo-task-run TODO-feature-b.md  # ← 同じブランチで別のTODOを実行してしまう
 
 # ✅ 正しい実行
 git checkout -b feature/feature-a
-/cccp:todo-task-run TODO-feature-a.md
+/todo-task-run TODO-feature-a.md
 
 git checkout main
 git pull origin main
 git checkout -b feature/feature-b
-/cccp:todo-task-run TODO-feature-b.md
+/todo-task-run TODO-feature-b.md
 ```
 
 ### 5.5 ベストプラクティス
@@ -1469,16 +1469,16 @@ TODO Task Pluginを効果的に活用するための推奨事項を示します�
   - トークン生成ロジックの修正
 
 # 2. 修正を実行（新しいコミットとして追加）
-/cccp:todo-task-run TODO.md
+/todo-task-run TODO.md
 ```
 
-#### ✅ プラクティス5: cccp:micro-commitで適切な粒度でコミット
+#### ✅ プラクティス5: micro-commitで適切な粒度でコミット
 
 **理由**:
 適切な粒度のコミットにより、変更履歴が明確になり、レビューが容易になり、問題発生時のロールフォワードが正確になります。
 
 **実践方法**:
-- `/cccp:micro-commit`スキルを使用して、コンテキストベースのコミットメッセージを自動生成する
+- `/micro-commit`スキルを使用して、コンテキストベースのコミットメッセージを自動生成する
 - 1つのタスク完了ごとに1つのコミットを作成する
 - コミットメッセージは具体的で、変更内容を明確に示す
 - 手動でgit commitを実行しない
@@ -1486,7 +1486,7 @@ TODO Task Pluginを効果的に活用するための推奨事項を示します�
 ```bash
 # ✅ micro-commitの使用
 # タスク完了後
-/cccp:micro-commit
+/micro-commit
 
 # 自動的に以下が実行される:
 # 1. 変更ファイルの検出
@@ -1528,7 +1528,7 @@ TODO Task Pluginを効果的に活用するための推奨事項を示します�
 
 ```bash
 # ✅ planningとrunの間に確認を挟む
-/cccp:todo-task-planning TODO.md --pr
+/todo-task-planning TODO.md --pr
 
 # 生成されたTODOファイルを確認・編集
 # - タスクの妥当性チェック
@@ -1536,7 +1536,7 @@ TODO Task Pluginを効果的に活用するための推奨事項を示します�
 # - 不要なタスクの削除
 
 # 確認後に実行
-/cccp:todo-task-run TODO.md
+/todo-task-run TODO.md
 ```
 
 これらのベストプラクティスを遵守することで、TODO Task Pluginを効果的に活用し、効率的で保守性の高い開発ワークフローを実現できます。
@@ -1553,48 +1553,48 @@ TODO Task Pluginを効率的に使用するための早見表とチェックリ�
 
 | パターン | コマンド | 使用シーン | 生成内容 |
 |---------|---------|-----------|---------|
-| 基本実行 | `/cccp:todo-task-planning <file_path>` | TODOファイルのみを生成したい場合 | タスクリストのみ（ブランチ作成タスク、PR作成タスクなし） |
-| PR作成付き | `/cccp:todo-task-planning <file_path> --pr` | タスク完了後にPRを作成したい場合 | タスクリスト + PR作成タスク |
-| ブランチ指定 | `/cccp:todo-task-planning <file_path> --branch <branch_name>` | 特定のブランチ名で作業したい場合 | ブランチ作成タスク + タスクリスト |
-| ブランチ自動生成 | `/cccp:todo-task-planning <file_path> --pr --branch` | ブランチ名を自動生成し、PR作成も行いたい場合 | ブランチ作成タスク + タスクリスト + PR作成タスク（ブランチ名は要件ファイル名から自動生成） |
+| 基本実行 | `/todo-task-planning <file_path>` | TODOファイルのみを生成したい場合 | タスクリストのみ（ブランチ作成タスク、PR作成タスクなし） |
+| PR作成付き | `/todo-task-planning <file_path> --pr` | タスク完了後にPRを作成したい場合 | タスクリスト + PR作成タスク |
+| ブランチ指定 | `/todo-task-planning <file_path> --branch <branch_name>` | 特定のブランチ名で作業したい場合 | ブランチ作成タスク + タスクリスト |
+| ブランチ自動生成 | `/todo-task-planning <file_path> --pr --branch` | ブランチ名を自動生成し、PR作成も行いたい場合 | ブランチ作成タスク + タスクリスト + PR作成タスク（ブランチ名は要件ファイル名から自動生成） |
 
 **使用例**:
 ```bash
 # 基本実行
-/cccp:todo-task-planning requirements.md
+/todo-task-planning requirements.md
 
 # PR作成付き
-/cccp:todo-task-planning requirements.md --pr
+/todo-task-planning requirements.md --pr
 
 # ブランチ名指定
-/cccp:todo-task-planning requirements.md --branch feature/user-auth
+/todo-task-planning requirements.md --branch feature/user-auth
 
 # ブランチ自動生成 + PR作成
-/cccp:todo-task-planning user-feature-spec.md --pr --branch
+/todo-task-planning user-feature-spec.md --pr --branch
 ```
 
 #### todo-task-run コマンドパターン
 
 | パターン | コマンド | 使用シーン | 動作内容 |
 |---------|---------|-----------|---------|
-| 基本実行 | `/cccp:todo-task-run <todo_file_path>` | TODOファイルを実行し、PRを自動作成したい場合 | タスク実行 → コミット → push → PR作成/更新 |
-| PR無効 | `/cccp:todo-task-run <todo_file_path> --no-pr` | PRを手動で作成したい場合 | タスク実行 → コミット → push（PRは作成されない） |
-| push無効 | `/cccp:todo-task-run <todo_file_path> --no-push` | ローカルでコミットし、後からpushしたい場合 | タスク実行 → コミット（pushとPR作成はスキップ） |
-| 完全ローカル | `/cccp:todo-task-run <todo_file_path> --no-pr --no-push` | 完全にローカル環境で実行したい場合 | タスク実行 → コミット（pushとPR作成は両方スキップ） |
+| 基本実行 | `/todo-task-run <todo_file_path>` | TODOファイルを実行し、PRを自動作成したい場合 | タスク実行 → コミット → push → PR作成/更新 |
+| PR無効 | `/todo-task-run <todo_file_path> --no-pr` | PRを手動で作成したい場合 | タスク実行 → コミット → push（PRは作成されない） |
+| push無効 | `/todo-task-run <todo_file_path> --no-push` | ローカルでコミットし、後からpushしたい場合 | タスク実行 → コミット（pushとPR作成はスキップ） |
+| 完全ローカル | `/todo-task-run <todo_file_path> --no-pr --no-push` | 完全にローカル環境で実行したい場合 | タスク実行 → コミット（pushとPR作成は両方スキップ） |
 
 **使用例**:
 ```bash
 # 基本実行（PR自動作成）
-/cccp:todo-task-run TODO.md
+/todo-task-run TODO.md
 
 # PR無効（手動でPRを作成）
-/cccp:todo-task-run TODO.md --no-pr
+/todo-task-run TODO.md --no-pr
 
 # push無効（ローカルで検証後にpush）
-/cccp:todo-task-run TODO.md --no-push
+/todo-task-run TODO.md --no-push
 
 # 完全ローカル（オフライン作業）
-/cccp:todo-task-run TODO.md --no-pr --no-push
+/todo-task-run TODO.md --no-pr --no-push
 ```
 
 ### 6.2 パラメータ完全一覧
@@ -1610,16 +1610,16 @@ TODO Task Pluginを効率的に使用するための早見表とチェックリ�
 **パラメータ組み合わせ例**:
 ```bash
 # file_pathのみ（必須パラメータ）
-/cccp:todo-task-planning requirements.md
+/todo-task-planning requirements.md
 
 # file_path + --pr
-/cccp:todo-task-planning requirements.md --pr
+/todo-task-planning requirements.md --pr
 
 # file_path + --branch（値指定）
-/cccp:todo-task-planning requirements.md --branch feature/user-auth
+/todo-task-planning requirements.md --branch feature/user-auth
 
 # file_path + --pr + --branch（値省略）
-/cccp:todo-task-planning requirements.md --pr --branch
+/todo-task-planning requirements.md --pr --branch
 ```
 
 #### todo-task-run パラメータ
@@ -1633,16 +1633,16 @@ TODO Task Pluginを効率的に使用するための早見表とチェックリ�
 **パラメータ組み合わせ例**:
 ```bash
 # todo_file_pathのみ（デフォルト: PR作成、push実行）
-/cccp:todo-task-run TODO.md
+/todo-task-run TODO.md
 
 # todo_file_path + --no-pr（PR作成スキップ）
-/cccp:todo-task-run TODO.md --no-pr
+/todo-task-run TODO.md --no-pr
 
 # todo_file_path + --no-push（pushスキップ）
-/cccp:todo-task-run TODO.md --no-push
+/todo-task-run TODO.md --no-push
 
 # todo_file_path + --no-pr + --no-push（完全ローカル実行）
-/cccp:todo-task-run TODO.md --no-pr --no-push
+/todo-task-run TODO.md --no-pr --no-push
 ```
 
 ### 6.3 Feasibility Markers 早見表

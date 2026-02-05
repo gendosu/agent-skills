@@ -8,7 +8,7 @@ This approach is inspired by **Lucas Rocha's micro-commit** methodology, which e
 
 ## Core Guidelines
 
-Before starting any task, read and follow `/cccp:key-guidelines`
+Before starting any task, read and follow `/key-guidelines`
 
 ---
 
@@ -16,11 +16,11 @@ Commits unstaged changes by grouping them into logical micro-commits using the g
 
 ## Agents
 
-- use cccp:git-operations-specialist agent
+- use git-operations-specialist agent
 
 ## Agent Instructions
 
-**IMPORTANT: Use the cccp:git-operations-specialist agent (via Task tool) for ALL git-related operations in this command.**
+**IMPORTANT: Use the git-operations-specialist agent (via Task tool) for ALL git-related operations in this command.**
 
 Analyze all unstaged changes and execute multiple micro-commits, grouping related changes together.
 

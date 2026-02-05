@@ -1,6 +1,6 @@
 ---
 name: todo-task-planning
-description: Execute task planning based on the specified file and manage questions[/cccp:todo-task-planning file_path --pr --branch branch_name]
+description: Execute task planning based on the specified file and manage questions[/todo-task-planning file_path --pr --branch branch_name]
 argument-hint: <file_path> [--pr] [--branch <name>]
 user-invocable: true
 ---
@@ -8,7 +8,7 @@ user-invocable: true
 ## Usage
 
 ```
-/cccp:todo-task-planning <file_path> [--pr] [--branch <name>]
+/todo-task-planning <file_path> [--pr] [--branch <name>]
 ```
 
 ### Arguments
@@ -60,21 +60,21 @@ Do not neglect checking to avoid duplicating research results and tasks.
 
 ```bash
 # Example 1: Create branch with auto-generated name (no PR)
-/cccp:todo-task-planning TODO.md --branch
+/todo-task-planning TODO.md --branch
 # → Generates branch name like: feature/actionlog-notification
 
 # Example 2: Create branch with specific name (no PR)
-/cccp:todo-task-planning docs/todos/feature-x.md --branch feature/user-auth
+/todo-task-planning docs/todos/feature-x.md --branch feature/user-auth
 
 # Example 3: Create PR with auto-generated branch name
-/cccp:todo-task-planning docs/todos/feature-x.md --pr
+/todo-task-planning docs/todos/feature-x.md --pr
 # → Auto-generates branch name and creates PR
 
 # Example 4: Create PR with specific branch name
-/cccp:todo-task-planning docs/todos/feature-x.md --pr --branch feature/user-auth
+/todo-task-planning docs/todos/feature-x.md --pr --branch feature/user-auth
 
 # Example 5: Basic task planning (no branch, no PR)
-/cccp:todo-task-planning docs/todos/feature-x.md
+/todo-task-planning docs/todos/feature-x.md
 ```
 
 ### Implementation Guidance
@@ -112,7 +112,7 @@ When these options are specified, the task planning should include:
 
 ## Core Guidelines
 
-Before starting any task, read and follow `/cccp:key-guidelines`
+Before starting any task, read and follow `/key-guidelines`
 
 ## 🚨 Important Implementation Requirements
 
@@ -132,12 +132,12 @@ The agents in Phase 0 MUST be executed in the following order:
 1. Phase 0.1: TODO File Reading
 2. Phase 0.2: Explore Agent
 3. Phase 0.3: Plan Agent
-4. Phase 0.4: cccp:project-manager Agent
+4. Phase 0.4: project-manager Agent
 5. Phase 0.5: Verification
 
 **DO NOT execute agents in parallel.** Each phase depends on the results of the previous phase:
 - Phase 0.3 (Plan) requires `exploration_results` from Phase 0.2 (Explore)
-- Phase 0.4 (cccp:project-manager) requires both `exploration_results` and `planning_results`
+- Phase 0.4 (project-manager) requires both `exploration_results` and `planning_results`
 
 **Execution Pattern:**
 ```typescript
@@ -146,7 +146,7 @@ const exploration_results = await Task({ subagent_type: "Explore", ... });
 // Wait for Explore to complete, THEN proceed
 const planning_results = await Task({ subagent_type: "Plan", ... });
 // Wait for Plan to complete, THEN proceed
-const strategic_plan = await Task({ subagent_type: "cccp:project-manager", ... });
+const strategic_plan = await Task({ subagent_type: "project-manager", ... });
 
 // ❌ WRONG: Parallel execution (DO NOT DO THIS)
 Promise.all([
@@ -290,7 +290,7 @@ Task({
   - Sections: Approach, Task Breakdown, Critical Files, Trade-offs, Risks and Mitigation, Feasibility Assessment
   - Verification: File creation will be confirmed in Phase 0.5
 
-#### Phase 0.4: Calling cccp:project-manager Agent
+#### Phase 0.4: Calling project-manager Agent
 
 **Purpose**: Integrate exploration and planning results and organize strategically
 
@@ -309,15 +309,15 @@ Phase 0.2 (Explore) → exploration_results
                           ↓
 Phase 0.3 (Plan) → planning_results
                           ↓
-Phase 0.4 (cccp:project-manager) → strategic_plan
+Phase 0.4 (project-manager) → strategic_plan
 ```
 
-**ONLY after confirming the above, execute the cccp:project-manager agent Task tool.**
+**ONLY after confirming the above, execute the project-manager agent Task tool.**
 
 **Task tool execution example**:
 ```typescript
 Task({
-  subagent_type: "cccp:project-manager",
+  subagent_type: "project-manager",
   description: "Strategic organization for [feature name]",
   prompt: `
     # Strategic Project Planning Request
@@ -360,11 +360,11 @@ Task({
    - **⚠️ Verify Sequential Execution Order**
      - [ ] Phase 0.2 (Explore) completed FIRST
      - [ ] Phase 0.3 (Plan) completed SECOND (after Explore)
-     - [ ] Phase 0.4 (cccp:project-manager) completed THIRD (after Plan)
+     - [ ] Phase 0.4 (project-manager) completed THIRD (after Plan)
    - **Confirm all agents completed successfully**
      - [ ] No errors in Explore agent execution
      - [ ] No errors in Plan agent execution
-     - [ ] No errors in cccp:project-manager agent execution
+     - [ ] No errors in project-manager agent execution
    - **Verify Variable Dependencies**
      - [ ] `exploration_results` exists and contains valid data
      - [ ] `planning_results` exists and contains valid data
@@ -428,7 +428,7 @@ Task({
      - Utilize implementation strategy designed by Plan agent in Phase 0.3
    - **Utilizing Strategic Plan**
      - Get tasks by feasibility, user questions, checklist structure from `strategic_plan`
-     - Utilize strategic plan organized by cccp:project-manager agent in Phase 0.4
+     - Utilize strategic plan organized by project-manager agent in Phase 0.4
    - **Existing Research Check**: Check past analysis results in docs/memory to avoid duplicate analysis
 
 4. **Scientific Analysis of Implementation Feasibility**
@@ -463,7 +463,7 @@ Task({
 6. **Question Extraction (Only What Is Necessary to Achieve the Objective)**
    - **Utilizing Phase 0 Strategic Plan**
      - Check extracted questions from `strategic_plan.user_questions`
-     - Base on questions identified by cccp:project-manager agent in Phase 0.4
+     - Base on questions identified by project-manager agent in Phase 0.4
    - **🚨 Important Constraint**: Extract only questions that are truly necessary to achieve the objective
    - **Required**: Extract concrete unclear points from the researched files and implementation
    - **Duplicate Question Check**: Check past question history in docs/memory to avoid duplicates
@@ -888,18 +888,18 @@ Used by main Claude executor in Phase 0.3:
 - **Trade-off evaluation**: Comparing different solutions
 - The Plan agent builds on Explore agent findings to create actionable plans
 
-### When to Use cccp:project-manager Agent (Phase 0.4)
+### When to Use project-manager Agent (Phase 0.4)
 Used by main Claude executor in Phase 0.4:
 - **Strategic organization**: Organizing tasks by feasibility (✅⏳🔍🚧)
 - **User question extraction**: Identifying specification ambiguities
 - **Checklist structure preparation**: Creating structured checklist format
 - **YAGNI validation**: Ensuring only necessary tasks are included
-- The cccp:project-manager agent integrates Explore and Plan results into actionable structure
+- The project-manager agent integrates Explore and Plan results into actionable structure
 
 ### Workflow Example (Phase 0)
 1. **Phase 0.2: Explore Agent** → Find all salary-related files and their relationships (thoroughness: medium)
 2. **Phase 0.3: Plan Agent** → Design implementation approach for adding calculation period feature
-3. **Phase 0.4: cccp:project-manager Agent** → Organize tasks by feasibility and prepare checklist structure
+3. **Phase 0.4: project-manager Agent** → Organize tasks by feasibility and prepare checklist structure
 4. **Phase 1-5** → Use agent results to execute remaining phases and update $ARGUMENTS file
 
 ### ⚠️ Common Mistakes to Avoid
@@ -941,9 +941,9 @@ if (!planning_results) {
   throw new Error("Plan agent failed");
 }
 
-// NOW we can safely run cccp:project-manager agent
+// NOW we can safely run project-manager agent
 const strategic_plan = await Task({
-  subagent_type: "cccp:project-manager",
+  subagent_type: "project-manager",
   prompt: `
     ## Context
     ### Exploration Results Summary
@@ -965,7 +965,7 @@ const strategic_plan = await Task({
 
 The TODO.md file follows a structured template with task breakdown, user answers, and reference documentation. Tasks are categorized by readiness status (✅ Ready, ⏳ Pending, 🔍 Research, 🚧 Blocked) with hierarchical checkboxes, time estimates, and dependencies.
 
-**Complete Template with Examples**: See `/cccp:todo-output-template` skill or `plugins/cccp/skills/todo-output-template/SKILL.md`
+**Complete Template with Examples**: See `/todo-output-template` skill or `plugins/cccp/skills/todo-output-template/SKILL.md`
 
 **Key Sections**:
 - **Execution Summary**: Research performance, technical analysis, duplicate checks, memory file references

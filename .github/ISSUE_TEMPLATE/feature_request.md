@@ -31,7 +31,7 @@ assignees: ''
 
 ```bash
 # Provide example command usage or workflow
-/cccp:your-proposed-command [options]
+/your-proposed-command [options]
 ```
 
 ## Benefits
