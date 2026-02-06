@@ -5,6 +5,17 @@ All notable changes to the CCCP plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.7] - 2026-02-06
+
+### Changed
+
+- **Documentation**: Completed terminology standardization from "agent" to "skill"
+  - Updated skills/project-manager/SKILL.md (3 occurrences in description field)
+  - Updated skills/todo-task-planning/SKILL.md (8 references to "project-manager agent")
+  - Updated skills/git-operations-specialist/SKILL.md (2 occurrences)
+  - This completes the standardization work started in commit 1625667
+  - Ensures consistent terminology across all skill documentation
+
 ## [3.0.6] - 2026-02-06
 
 ### Changed
