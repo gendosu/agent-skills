@@ -162,12 +162,12 @@ The agents in Phase 0 MUST be executed in the following order:
 1. Phase 0.1: TODO File Reading
 2. Phase 0.2: Explore Agent
 3. Phase 0.3: Plan Agent
-4. Phase 0.4: project-manager Agent
+4. Phase 0.4: project-manager skill
 5. Phase 0.5: Verification
 
 **DO NOT execute agents in parallel.** Each phase depends on the results of the previous phase:
 - Phase 0.3 (Plan) requires `exploration_results` from Phase 0.2 (Explore)
-- Phase 0.4 (project-manager) requires both `exploration_results` and `planning_results`
+- Phase 0.4 (project-manager skill) requires both `exploration_results` and `planning_results`
 
 **Execution Pattern:**
 ```typescript
@@ -442,7 +442,7 @@ Phase 0.3 (Plan) → planning_results
 Phase 0.4 (project-manager) → strategic_plan
 ```
 
-**ONLY after confirming the above, execute the project-manager agent Task tool.**
+**ONLY after confirming the above, execute the project-manager skill Task tool.**
 
 **Task tool execution example**:
 ```typescript
@@ -494,7 +494,7 @@ Task({
    - **Confirm all agents completed successfully**
      - [ ] No errors in Explore agent execution
      - [ ] No errors in Plan agent execution
-     - [ ] No errors in project-manager agent execution
+     - [ ] No errors in project-manager skill execution
    - **Verify Variable Dependencies**
      - [ ] `exploration_results` exists and contains valid data
      - [ ] `planning_results` exists and contains valid data
@@ -558,7 +558,7 @@ Task({
      - Utilize implementation strategy designed by Plan agent in Phase 0.3
    - **Utilizing Strategic Plan**
      - Get tasks by feasibility, user questions, checklist structure from `strategic_plan`
-     - Utilize strategic plan organized by project-manager agent in Phase 0.4
+     - Utilize strategic plan organized by project-manager skill in Phase 0.4
    - **Existing Research Check**: Check past analysis results in docs/memory to avoid duplicate analysis
 
 4. **Scientific Analysis of Implementation Feasibility**
@@ -593,7 +593,7 @@ Task({
 6. **Question Extraction (Only What Is Necessary to Achieve the Objective)**
    - **Utilizing Phase 0 Strategic Plan**
      - Check extracted questions from `strategic_plan.user_questions`
-     - Base on questions identified by project-manager agent in Phase 0.4
+     - Base on questions identified by project-manager skill in Phase 0.4
    - **🚨 Important Constraint**: Extract only questions that are truly necessary to achieve the objective
    - **Required**: Extract concrete unclear points from the researched files and implementation
    - **Duplicate Question Check**: Check past question history in docs/memory to avoid duplicates
@@ -1135,7 +1135,7 @@ Used by main Claude executor in Phase 0.4:
 - **User question extraction**: Identifying specification ambiguities
 - **Checklist structure preparation**: Creating structured checklist format
 - **YAGNI validation**: Ensuring only necessary tasks are included
-- The project-manager agent integrates Explore and Plan results into actionable structure
+- The project-manager skill integrates Explore and Plan results into actionable structure
 
 ### Workflow Example (Phase 0)
 1. **Phase 0.2: Explore Agent** → Find all salary-related files and their relationships (thoroughness: medium)
@@ -1182,7 +1182,7 @@ if (!planning_results) {
   throw new Error("Plan agent failed");
 }
 
-// NOW we can safely run project-manager agent
+// NOW we can safely run project-manager skill
 const strategic_plan = await Task({
   subagent_type: "project-manager",
   prompt: `
