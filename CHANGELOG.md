@@ -5,6 +5,30 @@ All notable changes to the CCCP plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.8] - 2026-02-07
+
+### Changed
+
+- **Documentation**: Standardized terminology across all skill documentation files
+  - Unified "agent" terminology to proper context-specific terms:
+    - Task tool subagents: "agent" → "subagent" (Explore, Plan, general-purpose)
+    - Skill tool skills: "agent" → "skill" (git-operations-specialist, project-manager)
+  - Updated section headers for consistency:
+    - `## Agents` → `## Dependencies` (in commit, micro-commit, pull-request skills)
+    - `## Agent Instructions` → `## Instructions` (in commit, micro-commit skills)
+  - Updated skills/commit/SKILL.md: 3 terminology updates
+  - Updated skills/micro-commit/SKILL.md: 3 terminology updates
+  - Updated skills/pull-request/SKILL.md: 4 terminology updates
+  - Updated skills/todo-task-planning/SKILL.md: 40+ terminology updates including:
+    - Multi-Agent Orchestration → Multi-Subagent Orchestration
+    - Phase headers (Explore Agent → Explore Subagent, Plan Agent → Plan Subagent)
+    - Agent responsibility → Subagent responsibility
+    - Agent Execution → Subagent Execution
+  - Updated skills/todo-task-run/SKILL.md: 10+ terminology updates including:
+    - Agent Classification Rules → Subagent Classification Rules
+    - agent type → subagent type
+  - Ensures consistent and accurate terminology aligned with Claude Code architecture
+
 ## [3.0.7] - 2026-02-06
 
 ### Changed

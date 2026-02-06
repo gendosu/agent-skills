@@ -53,7 +53,7 @@ The `/todo-task-run` command is designed as a **generic task runner** - it takes
 - **Continuous Operation**: Continue executing tasks until completion or blocker - NEVER stop prematurely
 - **Not for planning**: This command does NOT create tasks or convert requirements into actionable items
 - **Task planning**: Use `/todo-task-planning` to convert requirements into a structured TODO.md before using this command
-- **Task Runner Focus**: Act as a task runner, delegating individual work to sub-agents as much as possible
+- **Task Runner Focus**: Act as a task runner, delegating individual work to subagents as much as possible
 
 ### Execution Guarantee
 This command guarantees:
@@ -98,21 +98,21 @@ This command expects a TODO.md file with the following format:
 
 ### Initial Setup (Using Task Tool)
 - Read TODO.md file specified in $ARGUMENTS
-- **Classify each task by agent type**:
+- **Classify each task by subagent type**:
   - Scan task descriptions for keywords (explore, investigate, implement, etc.)
-  - Pre-determine agent type for each task based on Agent Classification Rules
+  - Pre-determine subagent type for each task based on Subagent Classification Rules
   - Identify task dependencies (which tasks need results from previous tasks)
   - Log classification results for transparency
 
-### Agent Classification Rules
+### Subagent Classification Rules
 
-When executing tasks, select the appropriate agent based on task characteristics:
+When executing tasks, select the appropriate subagent based on task characteristics:
 
-- **Implementation Tasks** (implement, add, create, update features) → Use general-purpose agent
+- **Implementation Tasks** (implement, add, create, update features) → Use general-purpose subagent
   - Examples: Adding new features, modifying existing code, creating files
-  - Standard implementation work without specific agent requirements
+  - Standard implementation work without specific subagent requirements
 
-- **Investigation Tasks** (explore, investigate, research) → Use `Explore` agent
+- **Investigation Tasks** (explore, investigate, research) → Use `Explore` subagent
   - Examples: Codebase exploration, finding files, analyzing patterns
   - Specialized in comprehensive codebase analysis and discovery
 
@@ -152,11 +152,11 @@ All tasks MUST be executed sequentially using the Task tool. Each task's results
 
 ```typescript
 // Sequential execution pattern
-const task_1_result = await Task({ subagent_type: "[agent_type]", ... });
+const task_1_result = await Task({ subagent_type: "[subagent_type]", ... });
 // ⚠️ WAIT for task_1 to complete, THEN proceed
-const task_2_result = await Task({ subagent_type: "[agent_type]", ... });
+const task_2_result = await Task({ subagent_type: "[subagent_type]", ... });
 // ⚠️ WAIT for task_2 to complete, THEN proceed
-const task_3_result = await Task({ subagent_type: "[agent_type]", ... });
+const task_3_result = await Task({ subagent_type: "[subagent_type]", ... });
 
 // ❌ WRONG: Parallel execution (DO NOT DO THIS)
 Promise.all([
@@ -165,9 +165,9 @@ Promise.all([
 ]);
 ```
 
-#### Task Classification and Agent Selection
+#### Task Classification and Subagent Selection
 
-Before executing each task, determine the appropriate agent based on task characteristics (see "Agent Classification Rules" section):
+Before executing each task, determine the appropriate subagent based on task characteristics (see "Subagent Classification Rules" section):
 
 - **Implementation Tasks** → `subagent_type: "general-purpose"` (or omit parameter)
 - **Investigation Tasks** → `subagent_type: "Explore"`
@@ -178,7 +178,7 @@ For each incomplete task (`- [ ]`) in TODO.md, execute using this pattern:
 
 ```typescript
 const task_N_result = await Task({
-  subagent_type: "[determined_agent_type]",  // From classification rules
+  subagent_type: "[determined_subagent_type]",  // From classification rules
   description: "Execute task N: [task title from TODO.md]",
   prompt: `
     ## 📋 Development Rules (MUST Follow)
@@ -209,7 +209,7 @@ const task_N_result = await Task({
 
     ## Task-Specific Instructions
 
-    ### For Investigation Tasks (Explore agent):
+    ### For Investigation Tasks (Explore subagent):
     1. Create investigation memory file at start:
        - Path: \`/docs/memory/investigation-YYYY-MM-DD-{topic}.md\`
        - Record findings immediately during investigation
@@ -217,7 +217,7 @@ const task_N_result = await Task({
     2. Document discoveries and insights for future reference
     3. Include links to related documentation
 
-    ### For Implementation Tasks (General-purpose agent):
+    ### For Implementation Tasks (General-purpose subagent):
     1. Follow existing code patterns discovered in exploration
     2. Adhere to YAGNI principle (implement only what's necessary)
     3. Reference memory files for context and technical patterns

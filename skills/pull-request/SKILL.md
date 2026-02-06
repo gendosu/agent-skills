@@ -18,7 +18,7 @@ user-invocable: true
 ### Arguments
 - `issue_number` (optional): 関連するGitHub Issue番号
 
-## Agents
+## Dependencies
 
 - use git-operations-specialist skill
 
@@ -28,15 +28,15 @@ user-invocable: true
 
 Delegate all operations to the git-operations-specialist skill:
 
-- ask the agent to check if a pull request already exists for current branch
+- ask the skill to check if a pull request already exists for current branch
   - Use command: `gh pr list --head $(git branch --show-current) --state open --json number,title`
 - if existing PR found:
-  - ask the agent to update the existing pull request with current branch changes
+  - ask the skill to update the existing pull request with current branch changes
   - update PR title and description based on latest commits
   - preserve the existing PR description structure as much as possible
   - if issue_number argument is provided, add "Related: #<issue_number>" to the description
 - if no existing PR found:
-  - ask the agent to create a new pull request with current branch
+  - ask the skill to create a new pull request with current branch
   - if issue_number argument is provided, add "Related: #<issue_number>" to the description
 
 ## Constraints

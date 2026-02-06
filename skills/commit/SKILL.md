@@ -12,11 +12,11 @@ Before starting any task, read and follow `/key-guidelines`
 
 ---
 
-## Agents
+## Dependencies
 
 - use git-operations-specialist skill
 
-## Agent Instructions
+## Instructions
 
 **IMPORTANT: Use the git-operations-specialist skill (via Skill tool) for ALL git-related operations in this command.**
 

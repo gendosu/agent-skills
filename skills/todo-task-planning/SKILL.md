@@ -129,8 +129,8 @@ Before starting any task, read and follow `/key-guidelines`
 ## 🚨 Important Implementation Requirements
 
 **MANDATORY**: This command MUST update the $ARGUMENTS file (the file specified as a parameter)
-- **Main Claude executor** (not an agent) uses Edit or Write tool to update files
-- After calling agents in Phase 0, update the $ARGUMENTS file with those results in Phase 4
+- **Main Claude executor** (not a subagent) uses Edit or Write tool to update files
+- After calling subagents in Phase 0, update the $ARGUMENTS file with those results in Phase 4
 - Add new task planning results in a structured format while preserving existing content
 - After file update is complete, confirm, verify, and report the updated content
 - **CRITICAL**: The $ARGUMENTS file update is NOT optional - it must be executed in every run
@@ -154,18 +154,18 @@ Phase 0.1 → Set variables
 Phase 4 → Use variables for conditional logic
 ```
 
-### Phase 0: Multi-Agent Orchestration (Main Claude Executor)
+### Phase 0: Multi-Subagent Orchestration (Main Claude Executor)
 
 **⚠️ CRITICAL: Sequential Execution Required**
 
-The agents in Phase 0 MUST be executed in the following order:
+The subagents in Phase 0 MUST be executed in the following order:
 1. Phase 0.1: TODO File Reading
-2. Phase 0.2: Explore Agent
-3. Phase 0.3: Plan Agent
+2. Phase 0.2: Explore Subagent
+3. Phase 0.3: Plan Subagent
 4. Phase 0.4: project-manager skill
 5. Phase 0.5: Verification
 
-**DO NOT execute agents in parallel.** Each phase depends on the results of the previous phase:
+**DO NOT execute subagents in parallel.** Each phase depends on the results of the previous phase:
 - Phase 0.3 (Plan) requires `exploration_results` from Phase 0.2 (Explore)
 - Phase 0.4 (project-manager skill) requires both `exploration_results` and `planning_results`
 
@@ -311,13 +311,13 @@ Promise.all([
    - Determine exploration scope (file patterns, directories)
    - Check existing docs/memory research results (to avoid duplicate research)
 
-#### Phase 0.2: Calling Explore Agent
+#### Phase 0.2: Calling Explore Subagent
 
 **Purpose**: Discover related files, patterns, and dependencies through comprehensive codebase exploration
 
 **Task tool execution example**:
 ```typescript
-// Conceptual example - Explore agent for codebase investigation
+// Conceptual example - Explore subagent for codebase investigation
 const exploration_result = await Task({
   subagent_type: "Explore",
   description: "Codebase exploration for [feature name]",
@@ -333,7 +333,7 @@ const exploration_result = await Task({
 ```
 
 **Saving Results**:
-- **Agent responsibility**:
+- **Subagent responsibility**:
   - Return structured data in variable `exploration_results` containing:
     - `summary`: Overall findings summary (required)
     - `files`: Array of {path, purpose, importance} objects
@@ -341,7 +341,7 @@ const exploration_result = await Task({
     - `tech_stack`: Technologies and frameworks used
     - `blockers`: Potential blockers and constraints
     - `recommendations`: Recommendations for planning phase
-  - **IMPORTANT**: Agent does NOT create files directly (Task tool limitation)
+  - **IMPORTANT**: Subagent does NOT create files directly (Task tool limitation)
 
 - **Main Claude executor responsibility** (executed in Phase 4):
   - **MANDATORY**: Use Write tool to create `docs/memory/explorations/YYYY-MM-DD-[feature]-exploration.md`
@@ -349,24 +349,24 @@ const exploration_result = await Task({
   - Sections: Summary, Key Discoveries, Patterns, Tech Stack, Blockers, Recommendations
   - Verification: File creation will be confirmed in Phase 0.5
 
-**⚠️ WAIT: Verify Explore Agent Completion**
+**⚠️ WAIT: Verify Explore Subagent Completion**
 
 Before proceeding to Phase 0.3, ensure:
-- [ ] Explore agent Task tool has completed successfully
+- [ ] Explore subagent Task tool has completed successfully
 - [ ] `exploration_results` variable contains valid data
 - [ ] `docs/memory/explorations/` file has been created
 - [ ] NO errors occurred during exploration
 
-**ONLY after confirming the above, proceed to Phase 0.3 (Plan Agent).**
+**ONLY after confirming the above, proceed to Phase 0.3 (Plan Subagent).**
 
-#### Phase 0.3: Calling Plan Agent
+#### Phase 0.3: Calling Plan Subagent
 
 **Purpose**: Design implementation strategy based on exploration results
 
-**⚠️ MANDATORY PRECONDITION: Phase 0.2 Explore Agent MUST Be Completed First**
+**⚠️ MANDATORY PRECONDITION: Phase 0.2 Explore Subagent MUST Be Completed First**
 
 **DO NOT proceed with Phase 0.3 unless ALL of the following are confirmed:**
-- ✅ Phase 0.2 Explore agent has successfully completed
+- ✅ Phase 0.2 Explore subagent has successfully completed
 - ✅ `exploration_results` variable exists and contains data
 - ✅ Exploration file saved: `docs/memory/explorations/YYYY-MM-DD-[feature]-exploration.md`
 - ✅ No errors occurred during exploration
@@ -380,9 +380,9 @@ Before proceeding to Phase 0.3, ensure:
 - ✅ Report to user if variables are NOT set (CRITICAL ERROR)
 
 **Why This Matters:**
-The Plan agent requires exploration results (`exploration_results.summary`, `exploration_results.files`, `exploration_results.patterns`, `exploration_results.tech_stack`) to create an accurate implementation plan. Running Plan before Explore completes will result in incomplete or incorrect planning.
+The Plan subagent requires exploration results (`exploration_results.summary`, `exploration_results.files`, `exploration_results.patterns`, `exploration_results.tech_stack`) to create an accurate implementation plan. Running Plan before Explore completes will result in incomplete or incorrect planning.
 
-**ONLY after confirming the above, execute the Plan agent Task tool.**
+**ONLY after confirming the above, execute the Plan subagent Task tool.**
 
 **Task tool execution example**:
 ```typescript
@@ -404,7 +404,7 @@ Task({
 ```
 
 **Saving Results**:
-- **Agent responsibility**:
+- **Subagent responsibility**:
   - Return structured data in variable `planning_results` containing:
     - `approach_summary`: Implementation strategy (2-3 paragraphs)
     - `tasks`: Array of task objects with descriptions and dependencies
@@ -412,7 +412,7 @@ Task({
     - `trade_offs`: Technical trade-offs analysis
     - `risks`: Potential risks and mitigation strategies
     - `feasibility`: Task categorization by status (✅⏳🔍🚧)
-  - **IMPORTANT**: Agent does NOT create files directly (Task tool limitation)
+  - **IMPORTANT**: Subagent does NOT create files directly (Task tool limitation)
 
 - **Main Claude executor responsibility** (executed in Phase 4):
   - **MANDATORY**: Use Write tool to create `docs/memory/planning/YYYY-MM-DD-[feature]-plan.md`
@@ -420,15 +420,15 @@ Task({
   - Sections: Approach, Task Breakdown, Critical Files, Trade-offs, Risks and Mitigation, Feasibility Assessment
   - Verification: File creation will be confirmed in Phase 0.5
 
-#### Phase 0.4: Calling project-manager Agent
+#### Phase 0.4: Calling project-manager Skill
 
 **Purpose**: Integrate exploration and planning results and organize strategically
 
 **⚠️ MANDATORY PRECONDITION: Both Phase 0.2 AND Phase 0.3 MUST Be Completed First**
 
 **DO NOT proceed with Phase 0.4 unless ALL of the following are confirmed:**
-- ✅ Phase 0.2 Explore agent has successfully completed
-- ✅ Phase 0.3 Plan agent has successfully completed
+- ✅ Phase 0.2 Explore subagent has successfully completed
+- ✅ Phase 0.3 Plan subagent has successfully completed
 - ✅ Both `exploration_results` and `planning_results` variables exist
 - ✅ Both exploration and planning files exist in `docs/memory/`
 - ✅ No errors occurred during exploration or planning
@@ -472,7 +472,7 @@ Task({
 ```
 
 **Saving Results**:
-- **Agent responsibility**:
+- **Subagent responsibility**:
   - Return structured data in variable `strategic_plan` containing:
     - `tasks_by_feasibility`: {ready: [], pending: [], research: [], blocked: []}
     - `user_questions`: Array of question objects with options (for AskUserQuestion tool)
@@ -486,14 +486,14 @@ Task({
 
 #### Phase 0.5: Result Verification and Preparation
 
-1. **Agent Execution Verification**
+1. **Subagent Execution Verification**
    - **⚠️ Verify Sequential Execution Order**
      - [ ] Phase 0.2 (Explore) completed FIRST
      - [ ] Phase 0.3 (Plan) completed SECOND (after Explore)
      - [ ] Phase 0.4 (project-manager) completed THIRD (after Plan)
-   - **Confirm all agents completed successfully**
-     - [ ] No errors in Explore agent execution
-     - [ ] No errors in Plan agent execution
+   - **Confirm all subagents completed successfully**
+     - [ ] No errors in Explore subagent execution
+     - [ ] No errors in Plan subagent execution
      - [ ] No errors in project-manager skill execution
    - **Verify Variable Dependencies**
      - [ ] `exploration_results` exists and contains valid data
@@ -528,7 +528,7 @@ Task({
    - Retain `exploration_results` and `planning_results` as reference information
 
 4. **Proceed to Phase 1**
-   - Execute existing phases using agent results
+   - Execute existing phases using subagent results
 
 ---
 
@@ -545,7 +545,7 @@ Task({
    - **Referencing Exploration Results**
      - Check key files, patterns, dependencies from `exploration_results` variable
      - Reference `docs/memory/explorations/YYYY-MM-DD-[feature]-exploration.md`
-     - Utilize research results conducted by Explore agent in Phase 0.2
+     - Utilize research results conducted by Explore subagent in Phase 0.2
    - **Duplicate Check**: Check existing research results in docs/memory to avoid duplicate research
    - **Additional Research**: Conduct supplementary research if information is missing from Phase 0
 
@@ -555,7 +555,7 @@ Task({
    - **Referencing Planning Results**
      - Check implementation approach, task breakdown, critical files from `planning_results` variable
      - Reference `docs/memory/planning/YYYY-MM-DD-[feature]-plan.md`
-     - Utilize implementation strategy designed by Plan agent in Phase 0.3
+     - Utilize implementation strategy designed by Plan subagent in Phase 0.3
    - **Utilizing Strategic Plan**
      - Get tasks by feasibility, user questions, checklist structure from `strategic_plan`
      - Utilize strategic plan organized by project-manager skill in Phase 0.4
@@ -882,17 +882,17 @@ END IF
 
 **🚨 CRITICAL: docs/memory Files Must Be Created in This Phase**
 
-The following files MUST be created by the Main Claude executor (NOT by agents) in Phase 4:
+The following files MUST be created by the Main Claude executor (NOT by subagents) in Phase 4:
 
 1. **Exploration results file** (from Phase 0.2):
    - [ ] **Create** `docs/memory/explorations/YYYY-MM-DD-[feature]-exploration.md`
-   - Source: `exploration_results` variable returned by Explore agent
+   - Source: `exploration_results` variable returned by Explore subagent
    - Tool: Use Write tool
    - Format: Structured markdown with sections: Summary, Key Discoveries, Patterns, Tech Stack, Blockers, Recommendations
 
 2. **Planning results file** (from Phase 0.3):
    - [ ] **Create** `docs/memory/planning/YYYY-MM-DD-[feature]-plan.md`
-   - Source: `planning_results` variable returned by Plan agent
+   - Source: `planning_results` variable returned by Plan subagent
    - Tool: Use Write tool
    - Format: Structured markdown with sections: Approach, Task Breakdown, Critical Files, Trade-offs, Risks, Feasibility
 
@@ -903,14 +903,14 @@ The following files MUST be created by the Main Claude executor (NOT by agents) 
    - Format: Q&A format with questions and selected answers
 
 **Timeline:**
-- **Phase 0.2-0.4**: Agents return data as variables (`exploration_results`, `planning_results`, `strategic_plan`)
-- **Phase 0.5**: Verify agent completion and data variables exist
+- **Phase 0.2-0.4**: Subagents return data as variables (`exploration_results`, `planning_results`, `strategic_plan`)
+- **Phase 0.5**: Verify subagent completion and data variables exist
 - **👉 Phase 4 (THIS PHASE)**: Main Claude executor creates persistent docs/memory files using Write tool
 - **Phase 5**: Verify file creation and report to user
 
-**Why Agents Cannot Create Files:**
-- Task tool agents run in isolated processes
-- Agent-created files do not persist to Main Claude executor's filesystem
+**Why Subagents Cannot Create Files:**
+- Task tool subagents run in isolated processes
+- Subagent-created files do not persist to Main Claude executor's filesystem
 - Main Claude executor must explicitly use Write tool to create persistent files
 
 9. **Create docs/memory Files (EXECUTE FIRST)**
@@ -1109,9 +1109,9 @@ The following files MUST be created by the Main Claude executor (NOT by agents) 
 - **Research Optimization**: Avoid duplicate research and supplement insufficient research (check entire docs/memory)
 - **Duplicate Check Function**: Thoroughly avoid duplication of tasks, research, questions, and recommendations
 
-## 🔧 Agent Usage Best Practices
+## 🔧 Subagent Usage Best Practices
 
-### When to Use Explore Agent (Phase 0.2)
+### When to Use Explore Subagent (Phase 0.2)
 Used by main Claude executor in Phase 0.2:
 - **Codebase exploration**: Finding files, patterns, or keywords across the project
 - **Relationship discovery**: Understanding how components/models/controllers relate
@@ -1120,16 +1120,16 @@ Used by main Claude executor in Phase 0.2:
 - **Test file discovery**: Locating corresponding test files
 - Set thoroughness: "quick" for simple searches, "medium" for standard exploration, "very thorough" for comprehensive analysis
 
-### When to Use Plan Agent (Phase 0.3)
+### When to Use Plan Subagent (Phase 0.3)
 Used by main Claude executor in Phase 0.3:
 - **Implementation strategy**: Designing how to implement a feature
 - **Architecture decisions**: Choosing between different approaches
 - **Impact analysis**: Evaluating changes across multiple files
 - **Technical design**: Creating detailed implementation plans
 - **Trade-off evaluation**: Comparing different solutions
-- The Plan agent builds on Explore agent findings to create actionable plans
+- The Plan subagent builds on Explore subagent findings to create actionable plans
 
-### When to Use project-manager Agent (Phase 0.4)
+### When to Use project-manager Skill (Phase 0.4)
 Used by main Claude executor in Phase 0.4:
 - **Strategic organization**: Organizing tasks by feasibility (✅⏳🔍🚧)
 - **User question extraction**: Identifying specification ambiguities
@@ -1138,14 +1138,14 @@ Used by main Claude executor in Phase 0.4:
 - The project-manager skill integrates Explore and Plan results into actionable structure
 
 ### Workflow Example (Phase 0)
-1. **Phase 0.2: Explore Agent** → Find all salary-related files and their relationships (thoroughness: medium)
-2. **Phase 0.3: Plan Agent** → Design implementation approach for adding calculation period feature
-3. **Phase 0.4: project-manager Agent** → Organize tasks by feasibility and prepare checklist structure
-4. **Phase 1-5** → Use agent results to execute remaining phases and update $ARGUMENTS file
+1. **Phase 0.2: Explore Subagent** → Find all salary-related files and their relationships (thoroughness: medium)
+2. **Phase 0.3: Plan Subagent** → Design implementation approach for adding calculation period feature
+3. **Phase 0.4: project-manager Skill** → Organize tasks by feasibility and prepare checklist structure
+4. **Phase 1-5** → Use subagent results to execute remaining phases and update $ARGUMENTS file
 
 ### ⚠️ Common Mistakes to Avoid
 
-**❌ WRONG: Parallel Agent Execution**
+**❌ WRONG: Parallel Subagent Execution**
 ```typescript
 // DO NOT DO THIS - agents will run in parallel
 const [explore, plan] = await Promise.all([
@@ -1154,7 +1154,7 @@ const [explore, plan] = await Promise.all([
 ]);
 ```
 
-**✅ CORRECT: Sequential Agent Execution**
+**✅ CORRECT: Sequential Subagent Execution**
 ```typescript
 // Execute agents one by one, waiting for each to complete
 const exploration_results = await Task({
@@ -1164,10 +1164,10 @@ const exploration_results = await Task({
 
 // Verify exploration completed successfully
 if (!exploration_results) {
-  throw new Error("Explore agent failed");
+  throw new Error("Explore subagent failed");
 }
 
-// NOW we can safely run Plan agent
+// NOW we can safely run Plan subagent
 const planning_results = await Task({
   subagent_type: "Plan",
   prompt: `
@@ -1179,7 +1179,7 @@ const planning_results = await Task({
 
 // Verify planning completed successfully
 if (!planning_results) {
-  throw new Error("Plan agent failed");
+  throw new Error("Plan subagent failed");
 }
 
 // NOW we can safely run project-manager skill
@@ -1198,8 +1198,8 @@ const strategic_plan = await Task({
 ```
 
 **Key Points:**
-- Wait for each agent to complete before starting the next
-- Verify results exist before passing them to the next agent
+- Wait for each subagent to complete before starting the next
+- Verify results exist before passing them to the next subagent
 - Handle errors at each stage to prevent cascading failures
 
 ## 📋 Output Format Example
