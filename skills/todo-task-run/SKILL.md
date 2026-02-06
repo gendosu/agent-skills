@@ -122,24 +122,18 @@ MEMORY_FILES = {}  # Track active memory file paths
 INVESTIGATION_FINDINGS = []  # Accumulate investigation results
 ```
 
-#### 2. Progress Tracking File Creation
-Create `/docs/memory/todo-task-run-progress.md` immediately when tasks begin:
-- **Timing**: Create at the start of first task execution
-- **Purpose**: Track task execution history, decisions, and context across the entire workflow
-- **Content**: Record task status, implementation notes, blockers, and cross-task dependencies
-
-#### 3. Load Existing Memory Files
+#### 2. Load Existing Memory Files
 Before executing any task, check and load relevant existing memory files:
 - **Planning files**: `/docs/memory/planning/*.md` - Contains task breakdown and strategy
 - **Exploration files**: `/docs/memory/explorations/*.md` - Contains codebase analysis results
 - **Pattern files**: `/docs/memory/patterns/*.md` - Contains reusable technical patterns
 - **Investigation files**: `/docs/memory/investigation-*.md` - Contains previous problem-solving insights
 
-#### 4. Context Accumulation Strategy
+#### 3. Context Accumulation Strategy
 As tasks progress:
 - Store task execution results in `TASK_CONTEXT` for use in subsequent tasks
 - Reference previous task outputs to inform current task decisions
-- Update progress file with new learnings and context changes
+- Document learnings and context in TODO.md task notes
 - Link related memory files to build comprehensive understanding
 
 ### Task Execution: Sequential Task Tool Orchestration
@@ -203,7 +197,6 @@ const task_N_result = await Task({
     ${task_N-1_result?.key_findings || ""}
 
     ## Memory Files
-    - Progress: /docs/memory/todo-task-run-progress.md
     ${MEMORY_FILES.planning || ""}
     ${MEMORY_FILES.exploration || ""}
     ${MEMORY_FILES.patterns || ""}
@@ -222,7 +215,7 @@ const task_N_result = await Task({
     1. Follow existing code patterns discovered in exploration
     2. Adhere to YAGNI principle (implement only what's necessary)
     3. Reference memory files for context and technical patterns
-    4. Update implementation status in progress memory file
+    4. Record implementation context in TODO.md task notes
 
     ## Required Steps After Task Completion
 
@@ -242,10 +235,10 @@ const task_N_result = await Task({
        - Record technical discoveries for future reference
        - Link to related documentation and patterns
 
-    3. **Update progress memory file**
-       - Record task completion status in \`/docs/memory/todo-task-run-progress.md\`
-       - Note any blockers, decisions, or context changes
-       - Accumulate learnings for next task
+    3. **Update TODO.md with execution context**
+       - Add task notes: implementation details, decisions, learnings
+       - Record blockers with 🚧 marker if encountered
+       - Document context for next task in task description
 
     4. **Report results**
        - Summarize changes made
@@ -309,7 +302,7 @@ const task_N_result = await Task({ ... });
 if (!task_N_result || task_N_result.blockers) {
   // Handle error:
   // 1. Mark task with 🚧 in TODO.md
-  // 2. Record blocker in progress memory file
+  // 2. Record blocker in TODO.md with context
   // 3. Report to user with details
   // 4. STOP execution until blocker is resolved
 
@@ -342,13 +335,13 @@ When a task encounters an error or blocker:
    - [ ] 🚧 Task title (BLOCKED: reason for blockage)
    ```
 
-2. **Record in progress memory file**:
+2. **Record blocker details in TODO.md**:
    ```markdown
-   ## Task N - BLOCKED
-   - **Blocker**: [Detailed description]
-   - **Attempted solutions**: [What was tried]
-   - **Next steps**: [How to resolve]
-   - **Recovery approach**: Fix with new changes, not rollback
+   - [ ] 🚧 Task title (BLOCKED: reason)
+     - 🚧 Blocker: [Detailed description]
+     - 🔧 Attempted: [What was tried]
+     - 📋 Next steps: [How to resolve]
+     - ⚠️ Recovery: Fix forward, not rollback
    ```
 
 3. **Report to user**:
