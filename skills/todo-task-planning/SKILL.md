@@ -6,11 +6,11 @@ arguments:
   - name: file_path
     description: Path to the file for task planning execution
     required: true
-  - name: pr
-    description: Create a pull request after task completion
+  - name: --pr
+    description: Create a pull request after task completion (flag)
     required: false
-  - name: branch
-    description: Branch name to create and use for task execution
+  - name: --branch
+    description: Branch name to create and use for task execution (optional value flag)
     required: false
 user-invocable: true
 ---
@@ -137,6 +137,23 @@ Before starting any task, read and follow `/key-guidelines`
 
 ## 🔄 Processing Flow
 
+## 🔧 Variable Scope and Persistence
+
+**IMPORTANT**: Variables set in Phase 0 persist throughout all subsequent phases (Phase 1-5).
+
+**Phase 0.1 Variables Used in Later Phases**:
+- `HAS_PR_OPTION`, `HAS_BRANCH_OPTION`, `BRANCH_NAME`, `IS_AUTO_GENERATED`
+  - Set in: Phase 0.1 Step 2 (argument parsing)
+  - Used in: Phase 4.10 (conditional task insertion)
+  - Scope: Available throughout entire skill execution
+
+**Variable Lifecycle**:
+```
+Phase 0.1 → Set variables
+    ↓
+Phase 4 → Use variables for conditional logic
+```
+
 ### Phase 0: Multi-Agent Orchestration (Main Claude Executor)
 
 **⚠️ CRITICAL: Sequential Execution Required**
@@ -176,12 +193,104 @@ Promise.all([
    - Determine exploration thoroughness (quick/medium/very thorough)
 
 2. **Git Workflow Options Preparation**
-   - Check `--branch` and `--pr` options from command-line arguments
-   - Prepare the following variables (used in subsequent agent calls):
-     - `HAS_BRANCH_OPTION`: true if `--branch` option is specified
-     - `HAS_PR_OPTION`: true if `--pr` option is specified
-     - `BRANCH_NAME`: Branch name (as-is if specified, auto-generated in next step if not)
-     - `IS_AUTO_GENERATED`: true if branch name was auto-generated
+
+   Parse the `$ARGUMENTS` string to extract file path and command-line flags, then prepare variables for subsequent phase execution.
+
+   **Argument Parsing Procedure**:
+
+   **a) Parse `$ARGUMENTS` string**:
+   - Split `$ARGUMENTS` on whitespace to get an array of tokens
+   - First element is the file path (e.g., `TODO.md`, `docs/todos/feature-x.md`)
+   - Remaining elements are command-line flags (e.g., `--pr`, `--branch`, `feature/auth`)
+
+   **b) Detect `--pr` flag**:
+   ```
+   IF `$ARGUMENTS` contains `--pr` THEN
+       → Set `HAS_PR_OPTION = true`
+   ELSE
+       → Set `HAS_PR_OPTION = false`
+   END IF
+   ```
+
+   **c) Detect `--branch` flag and extract value**:
+   ```
+   IF `$ARGUMENTS` contains `--branch` THEN
+       → Set `HAS_BRANCH_OPTION = true`
+       → Find the token immediately after `--branch`
+       IF next token exists AND does NOT start with `--` THEN
+           → Set `BRANCH_NAME = [token value]`
+           → Set `IS_AUTO_GENERATED = false`
+       ELSE
+           → Set `BRANCH_NAME = ""` (empty string, will be generated in next step)
+           → Set `IS_AUTO_GENERATED = true`
+       END IF
+   ELSE
+       → Set `HAS_BRANCH_OPTION = false`
+       → Set `BRANCH_NAME = ""` (empty string)
+       → Set `IS_AUTO_GENERATED = false`
+   END IF
+   ```
+
+   **d) Validation logic - PR requires branch**:
+   ```
+   IF `HAS_PR_OPTION = true` AND `HAS_BRANCH_OPTION = false` THEN
+       → Automatically set `HAS_BRANCH_OPTION = true`
+       → Set `IS_AUTO_GENERATED = true`
+       → Set `BRANCH_NAME = ""` (will be auto-generated in next step)
+       → Rationale: Pull requests require a branch, so enable branch creation automatically
+   END IF
+   ```
+
+   **e) Variable summary**:
+
+   | Variable | Type | Purpose | Set By |
+   |----------|------|---------|--------|
+   | `HAS_BRANCH_OPTION` | boolean | Whether branch creation is needed | `--branch` flag or PR validation |
+   | `HAS_PR_OPTION` | boolean | Whether PR creation is needed | `--pr` flag |
+   | `BRANCH_NAME` | string | Branch name (empty if auto-generated) | Explicit `--branch <name>` argument |
+   | `IS_AUTO_GENERATED` | boolean | Whether branch name needs generation | Flag without value or PR validation |
+
+   **Parsing Examples**:
+
+   **Example 1: Both flags with explicit branch name**
+   ```
+   Input: /todo-task-planning TODO.md --pr --branch feature/auth
+   Result:
+   - HAS_PR_OPTION = true
+   - HAS_BRANCH_OPTION = true
+   - BRANCH_NAME = "feature/auth"
+   - IS_AUTO_GENERATED = false
+   ```
+
+   **Example 2: Branch flag without value**
+   ```
+   Input: /todo-task-planning docs/todos/feature-x.md --branch
+   Result:
+   - HAS_PR_OPTION = false
+   - HAS_BRANCH_OPTION = true
+   - BRANCH_NAME = "" (empty, will be generated)
+   - IS_AUTO_GENERATED = true
+   ```
+
+   **Example 3: PR flag auto-enables branch creation**
+   ```
+   Input: /todo-task-planning TODO.md --pr
+   Result:
+   - HAS_PR_OPTION = true
+   - HAS_BRANCH_OPTION = true (auto-enabled by validation)
+   - BRANCH_NAME = "" (empty, will be generated)
+   - IS_AUTO_GENERATED = true (set by validation)
+   ```
+
+   **Example 4: No flags**
+   ```
+   Input: /todo-task-planning docs/feature.md
+   Result:
+   - HAS_PR_OPTION = false
+   - HAS_BRANCH_OPTION = false
+   - BRANCH_NAME = "" (empty)
+   - IS_AUTO_GENERATED = false
+   ```
 
 3. **Branch Name Generation (if --branch option specified without value)**
    - Read TODO file title and overview
@@ -261,6 +370,14 @@ Before proceeding to Phase 0.3, ensure:
 - ✅ `exploration_results` variable exists and contains data
 - ✅ Exploration file saved: `docs/memory/explorations/YYYY-MM-DD-[feature]-exploration.md`
 - ✅ No errors occurred during exploration
+
+**Verify Argument Parsing Variables (from Phase 0.1 Step 2)**:
+- ✅ `HAS_PR_OPTION` is set (boolean value, not undefined)
+- ✅ `HAS_BRANCH_OPTION` is set (boolean value, not undefined)
+- ✅ `BRANCH_NAME` is set (string value, may be empty if auto-generation needed)
+- ✅ `IS_AUTO_GENERATED` is set (boolean value, not undefined)
+- ✅ If `HAS_BRANCH_OPTION = true` and `IS_AUTO_GENERATED = true`, verify `BRANCH_NAME` was populated in Phase 0.1 Step 3
+- ✅ Report to user if variables are NOT set (CRITICAL ERROR)
 
 **Why This Matters:**
 The Plan agent requires exploration results (`exploration_results.summary`, `exploration_results.files`, `exploration_results.patterns`, `exploration_results.tech_stack`) to create an accurate implementation plan. Running Plan before Explore completes will result in incomplete or incorrect planning.
@@ -609,36 +726,136 @@ Task({
 ## 🚨 CRITICAL GATE: MANDATORY PHASE 4 ENTRANCE REQUIREMENTS
 
 **PURPOSE**: Prevent execution of Phase 4 without completing Phase 3 question processing when questions exist.
+### Step 1: Check Branch Creation Requirement
 
-### Checkpoint 1: Questions Processing Status
-
-**Verification Point**: Before entering Phase 4, verify the execution state of Phase 3 Step 9 conditions.
-
-**Required Verification**:
-- [ ] Check if `strategic_plan.user_questions` exists (from Phase 3 Step 6)
-- [ ] If questions exist, verify AskUserQuestion tool was executed
-- [ ] Confirm all questions received user responses
-
-### Checkpoint 2: Evidence Verification
-
-**File System Evidence**:
+**Decision Point**: Determine if branch creation task should be inserted based on argument parsing results from Phase 0.1.
 
 ```
-IF questions were extracted in Phase 3 Step 6 THEN
-    → Expected: docs/memory/questions/YYYY-MM-DD-[feature]-answers.md file EXISTS
-    → Status: AskUserQuestion tool MUST have been executed
+IF (HAS_BRANCH_OPTION = true) THEN
+    → Execute Step 2: Insert branch creation task
 ELSE
-    → Expected: No questions.md file (questions did not exist)
-    → Status: AskUserQuestion tool execution NOT required
+    → Skip Step 2, proceed to Step 3
 END IF
 ```
 
-**⚠️ Verification Checklist**
+**Variables Referenced**:
+- `HAS_BRANCH_OPTION` (boolean): Set in Phase 0.1 Step 2, indicates `--branch` flag presence
+- `BRANCH_NAME` (string): Branch name from argument or auto-generated in Phase 0.1 Step 3
+- `IS_AUTO_GENERATED` (boolean): Indicates if branch name was auto-generated
 
-Before proceeding to Phase 4, verify:
-- [ ] If questions.md exists, AskUserQuestion was executed (FAIL if not executed)
-- [ ] If no questions needed, AskUserQuestion was NOT executed (PASS if not executed)
-- [ ] Investigate if AskUserQuestion executed without questions.md (ANOMALY)
+---
+
+### Step 2: Insert Branch Creation Task (Conditional)
+
+**Execution Condition**: Only execute when `HAS_BRANCH_OPTION = true`
+
+**Branch Name Determination**:
+```
+IF (IS_AUTO_GENERATED = false) THEN
+    → Use BRANCH_NAME as-is (user provided explicit branch name)
+ELSE IF (IS_AUTO_GENERATED = true) THEN
+    → Use BRANCH_NAME generated in Phase 0.1 Step 3 (auto-generated from feature description)
+END IF
+```
+
+**Task Template to Insert**:
+
+```markdown
+## Phase 0: Repository Preparation
+
+### 0.1 Create Feature Branch
+
+- [ ] **Create and switch to feature branch**
+  - Branch name: `{BRANCH_NAME}`
+  - Command: `git checkout -b {BRANCH_NAME}`
+  - Verify: Current branch should be `{BRANCH_NAME}`
+```
+
+**Insertion Rules**:
+- **Location**: Insert BEFORE Phase 1 tasks
+- **Deduplication**: If existing Phase 0 tasks exist, REPLACE them with this template
+- **Numbering**: Renumber subsequent phases if necessary (Phase 1 becomes Phase 1, etc.)
+
+---
+
+### Step 3: Check PR Creation Requirement
+
+**Decision Point**: Determine if PR creation tasks should be inserted based on argument parsing results from Phase 0.1.
+
+```
+IF (HAS_PR_OPTION = true) THEN
+    → Execute Step 4: Insert PR creation tasks
+ELSE
+    → Skip Step 4, finalize task list without PR tasks
+END IF
+```
+
+**Variables Referenced**:
+- `HAS_PR_OPTION` (boolean): Set in Phase 0.1 Step 2, indicates `--pr` flag presence
+
+---
+
+### Step 4: Insert PR Creation Tasks (Conditional)
+
+**Execution Condition**: Only execute when `HAS_PR_OPTION = true`
+
+**Task Template to Insert**:
+
+```markdown
+## Phase N+1: Pull Request Creation
+
+### N+1.1 Prepare Pull Request
+
+- [ ] **Read PR template**
+  - Location: `.github/pull_request_template.md` or `.github/PULL_REQUEST_TEMPLATE.md`
+  - If template exists, use structure for PR description
+  - If no template, use standard format: Summary, Changes, Testing
+
+### N+1.2 Create Pull Request
+
+- [ ] **Push changes to remote**
+  - Command: `git push -u origin {BRANCH_NAME}`
+  - Verify: Remote branch created successfully
+
+- [ ] **Create PR using gh CLI**
+  - Command: `gh pr create --title "[Title]" --body "[Description from template]"`
+  - Alternative: Use GitHub web interface if gh CLI unavailable
+  - Verify: PR created successfully, note PR number
+
+### N+1.3 Wait for Review
+
+- [ ] **Monitor PR status**
+  - Check CI/CD pipeline results
+  - Address review comments if any
+  - Request review from team members if needed
+```
+
+**Insertion Rules**:
+- **Location**: Insert AFTER all existing task phases (Phase N becomes Phase N, this becomes Phase N+1)
+- **Deduplication**: If existing final phase contains PR tasks, REPLACE with this template
+- **Phase Number**: Calculate N based on highest existing phase number
+
+---
+
+### Step 5: Conditional Behavior Summary
+
+**Task Insertion Matrix**:
+
+| `HAS_BRANCH_OPTION` | `HAS_PR_OPTION` | Branch Task (Phase 0) | PR Tasks (Phase N+1) | Total Additional Phases |
+|---------------------|-----------------|----------------------|---------------------|------------------------|
+| `false` | `false` | ❌ Not inserted | ❌ Not inserted | 0 (base task list only) |
+| `true` | `false` | ✅ Inserted | ❌ Not inserted | +1 (Phase 0 added) |
+| `false` | `true` | ❌ Not inserted | ✅ Inserted | +1 (Phase N+1 added) |
+| `true` | `true` | ✅ Inserted | ✅ Inserted | +2 (Phase 0 and N+1 added) |
+
+**Branch Name Handling**:
+- **User-provided name** (`IS_AUTO_GENERATED = false`): Use `BRANCH_NAME` exactly as provided
+- **Auto-generated name** (`IS_AUTO_GENERATED = true`): Use `BRANCH_NAME` generated in Phase 0.1 Step 3
+
+**Deduplication Strategy**:
+- Check for existing Phase 0 before inserting branch task → Replace if exists
+- Check for existing final phase with PR tasks → Replace if exists
+- Never create duplicate phases with same functionality
 
 ### Action on Failure
 
