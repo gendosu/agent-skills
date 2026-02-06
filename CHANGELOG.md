@@ -5,6 +5,16 @@ All notable changes to the CCCP plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.6] - 2026-02-06
+
+### Changed
+
+- **SKILL.md Documentation**: Removed Japanese language requirement constraints from skill documentation
+  - Removed "日本語で記述する" requirement from `skills/commit/SKILL.md`
+  - Removed "日本語で記述する" requirement from `skills/micro-commit/SKILL.md`
+  - Removed "日本語で記述する" requirement from `skills/project-manager/SKILL.md`
+  - Skills now support language-agnostic documentation
+
 ## [3.0.5] - 2026-02-06
 
 ### Changed
