@@ -2,8 +2,20 @@
 name: todo-task-planning
 description: Execute task planning based on the specified file and manage questions[/todo-task-planning file_path --pr --branch branch_name]
 argument-hint: <file_path> [--pr] [--branch <name>]
+arguments:
+  - name: file_path
+    description: Path to the file for task planning execution
+    required: true
+  - name: pr
+    description: Create a pull request after task completion
+    required: false
+  - name: branch
+    description: Branch name to create and use for task execution
+    required: false
 user-invocable: true
 ---
+
+**Command arguments**: $ARGUMENTS
 
 ## Usage
 
