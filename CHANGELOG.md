@@ -5,6 +5,23 @@ All notable changes to the CCCP plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.3] - 2026-02-06
+
+### Changed
+
+- **todo-task-planning**: Enhanced file update enforcement from optional to mandatory
+  - Changed $ARGUMENTS file update requirement from "Optional" to "MANDATORY"
+  - Added critical verification steps in Phase 4 to ensure file update completion
+  - Added $ARGUMENTS file update verification checklist in Phase 5 reporting
+  - Clarified that file update failure is considered a critical execution error
+  - Emphasized that $ARGUMENTS file update is the core purpose of the command
+
+### Fixed
+
+- **Project Structure**: Added `.claude/skills` symbolic link pointing to `../skills` directory
+  - Enables access to skills from `.claude` directory context
+  - Improves compatibility with Claude Code skill discovery mechanism
+
 ## [3.0.2] - 2026-02-06
 
 ### Changed
