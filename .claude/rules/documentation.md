@@ -1,7 +1,6 @@
 ---
 paths:
   - "README*.md"
-  - "plugins/*/README*.md"
   - "**/*.md"
 ---
 
@@ -12,10 +11,6 @@ paths:
 - **Root README**: `README.ja.md` should be synchronized with `README.md`
   - `README.md`: English version (primary)
   - `README.ja.md`: Japanese version (synchronized)
-
-- **Plugin README**: For each plugin in `plugins/*/`:
-  - `plugins/<plugin-name>/README.md`: English version (primary)
-  - `plugins/<plugin-name>/README.ja.md`: Japanese version (synchronized)
 
 ## Documentation Updates
 
