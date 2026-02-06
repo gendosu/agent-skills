@@ -4,7 +4,7 @@ description: git stageされている内容でコミット
 user-invocable: true
 ---
 
-Commits staged changes with an appropriate commit message using the git-operations-specialist agent.
+Commits staged changes with an appropriate commit message using the git-operations-specialist skill.
 
 ## Core Guidelines
 
@@ -14,11 +14,11 @@ Before starting any task, read and follow `/key-guidelines`
 
 ## Agents
 
-- use git-operations-specialist agent
+- use git-operations-specialist skill
 
 ## Agent Instructions
 
-**IMPORTANT: Use the git-operations-specialist agent (via Task tool) for ALL git-related operations in this command.**
+**IMPORTANT: Use the git-operations-specialist skill (via Skill tool) for ALL git-related operations in this command.**
 
 Analyze the staged changes and safely commit them with an appropriate commit message.
 

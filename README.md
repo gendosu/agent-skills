@@ -212,7 +212,7 @@ cccp/
 ├── .claude-plugin/
 │   └── plugin.json                    # Plugin configuration
 ├── skills/                            # All skills (agents, commands, templates)
-│   ├── git-operations-specialist/     # Git operations agent skill
+│   ├── git-operations-specialist/     # Git operations skill
 │   ├── project-manager/               # Project management agent skill
 │   ├── commit/                        # Commit command skill
 │   ├── micro-commit/                  # Micro-commit command skill

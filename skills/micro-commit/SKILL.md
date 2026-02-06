@@ -12,15 +12,15 @@ Before starting any task, read and follow `/key-guidelines`
 
 ---
 
-Commits unstaged changes by grouping them into logical micro-commits using the git-operations-specialist agent.
+Commits unstaged changes by grouping them into logical micro-commits using the git-operations-specialist skill.
 
 ## Agents
 
-- use git-operations-specialist agent
+- use git-operations-specialist skill
 
 ## Agent Instructions
 
-**IMPORTANT: Use the git-operations-specialist agent (via Task tool) for ALL git-related operations in this command.**
+**IMPORTANT: Use the git-operations-specialist skill (via Skill tool) for ALL git-related operations in this command.**
 
 Analyze all unstaged changes and execute multiple micro-commits, grouping related changes together.
 

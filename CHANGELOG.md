@@ -5,6 +5,17 @@ All notable changes to the CCCP plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.4] - 2026-02-06
+
+### Changed
+
+- **Documentation**: Updated terminology from "agent" to "skill" for git-operations-specialist across documentation
+  - Updated skills/pull-request/SKILL.md (2 locations)
+  - Updated skills/micro-commit/SKILL.md (3 locations, including "Task tool" → "Skill tool")
+  - Updated skills/commit/SKILL.md (3 locations, including "Task tool" → "Skill tool")
+  - Updated CONTRIBUTING.md commit message example
+  - Updated README.md and README.ja.md directory structure comments
+
 ## [3.0.3] - 2026-02-06
 
 ### Changed
