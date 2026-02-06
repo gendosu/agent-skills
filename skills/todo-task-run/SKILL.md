@@ -2,8 +2,14 @@
 name: todo-task-run
 description: Execute tasks from TODO file - Generic task runner [/todo-task-run xxx]
 argument-hint: <file_path>
+arguments:
+  - name: file_path
+    description: Path to the TODO file to execute
+    required: true
 user-invocable: true
 ---
+
+**Target TODO file**: $ARGUMENTS
 
 ## Usage
 
