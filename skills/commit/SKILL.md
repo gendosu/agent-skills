@@ -37,7 +37,6 @@ Analyze the staged changes and safely commit them with an appropriate commit mes
 - Follow the `.gitmessage` template format
 - Use appropriate commit type prefixes: `feat`, `fix`, `refactor`, `docs`, `style`, `test`, `chore`
 - Write clear, concise messages that describe the change
-- Use Japanese for commit messages following project conventions
 
 ### ⚠️ Important Constraints
 

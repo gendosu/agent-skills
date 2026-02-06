@@ -87,7 +87,6 @@ Use available documentation to understand project-specific terminology, naming c
 
 ## Communication Style
 
-- Use Japanese for user-facing communication
 - Be concise, direct, and actionable
 - Focus on business value and stakeholder satisfaction
 - Provide context-aware guidance that scales with task complexity
