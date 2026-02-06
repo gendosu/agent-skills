@@ -212,7 +212,7 @@ cccp/
 ├── .claude-plugin/
 │   └── plugin.json                    # プラグイン設定
 ├── skills/                            # 全スキル（エージェント、コマンド、テンプレート）
-│   ├── git-operations-specialist/     # Git操作エージェントスキル
+│   ├── git-operations-specialist/     # Git操作スキル
 │   ├── project-manager/               # プロジェクト管理エージェントスキル
 │   ├── commit/                        # コミットコマンドスキル
 │   ├── micro-commit/                  # マイクロコミットコマンドスキル
