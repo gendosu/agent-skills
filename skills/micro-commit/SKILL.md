@@ -49,7 +49,6 @@ Analyze all unstaged changes and execute multiple micro-commits, grouping relate
 ### ⚠️ Important Constraints
 - **Stage files explicitly** - Use `git add <file>` for each group before committing
 - **Use HEREDOC** - Maintain proper formatting of commit messages
-- **Japanese Commit Messages** - Create messages following project conventions
 - **One Context Per Commit** - Each commit should represent a single logical change
 - **Sequential Processing** - Process one group at a time, verifying each commit before moving to the next
 
