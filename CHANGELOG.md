@@ -5,6 +5,20 @@ All notable changes to the CCCP plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.2] - 2026-02-06
+
+### Changed
+
+- **todo-task-run skill**: Removed progress tracking file feature and migrated to TODO.md-based context recording
+  - Removed automatic creation of `/docs/memory/todo-task-run-progress.md`
+  - Task execution context now recorded directly in TODO.md task notes
+  - Updated Memory File Initialization to remove progress file references (7 locations)
+  - Updated Task Execution Template to use TODO.md for context accumulation
+  - Updated Error Handling Protocol to record blockers in TODO.md format with emoji markers
+  - Deleted physical progress tracking files (`todo-task-run-progress.md`, `todo-task-run-progress-final.md`)
+  - Simplified workflow by consolidating all task information (definitions, status, context, decisions, blockers) into single TODO.md file
+  - No changes to command interface - `/todo-task-run` usage remains the same
+
 ## [3.0.1] - 2026-02-05
 
 ### Changed
