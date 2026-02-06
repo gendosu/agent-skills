@@ -19,6 +19,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Simplified workflow by consolidating all task information (definitions, status, context, decisions, blockers) into single TODO.md file
   - No changes to command interface - `/todo-task-run` usage remains the same
 
+### Fixed
+
+- **.claude/rules**: Corrected paths to match root-level plugin structure
+  - Updated `plugin-versioning.md` paths from `plugins/**/*` to `.claude-plugin/plugin.json`, `CHANGELOG.md`, and `skills/**/*`
+  - Updated `documentation.md` paths to remove incorrect `plugins/*/README*.md` references
+  - This project uses root-level `.claude-plugin/plugin.json` instead of `plugins/*` subdirectory structure
+
 ## [3.0.1] - 2026-02-05
 
 ### Changed
