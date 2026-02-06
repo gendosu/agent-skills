@@ -20,13 +20,13 @@ user-invocable: true
 
 ## Agents
 
-- use git-operations-specialist agent
+- use git-operations-specialist skill
 
 ## Your task
 
 **IMPORTANT: Do exactly what is instructed below, nothing more, nothing less. Do not add any additional "helpful" behavior like checking for unstaged changes or suggesting to push first.**
 
-Delegate all operations to the git-operations-specialist agent:
+Delegate all operations to the git-operations-specialist skill:
 
 - ask the agent to check if a pull request already exists for current branch
   - Use command: `gh pr list --head $(git branch --show-current) --state open --json number,title`
