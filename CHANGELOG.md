@@ -5,6 +5,15 @@ All notable changes to the CCCP plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.5] - 2026-02-06
+
+### Changed
+
+- **SKILL.md Documentation**: Added structured `arguments` metadata to skill frontmatter
+  - Added `arguments` section to `skills/todo-task-planning/SKILL.md` with detailed definitions for `file_path`, `pr`, and `branch` parameters
+  - Added `arguments` section to `skills/todo-task-run/SKILL.md` with definition for `file_path` parameter
+  - Added argument display templates using `$ARGUMENTS` variable for better user experience
+
 ## [3.0.4] - 2026-02-06
 
 ### Changed
