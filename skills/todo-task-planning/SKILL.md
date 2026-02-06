@@ -116,11 +116,12 @@ Before starting any task, read and follow `/key-guidelines`
 
 ## 🚨 Important Implementation Requirements
 
-**Optional**: This command can directly update the $ARGUMENTS file (the file specified as a parameter)
-- **Main Claude executor** (not an agent) uses MultiEdit or Edit tool to update files
+**MANDATORY**: This command MUST update the $ARGUMENTS file (the file specified as a parameter)
+- **Main Claude executor** (not an agent) uses Edit or Write tool to update files
 - After calling agents in Phase 0, update the $ARGUMENTS file with those results in Phase 4
 - Add new task planning results in a structured format while preserving existing content
 - After file update is complete, confirm, verify, and report the updated content
+- **CRITICAL**: The $ARGUMENTS file update is NOT optional - it must be executed in every run
 
 ## 🔄 Processing Flow
 
@@ -646,6 +647,8 @@ Before proceeding to Phase 4, verify:
 
 **⚠️ MANDATORY PRECONDITION**: All questions extracted in Phase 3 MUST be answered via AskUserQuestion tool before starting this phase. If questions exist but were not answered, STOP and return to Phase 3 step 9.
 
+**🚨 CRITICAL REQUIREMENT**: This phase MUST complete with the $ARGUMENTS file successfully updated. File update is NOT optional - it is the primary output of this command. Failure to update the file is a critical execution failure.
+
 #### File Creation Responsibility and Timeline
 
 **🚨 CRITICAL: docs/memory Files Must Be Created in This Phase**
@@ -699,7 +702,10 @@ The following files MUST be created by the Main Claude executor (NOT by agents) 
       - Use Bash tool with `ls -la` to confirm file existence
       - Report any file creation failures as CRITICAL ERROR
 
-10. **Thorough Update of $ARGUMENTS File**
+10. **Thorough Update of $ARGUMENTS File (MANDATORY - MUST BE EXECUTED)**
+    - **🚨 CRITICAL**: This step is the CORE PURPOSE of the command and MUST be executed
+    - Use Edit or Write tool to update the file specified in $ARGUMENTS parameter
+    - If file update fails, report as CRITICAL ERROR and retry
     - **🔀 Branch Creation Task (when --branch or --pr option is specified)**
       - **Add branch creation task as the FIRST task** in the task list section
       - Task format example:
@@ -833,6 +839,12 @@ The following files MUST be created by the Main Claude executor (NOT by agents) 
     - **Research Performance**: Report the number of researched files and directories
     - **Analysis Results**: Report the number of newly created tasks and their classification
     - **Verification Status**: Report identified questions and confirmation items
+    - **$ARGUMENTS File Update Verification** (MANDATORY):
+      - [ ] **CRITICAL**: Confirm that the $ARGUMENTS file (specified in command argument) was updated in Phase 4
+        - Read the file using Read tool to verify the update was successful
+        - Compare file modification timestamp to confirm recent update
+        - If NOT updated: Report as CRITICAL ERROR - the file update is mandatory
+        - If updated: Confirm new tasks, questions, and sections were added correctly
     - **docs/memory Files Creation Report** (MANDATORY):
       - [ ] **Exploration file**: Confirm `docs/memory/explorations/YYYY-MM-DD-[feature]-exploration.md` was created
         - If NOT created: Report as CRITICAL ERROR with explanation
