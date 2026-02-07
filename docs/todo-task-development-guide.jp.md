@@ -1503,15 +1503,6 @@ TODO Task Pluginを効率的に使用するための早見表とチェックリ�
 ```bash
 # todo_file_pathのみ（デフォルト: PR作成、push実行）
 /todo-task-run TODO.md
-
-# todo_file_path + --no-pr（PR作成スキップ）
-/todo-task-run TODO.md --no-pr
-
-# todo_file_path + --no-push（pushスキップ）
-/todo-task-run TODO.md --no-push
-
-# todo_file_path + --no-pr + --no-push（完全ローカル実行）
-/todo-task-run TODO.md --no-pr --no-push
 ```
 
 ### 6.3 Feasibility Markers 早見表
