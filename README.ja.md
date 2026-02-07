@@ -14,7 +14,7 @@ Claude Code用のプラグインで、Git操作スペシャリストエージェ
 | **micro-commit** | Command | Lucas Rochaのマイクロコミット方法に従った細粒度のコミットを作成 | - |
 | **pull-request** | Command | 現在のブランチに対するプルリクエストを作成または更新 | `<issue-number>` - Issue番号を指定 |
 | **todo-task-planning** | Command | TODOリストでタスクを計画・整理 | `<filepath>` - TODOファイルパス<br>`--pr` - PR作成<br>`--branch [name]` - ブランチ作成 |
-| **todo-task-run** | Command | TODOリストから計画されたタスクを実行 | `<filepath>` - TODOファイルパス<br>`--no-pr` - PR作成なし |
+| **todo-task-run** | Command | TODOリストから計画されたタスクを実行 | `<filepath>` - TODOファイルパス |
 
 ## 前提条件
 
@@ -182,7 +182,6 @@ git clone https://github.com/gendosu/agent-skills.git
 # 2段階のタスクワークフロー：
 /todo-task-planning TODO.md       # 第1段階：計画してTODO.mdを作成
 /todo-task-run TODO.md            # 第2段階：TODO.mdからタスクを実行
-/todo-task-run TODO.md --no-pr    # PR作成なしでタスクを実行
 ```
 
 ### テンプレートスキル

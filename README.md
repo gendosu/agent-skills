@@ -14,7 +14,7 @@ This plugin provides Claude Code with an integrated development support centered
 | **micro-commit** | Command | Create fine-grained commits following Lucas Rocha's micro-commit methodology | - |
 | **pull-request** | Command | Create or update pull requests for the current branch | `<issue-number>` - Specify issue number |
 | **todo-task-planning** | Command | Plan and organize tasks with todo lists | `<filepath>` - TODO file path<br>`--pr` - Create PR<br>`--branch [name]` - Create branch |
-| **todo-task-run** | Command | Execute planned tasks from todo lists | `<filepath>` - TODO file path<br>`--no-pr` - Skip PR creation |
+| **todo-task-run** | Command | Execute planned tasks from todo lists | `<filepath>` - TODO file path |
 
 ## Prerequisites
 
@@ -182,7 +182,6 @@ Invoke command skills directly with optional arguments:
 # Two-phase task workflow:
 /todo-task-planning TODO.md       # Phase 1: Plan and create TODO.md
 /todo-task-run TODO.md            # Phase 2: Execute tasks from TODO.md
-/todo-task-run TODO.md --no-pr    # Execute without creating PR
 ```
 
 ### Template Skills
