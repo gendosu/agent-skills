@@ -120,8 +120,6 @@ When these options are specified, the task planning should include:
 
 ## 📚 Reference Documentation
 
-- [TODO Task Development Guide (JP)](../../docs/todo-task-development-guide.jp.md)
-- [Migration Guide v3](../../docs/MIGRATION_v3.md)
 - [todo-task-run skill](../todo-task-run/SKILL.md)
 - [key-guidelines skill](../key-guidelines/SKILL.md)
 

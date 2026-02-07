@@ -37,7 +37,6 @@ user-invocable: true
 
 ## 📚 Reference Documentation
 
-- [TODO Task Development Guide (JP)](../../docs/todo-task-development-guide.jp.md)
 - [todo-task-planning skill](../todo-task-planning/SKILL.md)
 - [key-guidelines skill](../key-guidelines/SKILL.md)
 
