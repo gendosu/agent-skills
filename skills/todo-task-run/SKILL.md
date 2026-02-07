@@ -37,7 +37,8 @@ user-invocable: true
 
 ## 📚 Reference Documentation
 
-- [Related Documentation List](@docs)
+- [todo-task-planning skill](../todo-task-planning/SKILL.md)
+- [key-guidelines skill](../key-guidelines/SKILL.md)
 
 ## Core Guidelines
 
