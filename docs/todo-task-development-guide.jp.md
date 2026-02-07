@@ -1461,9 +1461,6 @@ TODO Task Pluginを効率的に使用するための早見表とチェックリ�
 | パターン | コマンド | 使用シーン | 動作内容 |
 |---------|---------|-----------|---------|
 | 基本実行 | `/todo-task-run <todo_file_path>` | TODOファイルを実行し、PRを自動作成したい場合 | タスク実行 → コミット → push → PR作成/更新 |
-| PR無効 | `/todo-task-run <todo_file_path> --no-pr` | PRを手動で作成したい場合 | タスク実行 → コミット → push（PRは作成されない） |
-| push無効 | `/todo-task-run <todo_file_path> --no-push` | ローカルでコミットし、後からpushしたい場合 | タスク実行 → コミット（pushとPR作成はスキップ） |
-| 完全ローカル | `/todo-task-run <todo_file_path> --no-pr --no-push` | 完全にローカル環境で実行したい場合 | タスク実行 → コミット（pushとPR作成は両方スキップ） |
 
 **使用例**:
 ```bash
