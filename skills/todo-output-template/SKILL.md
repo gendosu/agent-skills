@@ -3,6 +3,7 @@ name: todo-output-template
 description: |
   TODO.md file output template examples for todo-task-planning command.
   Provides structured checklist format with task classification, status indicators, and research rationale.
+model: Haiku
 ---
 
 # TODO Output Template

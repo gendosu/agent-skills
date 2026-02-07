@@ -7,6 +7,7 @@ arguments:
     description: 関連するGitHub Issue番号
     required: false
 user-invocable: true
+model: Haiku
 ---
 
 ## Usage
