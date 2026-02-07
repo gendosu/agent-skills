@@ -1466,15 +1466,6 @@ TODO Task Pluginを効率的に使用するための早見表とチェックリ�
 ```bash
 # 基本実行（PR自動作成）
 /todo-task-run TODO.md
-
-# PR無効（手動でPRを作成）
-/todo-task-run TODO.md --no-pr
-
-# push無効（ローカルで検証後にpush）
-/todo-task-run TODO.md --no-push
-
-# 完全ローカル（オフライン作業）
-/todo-task-run TODO.md --no-pr --no-push
 ```
 
 ### 6.2 パラメータ完全一覧
