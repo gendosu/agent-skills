@@ -5,6 +5,18 @@ All notable changes to the CCCP plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.10] - 2026-02-07
+
+### Changed
+
+- **Documentation**: Replaced [@docs] placeholders with concrete documentation links
+  - Updated skills/todo-task-planning/SKILL.md: Replaced `[@docs]` placeholder (Line 123) with 4 specific documentation links
+    - Added references to: TODO Task Development Guide (JP), Migration Guide v3, todo-task-run skill, key-guidelines skill
+  - Updated skills/todo-task-run/SKILL.md: Replaced `[@docs]` placeholder (Line 40) with 3 specific documentation links
+    - Added references to: TODO Task Development Guide (JP), todo-task-planning skill, key-guidelines skill
+  - All links verified: relative paths validated, all target files confirmed to exist, zero broken links
+  - Improved documentation discoverability by providing direct access to related resources
+
 ## [3.0.9] - 2026-02-07
 
 ### Changed
