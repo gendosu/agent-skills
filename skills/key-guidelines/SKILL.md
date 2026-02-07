@@ -3,6 +3,7 @@ name: key-guidelines
 description: |
   Core development principles and standards for consistent, high-quality code.
   Automatically applies DRY, KISS, YAGNI, SOLID, TDD, and micro-commit methodologies.
+model: Haiku
 ---
 
 # Key Guidelines
