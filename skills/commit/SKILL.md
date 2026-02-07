@@ -1,6 +1,6 @@
 ---
 name: commit
-description: git stageされている内容でコミット
+description: Commit staged changes with appropriate commit messages
 user-invocable: true
 ---
 
