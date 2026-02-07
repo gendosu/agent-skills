@@ -182,7 +182,6 @@ Invoke command skills directly with optional arguments:
 # Two-phase task workflow:
 /todo-task-planning TODO.md       # Phase 1: Plan and create TODO.md
 /todo-task-run TODO.md            # Phase 2: Execute tasks from TODO.md
-/todo-task-run TODO.md --no-pr    # Execute without creating PR
 ```
 
 ### Template Skills
