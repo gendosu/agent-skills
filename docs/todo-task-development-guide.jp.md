@@ -636,13 +636,11 @@ TODOファイルの冒頭には、実行サマリーが記載されます。
 `todo-task-run`コマンドの基本構文は以下の通りです。
 
 ```bash
-/todo-task-run <todo_file_path> [--no-pr] [--no-push]
+/todo-task-run <todo_file_path>
 ```
 
 **構文要素**:
 - `<todo_file_path>`: 実行するTODOファイルのパス（必須）
-- `[--no-pr]`: プルリクエスト作成/更新をスキップするフラグ（オプション）
-- `[--no-push]`: リモートへのpushをスキップするフラグ（オプション）
 
 ### 4.2 パラメータ詳細
 
