@@ -1,6 +1,6 @@
 ---
 name: pull-request
-description: プルリク作成 or 更新
+description: Create or update pull requests for the current branch
 argument-hint: "[issue-number]"
 arguments:
   - name: issue_number
