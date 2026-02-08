@@ -5,6 +5,26 @@ All notable changes to the CCCP plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.1.2] - 2026-02-08
+
+### Added
+
+- **todo-task-planning**: Implemented comprehensive 3-layer defense system to prevent Phase 1-2 skip
+  - Added [CRITICAL - MUST NOT SKIP] warnings in Phase 1-2 sections (lines 652-769)
+  - Added Phase 4 Entrance Gate with prerequisite verification (lines 1061-1115)
+  - Added runtime Phase 1-2 skip detection logic (lines 1198-1306)
+  - Added Integration Verification logic (lines 1308-1393)
+  - Added execution flow diagram (lines 156-209)
+  - Added Phase Requirement Markers table (lines 211-220)
+  - Added Critical Phase Transition Rules (lines 226-255)
+
+### Fixed
+
+- **todo-task-planning**: Resolved issues with existing progress loss, duplicate tasks, and question history loss
+  - Prevents loss of existing task progress during TODO.md updates
+  - Prevents duplicate task creation
+  - Preserves question/answer history
+
 ## [3.1.1] - 2026-02-07
 
 ### Fixed
