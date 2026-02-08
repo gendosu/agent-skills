@@ -5,6 +5,25 @@ All notable changes to the CCCP plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.1.3] - 2026-02-08
+
+### Changed
+
+- **Documentation**: Split todo-task-planning/SKILL.md into phase-based files for improved readability and maintainability
+  - Created SKILL.md (main entry point, 291 lines)
+  - Created PHASE-0-PREPARATION.md (385 lines)
+  - Created PHASE-1-ANALYSIS.md (56 lines)
+  - Created PHASE-2-BREAKDOWN.md (81 lines)
+  - Created PHASE-3-QUESTIONS.md (293 lines)
+  - Created PHASE-4-UPDATE.md (402 lines)
+  - Created PHASE-5-VERIFICATION.md (123 lines)
+  - Created ADVANCED-USAGE.md (112 lines)
+  - Created EXAMPLES.md (212 lines with 3 practical examples)
+  - Reduced learning time from 30-60 minutes to ~5 minutes (Quick Start)
+  - Improved troubleshooting with dedicated sections
+  - Enhanced maintainability with modular structure
+  - Added comprehensive navigation links between all files
+
 ## [3.1.2] - 2026-02-08
 
 ### Added
