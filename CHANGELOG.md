@@ -5,6 +5,16 @@ All notable changes to the CCCP plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.1.6] - 2026-02-09
+
+### Changed
+
+- **Documentation**: Replace emojis with text-based symbols in todo-task-planning
+  - Replaced emojis (❌, ✅, ⚠️, 🚨, ⛔) with text symbols ([NG], [OK], [WARNING], [CRITICAL], [PROHIBITED])
+  - Updated ADVANCED-USAGE.md, PHASE-0-PREPARATION.md, and SKILL.md
+  - Improves clarity and prevents misinterpretation of sequential execution requirements
+  - Addresses issue where emoji-based notation was causing parallel execution to be suggested
+
 ## [3.1.5] - 2026-02-09
 
 ### Changed
