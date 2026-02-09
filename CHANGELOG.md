@@ -5,6 +5,18 @@ All notable changes to the CCCP plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.1.5] - 2026-02-09
+
+### Changed
+
+- **Documentation**: Enforce sequential execution of Phase 0 subagents in todo-task-planning
+  - Added CRITICAL EXECUTION RULE section prohibiting multiple Task tool calls in single message
+  - Added execution requirements to Phase 0.2 (Explore), 0.3 (Plan), and 0.4 (project-manager)
+  - Strengthened checkpoints with mandatory verification steps between phases
+  - Added concrete examples of correct vs incorrect execution patterns
+  - Clarified that only ONE Task tool should be called per message to prevent parallel execution
+  - Prevents data dependency failures when Plan requires exploration_results and project-manager requires both results
+
 ## [3.1.4] - 2026-02-09
 
 ### Changed
