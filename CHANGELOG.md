@@ -5,6 +5,18 @@ All notable changes to the CCCP plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.1.4] - 2026-02-09
+
+### Changed
+
+- **Documentation**: Extracted verification protocols from todo-task-planning into dedicated document
+  - Created VERIFICATION-PROTOCOLS.md (454 lines) consolidating all verification logic
+  - Reduced PHASE-4-UPDATE.md from 402 to 146 lines (63.7% reduction)
+  - Reduced PHASE-5-VERIFICATION.md from 123 to 57 lines (53.7% reduction)
+  - Improved maintainability with centralized verification protocols
+  - Enhanced modularity with single responsibility principle
+  - Simplified phase files while preserving all verification functionality
+
 ## [3.1.3] - 2026-02-08
 
 ### Changed
