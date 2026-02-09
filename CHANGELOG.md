@@ -5,6 +5,17 @@ All notable changes to the CCCP plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.1.7] - 2026-02-09
+
+### Changed
+
+- **Documentation**: Clarify sequential execution requirements in ADVANCED-USAGE.md workflow example
+  - Added explicit completion conditions to Phase 0.3 and Phase 0.4
+  - Phase 0.3 now shows "(after Explore completes)" to indicate dependency on Phase 0.2
+  - Phase 0.4 now shows "(after Plan completes)" to indicate dependency on Phase 0.3
+  - Reinforces the sequential execution requirement established in version 3.1.5
+  - Prevents misinterpretation of Phase 0 workflow as parallel execution
+
 ## [3.1.6] - 2026-02-09
 
 ### Changed
