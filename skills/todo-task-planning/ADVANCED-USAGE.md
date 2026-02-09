@@ -4,7 +4,7 @@
 
 ---
 
-## 🎛️ Thorough Iterative Execution Support Features
+## Thorough Iterative Execution Support Features
 
 - **Detailed Difference Detection**: Automatically detect and analyze changes since the last execution
 - **Research History Management**: Record and utilize past researched files and results (utilize docs/memory)
@@ -14,7 +14,7 @@
 - **Research Optimization**: Avoid duplicate research and supplement insufficient research (check entire docs/memory)
 - **Duplicate Check Function**: Thoroughly avoid duplication of tasks, research, questions, and recommendations
 
-## 🔧 Subagent Usage Best Practices
+## Subagent Usage Best Practices
 
 ### When to Use Explore Subagent (Phase 0.2)
 Used by main Claude executor in Phase 0.2:
@@ -48,9 +48,9 @@ Used by main Claude executor in Phase 0.4:
 3. **Phase 0.4: project-manager Skill** → Organize tasks by feasibility and prepare checklist structure
 4. **Phase 1-5** → Use subagent results to execute remaining phases and update $ARGUMENTS file
 
-### ⚠️ Common Mistakes to Avoid
+### [WARNING] Common Mistakes to Avoid
 
-**❌ WRONG: Parallel Subagent Execution**
+**[NG] WRONG: Parallel Subagent Execution**
 ```typescript
 // DO NOT DO THIS - agents will run in parallel
 const [explore, plan] = await Promise.all([
@@ -59,7 +59,7 @@ const [explore, plan] = await Promise.all([
 ]);
 ```
 
-**✅ CORRECT: Sequential Subagent Execution**
+**[OK] CORRECT: Sequential Subagent Execution**
 ```typescript
 // Execute agents one by one, waiting for each to complete
 const exploration_results = await Task({

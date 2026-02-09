@@ -28,7 +28,7 @@ user-invocable: true
 - `--pr` (optional): Create a pull request after task completion. When specified, tasks will include branch creation (auto-generated if --branch not specified), commits, and PR creation
 - `--branch <name>` (optional): Branch name to create and use for task execution. Creates the specified branch and commits all changes to it. Can be used independently or with --pr option
 
-## 🎯 Command Overview
+##Command Overview
 
 This command reads the specified file ($ARGUMENTS) and performs comprehensive task planning.
 It can be executed repeatedly on the same file and also manages, confirms, and updates questions.
@@ -42,7 +42,7 @@ Also, do not excessively abbreviate research results; retain them.
 Check each time whether you have researched something in the past.
 Do not neglect checking to avoid duplicating research results and tasks.
 
-## 🔀 Branch and PR Options Usage
+##Branch and PR Options Usage
 
 ### Option Behavior
 
@@ -118,7 +118,7 @@ When these options are specified, the task planning should include:
 - Final task to create a pull request with proper description
 - PR description should summarize all changes made
 
-## 📚 Reference Documentation
+##Reference Documentation
 
 - [todo-task-run skill](../todo-task-run/SKILL.md)
 - [key-guidelines skill](../key-guidelines/SKILL.md)
@@ -127,7 +127,7 @@ When these options are specified, the task planning should include:
 
 Before starting any task, read and follow `/key-guidelines`
 
-## 🚨 Important Implementation Requirements
+## [CRITICAL]Important Implementation Requirements
 
 **MANDATORY**: This command MUST update the $ARGUMENTS file (the file specified as a parameter)
 - **Main Claude executor** (not a subagent) uses Edit or Write tool to update files
@@ -136,17 +136,17 @@ Before starting any task, read and follow `/key-guidelines`
 - After file update is complete, confirm, verify, and report the updated content
 - **CRITICAL**: The $ARGUMENTS file update is NOT optional - it must be executed in every run
 
-## 🔄 Processing Flow
+##Processing Flow
 
-### 🚨 Phase Dependency and Execution Rules
+### [CRITICAL]Phase Dependency and Execution Rules
 
-**⛔ PROHIBITED PHASE SHORTCUTS - MUST FOLLOW SEQUENTIAL FLOW ⛔**
+**[PROHIBITED]PROHIBITED PHASE SHORTCUTS - MUST FOLLOW SEQUENTIAL FLOW ⛔**
 
 The following phase shortcuts are **STRICTLY PROHIBITED**:
-- ❌ **Phase 0 → Phase 4 direct transition** (MOST COMMON VIOLATION)
-- ❌ **Phase 0 → Phase 5 direct transition**
-- ❌ **Phase 1 → Phase 4 direct transition** (skipping Phase 2-3)
-- ❌ **Phase 2 → Phase 4 direct transition** (skipping Phase 3)
+- [NG]**Phase 0 → Phase 4 direct transition** (MOST COMMON VIOLATION)
+- [NG]**Phase 0 → Phase 5 direct transition**
+- [NG]**Phase 1 → Phase 4 direct transition** (skipping Phase 2-3)
+- [NG]**Phase 2 → Phase 4 direct transition** (skipping Phase 3)
 
 **Why These Shortcuts Are Dangerous:**
 - **Data Loss**: Phase 1 existing task analysis will be ignored
@@ -162,48 +162,48 @@ The following phase shortcuts are **STRICTLY PROHIBITED**:
 │                 (MUST FOLLOW SEQUENTIAL ORDER)                  │
 └─────────────────────────────────────────────────────────────────┘
 
-Phase 0: Multi-Subagent Orchestration → [詳細](PHASE-0-PREPARATION.md)  ✅ MANDATORY
-├─ 0.1: TODO File Reading               ✅ MANDATORY
-├─ 0.2: Explore Subagent                ✅ MANDATORY
+Phase 0: Multi-Subagent Orchestration → [詳細](PHASE-0-PREPARATION.md)  [OK]MANDATORY
+├─ 0.1: TODO File Reading               [OK]MANDATORY
+├─ 0.2: Explore Subagent                [OK]MANDATORY
 │      └─ Output: exploration_results
-├─ 0.3: Plan Subagent                   ✅ MANDATORY
+├─ 0.3: Plan Subagent                   [OK]MANDATORY
 │      └─ Input: exploration_results
 │      └─ Output: planning_results
-├─ 0.4: project-manager skill           ✅ MANDATORY
+├─ 0.4: project-manager skill           [OK]MANDATORY
 │      └─ Input: exploration_results, planning_results
 │      └─ Output: strategic_plan
-└─ 0.5: Verification                    ✅ MANDATORY
+└─ 0.5: Verification                    [OK]MANDATORY
        └─ Verify: All subagents completed, variables exist
               ↓
-              ⛔ CANNOT SKIP TO PHASE 4
+              [PROHIBITED]CANNOT SKIP TO PHASE 4
               ↓
-Phase 1: File Analysis → [詳細](PHASE-1-ANALYSIS.md)                  ✅ MANDATORY
+Phase 1: File Analysis → [詳細](PHASE-1-ANALYSIS.md)                  [OK]MANDATORY
 └─ Read $ARGUMENTS file
    └─ Output: existingTasks, taskProgress
               ↓
-              ⛔ CANNOT SKIP TO PHASE 4
+              [PROHIBITED]CANNOT SKIP TO PHASE 4
               ↓
-Phase 2: Task Analysis & Breakdown → [詳細](PHASE-2-BREAKDOWN.md)      ✅ MANDATORY
+Phase 2: Task Analysis & Breakdown → [詳細](PHASE-2-BREAKDOWN.md)      [OK]MANDATORY
 └─ Input: Phase 0 results + Phase 1 results
    └─ Output: Task breakdown, feasibility analysis
               ↓
-Phase 3: Question Management → [詳細](PHASE-3-QUESTIONS.md)            ⚠️ CONDITIONAL
-├─ CONDITION A: Questions exist         ✅ MANDATORY
+Phase 3: Question Management → [詳細](PHASE-3-QUESTIONS.md)            [WARNING]CONDITIONAL
+├─ CONDITION A: Questions exist         [OK]MANDATORY
 │  └─ Execute AskUserQuestion tool
 │  └─ Wait for user responses
 │  └─ Create questions.md file
 │  └─ Output: User decisions recorded
-├─ CONDITION B: No questions            ✅ ALLOWED (Must document reason)
+├─ CONDITION B: No questions            [OK]ALLOWED (Must document reason)
 │  └─ Proceed to Phase 4
 │  └─ Document why no questions needed
-└─ ⛔ GATE: Phase 4 entrance checkpoint
+└─ [PROHIBITED]GATE: Phase 4 entrance checkpoint
               ↓
-Phase 4: File Update → [詳細](PHASE-4-UPDATE.md)                    ✅ MANDATORY
+Phase 4: File Update → [詳細](PHASE-4-UPDATE.md)                    [OK]MANDATORY
 ├─ Create docs/memory files (exploration, planning, questions)
 ├─ Update $ARGUMENTS file with task checklist
 └─ Insert branch/PR tasks if needed
               ↓
-Phase 5: Verification & Feedback → [詳細](PHASE-5-VERIFICATION.md)        ✅ MANDATORY
+Phase 5: Verification & Feedback → [詳細](PHASE-5-VERIFICATION.md)        [OK]MANDATORY
 └─ Verify file updates, AskUserQuestion execution
    └─ Report to user
 
@@ -213,18 +213,18 @@ Phase 5: Verification & Feedback → [詳細](PHASE-5-VERIFICATION.md)        �
 
 | Phase | Status | Skippable? | Dependencies | Critical Output |
 |-------|--------|------------|--------------|-----------------|
-| **Phase 0** | ✅ MANDATORY | 🚫 NO | None | exploration_results, planning_results, strategic_plan |
-| **Phase 1** | ✅ MANDATORY | 🚫 NO | Phase 0 | existingTasks, taskProgress |
-| **Phase 2** | ✅ MANDATORY | 🚫 NO | Phase 0 + Phase 1 | Task breakdown, feasibility |
-| **Phase 3** | ⚠️ CONDITIONAL | 🚫 NO (See conditions) | Phase 2 | User decisions (if questions exist) |
-| **Phase 4** | ✅ MANDATORY | 🚫 NO | Phase 0-3 | Updated $ARGUMENTS file, docs/memory files |
-| **Phase 5** | ✅ MANDATORY | 🚫 NO | Phase 4 | Verification report |
+| **Phase 0** | [OK]MANDATORY | 🚫 NO | None | exploration_results, planning_results, strategic_plan |
+| **Phase 1** | [OK]MANDATORY | 🚫 NO | Phase 0 | existingTasks, taskProgress |
+| **Phase 2** | [OK]MANDATORY | 🚫 NO | Phase 0 + Phase 1 | Task breakdown, feasibility |
+| **Phase 3** | [WARNING]CONDITIONAL | 🚫 NO (See conditions) | Phase 2 | User decisions (if questions exist) |
+| **Phase 4** | [OK]MANDATORY | 🚫 NO | Phase 0-3 | Updated $ARGUMENTS file, docs/memory files |
+| **Phase 5** | [OK]MANDATORY | 🚫 NO | Phase 4 | Verification report |
 
 **Phase 3 Conditions:**
-- ✅ **Questions exist**: MUST execute AskUserQuestion tool and wait for responses
-- ✅ **No questions**: MUST proceed to Phase 4 and document reason in Phase 5
+- [OK]**Questions exist**: MUST execute AskUserQuestion tool and wait for responses
+- [OK]**No questions**: MUST proceed to Phase 4 and document reason in Phase 5
 
-### ⚠️ Critical Phase Transition Rules
+### [WARNING]Critical Phase Transition Rules
 
 **Rule 1: Sequential Execution Only**
 - Each phase MUST complete before the next phase begins
@@ -233,14 +233,14 @@ Phase 5: Verification & Feedback → [詳細](PHASE-5-VERIFICATION.md)        �
 
 **Rule 2: Phase 0 → Phase 4 Direct Transition is PROHIBITED**
 ```
-❌ WRONG FLOW:
+[NG]WRONG FLOW:
 Phase 0 (subagents complete) → Phase 4 (file update) → Phase 5 (verification)
                     ↓
             MISSING PHASE 1-3
                     ↓
     Result: Data loss, no integration, missing user validation
 
-✅ CORRECT FLOW:
+[OK]CORRECT FLOW:
 Phase 0 → Phase 1 → Phase 2 → Phase 3 → Phase 4 → Phase 5
    ↓         ↓         ↓         ↓         ↓         ↓
   Sub-    File     Task    Question   File     Verify
@@ -255,7 +255,7 @@ Phase 0 → Phase 1 → Phase 2 → Phase 3 → Phase 4 → Phase 5
 - Even if no questions exist, Phase 3 MUST be executed to document this fact
 - Phase 4 entrance gate verifies Phase 3 completion
 
-## 🔧 Variable Scope and Persistence
+##Variable Scope and Persistence
 
 **IMPORTANT**: Variables set in Phase 0 persist throughout all subsequent phases (Phase 1-5).
 
@@ -274,7 +274,7 @@ Phase 4 → Use variables for conditional logic
 
 ---
 
-## 📚 Related Documentation
+##Related Documentation
 
 For detailed information about each phase, see:
 
