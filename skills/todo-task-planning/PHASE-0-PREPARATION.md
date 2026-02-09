@@ -6,6 +6,46 @@
 
 ### Phase 0: Multi-Subagent Orchestration (Main Claude Executor)
 
+---
+
+## 🚨 CRITICAL EXECUTION RULE 🚨
+
+**⛔ ABSOLUTE PROHIBITION: NEVER CALL MULTIPLE TASK TOOLS IN A SINGLE MESSAGE ⛔**
+
+**YOU MUST:**
+- ✅ Call **ONE Task tool per message/response**
+- ✅ Wait for the Task tool result to arrive
+- ✅ Verify the result contains expected data
+- ✅ **THEN** proceed to the next phase in a **NEW message**
+
+**YOU MUST NOT:**
+- ❌ Call multiple Task tools in the same `<function_calls>` block
+- ❌ Proceed to the next phase without receiving and verifying the previous result
+- ❌ Assume parallel execution will work correctly
+
+**Why This Matters:**
+- When multiple Task tools are called in a single message, Claude Code executes them **IN PARALLEL**
+- Phase 0.3 (Plan) **REQUIRES** `exploration_results` from Phase 0.2 (Explore)
+- Phase 0.4 (project-manager) **REQUIRES** both `exploration_results` AND `planning_results`
+- Parallel execution causes **data dependency failures** and **incomplete planning**
+
+**Execution Flow:**
+```
+Message 1: Call Task (Explore) → WAIT for result
+    ↓
+[Receive exploration_results]
+    ↓
+Message 2: Call Task (Plan) with exploration_results → WAIT for result
+    ↓
+[Receive planning_results]
+    ↓
+Message 3: Call Task (project-manager) with both results → WAIT for result
+    ↓
+[Receive strategic_plan]
+```
+
+---
+
 **⚠️ CRITICAL: Sequential Execution Required**
 
 The subagents in Phase 0 MUST be executed in the following order:
@@ -21,14 +61,31 @@ The subagents in Phase 0 MUST be executed in the following order:
 
 **Execution Pattern:**
 ```typescript
-// ✅ CORRECT: Sequential execution
-const exploration_results = await Task({ subagent_type: "Explore", ... });
-// Wait for Explore to complete, THEN proceed
-const planning_results = await Task({ subagent_type: "Plan", ... });
-// Wait for Plan to complete, THEN proceed
-const strategic_plan = await Task({ subagent_type: "project-manager", ... });
+// ✅ CORRECT: ONE Task tool call per message
+// Message 1:
+Task({ subagent_type: "Explore", ... });
+// → WAIT for result, receive exploration_results
 
-// ❌ WRONG: Parallel execution (DO NOT DO THIS)
+// Message 2 (AFTER receiving exploration_results):
+Task({
+  subagent_type: "Plan",
+  prompt: `... ${exploration_results.summary} ...`
+});
+// → WAIT for result, receive planning_results
+
+// Message 3 (AFTER receiving planning_results):
+Task({
+  subagent_type: "project-manager",
+  prompt: `... ${exploration_results.summary} ... ${planning_results.approach_summary} ...`
+});
+
+// ❌ WRONG: Multiple Task tools in ONE message (causes parallel execution)
+// Single message with multiple Task calls:
+Task({ subagent_type: "Explore", ... });
+Task({ subagent_type: "Plan", ... });  // ⛔ This will run IN PARALLEL, breaking dependencies!
+Task({ subagent_type: "project-manager", ... });  // ⛔ This will run IN PARALLEL!
+
+// ❌ WRONG: Parallel execution pattern
 Promise.all([
   Task({ subagent_type: "Explore", ... }),
   Task({ subagent_type: "Plan", ... })  // Plan cannot start before Explore completes!
@@ -165,6 +222,15 @@ Promise.all([
 
 **Purpose**: Discover related files, patterns, and dependencies through comprehensive codebase exploration
 
+**🚨 EXECUTION REQUIREMENT: Call Task tool in THIS message, THEN WAIT for result**
+
+**YOU MUST:**
+1. Call the Explore Task tool in this message
+2. **STOP** after calling the Task tool
+3. **WAIT** for the tool result to arrive
+4. Verify `exploration_results` contains valid data
+5. **DO NOT** call Plan or project-manager Task tools in the same message
+
 **Task tool execution example**:
 ```typescript
 // Conceptual example - Explore subagent for codebase investigation
@@ -201,17 +267,35 @@ const exploration_result = await Task({
 
 **⚠️ WAIT: Verify Explore Subagent Completion**
 
+**THIS IS A MANDATORY CHECKPOINT - DO NOT PROCEED UNTIL VERIFIED:**
+
 Before proceeding to Phase 0.3, ensure:
 - [ ] Explore subagent Task tool has completed successfully
+- [ ] You have **RECEIVED** the Task tool result in the conversation
 - [ ] `exploration_results` variable contains valid data
 - [ ] `docs/memory/explorations/` file has been created
 - [ ] NO errors occurred during exploration
 
-**ONLY after confirming the above, proceed to Phase 0.3 (Plan Subagent).**
+**IF ANY OF THE ABOVE ARE NOT TRUE:**
+- ⛔ **STOP** - Do not proceed to Phase 0.3
+- 🔍 Investigate what went wrong
+- 🔧 Fix the issue before continuing
+
+**ONLY after confirming ALL of the above in a NEW message, proceed to Phase 0.3 (Plan Subagent).**
 
 #### Phase 0.3: Calling Plan Subagent
 
 **Purpose**: Design implementation strategy based on exploration results
+
+**🚨 EXECUTION REQUIREMENT: Call Task tool in THIS message, THEN WAIT for result**
+
+**YOU MUST:**
+1. Verify `exploration_results` exists from Phase 0.2
+2. Call the Plan Task tool in this message (pass `exploration_results` in prompt)
+3. **STOP** after calling the Task tool
+4. **WAIT** for the tool result to arrive
+5. Verify `planning_results` contains valid data
+6. **DO NOT** call project-manager Task tool in the same message
 
 **⚠️ MANDATORY PRECONDITION: Phase 0.2 Explore Subagent MUST Be Completed First**
 
@@ -270,9 +354,38 @@ Task({
   - Sections: Approach, Task Breakdown, Critical Files, Trade-offs, Risks and Mitigation, Feasibility Assessment
   - Verification: File creation will be confirmed in Phase 0.5
 
+**⚠️ WAIT: Verify Plan Subagent Completion**
+
+**THIS IS A MANDATORY CHECKPOINT - DO NOT PROCEED UNTIL VERIFIED:**
+
+Before proceeding to Phase 0.4, ensure:
+- [ ] Plan subagent Task tool has completed successfully
+- [ ] You have **RECEIVED** the Task tool result in the conversation
+- [ ] `planning_results` variable contains valid data
+- [ ] `planning_results` includes exploration context from Phase 0.2
+- [ ] `docs/memory/planning/` file has been created
+- [ ] NO errors occurred during planning
+
+**IF ANY OF THE ABOVE ARE NOT TRUE:**
+- ⛔ **STOP** - Do not proceed to Phase 0.4
+- 🔍 Investigate what went wrong
+- 🔧 Fix the issue before continuing
+
+**ONLY after confirming ALL of the above in a NEW message, proceed to Phase 0.4 (project-manager).**
+
 #### Phase 0.4: Calling project-manager Skill
 
 **Purpose**: Integrate exploration and planning results and organize strategically
+
+**🚨 EXECUTION REQUIREMENT: Call Task tool in THIS message, THEN WAIT for result**
+
+**YOU MUST:**
+1. Verify both `exploration_results` and `planning_results` exist
+2. Call the project-manager Task tool in this message (pass both results in prompt)
+3. **STOP** after calling the Task tool
+4. **WAIT** for the tool result to arrive
+5. Verify `strategic_plan` contains valid data
+6. Proceed to Phase 0.5 verification
 
 **⚠️ MANDATORY PRECONDITION: Both Phase 0.2 AND Phase 0.3 MUST Be Completed First**
 
