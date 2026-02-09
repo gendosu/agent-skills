@@ -24,10 +24,9 @@
 - [NG]Assume parallel execution will work correctly
 
 **Why This Matters:**
-- When multiple Task tools are called in a single message, Claude Code executes them **IN PARALLEL**
+- When multiple Task tools are called in a single message, Claude Code executes them
 - Phase 0.3 (Plan) **REQUIRES** `exploration_results` from Phase 0.2 (Explore)
 - Phase 0.4 (project-manager) **REQUIRES** both `exploration_results` AND `planning_results`
-- Parallel execution causes **data dependency failures** and **incomplete planning**
 
 **Execution Flow:**
 ```
