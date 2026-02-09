@@ -44,8 +44,8 @@ Used by main Claude executor in Phase 0.4:
 
 ### Workflow Example (Phase 0)
 1. **Phase 0.2: Explore Subagent** → Find all salary-related files and their relationships (thoroughness: medium)
-2. **Phase 0.3: Plan Subagent** → Design implementation approach for adding calculation period feature
-3. **Phase 0.4: project-manager Skill** → Organize tasks by feasibility and prepare checklist structure
+2. **Phase 0.3: Plan Subagent** (after Explore completes) → Design implementation approach for adding calculation period feature
+3. **Phase 0.4: project-manager Skill** (after Plan completes) → Organize tasks by feasibility and prepare checklist structure
 4. **Phase 1-5** → Use subagent results to execute remaining phases and update $ARGUMENTS file
 
 ### [WARNING] Common Mistakes to Avoid
