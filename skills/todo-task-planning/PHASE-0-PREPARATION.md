@@ -8,20 +8,20 @@
 
 ---
 
-## 🚨 CRITICAL EXECUTION RULE 🚨
+## [CRITICAL] CRITICAL EXECUTION RULE [CRITICAL]
 
-**⛔ ABSOLUTE PROHIBITION: NEVER CALL MULTIPLE TASK TOOLS IN A SINGLE MESSAGE ⛔**
+**[PROHIBITED] ABSOLUTE PROHIBITION: NEVER CALL MULTIPLE TASK TOOLS IN A SINGLE MESSAGE [PROHIBITED]**
 
 **YOU MUST:**
-- ✅ Call **ONE Task tool per message/response**
-- ✅ Wait for the Task tool result to arrive
-- ✅ Verify the result contains expected data
-- ✅ **THEN** proceed to the next phase in a **NEW message**
+- [OK]Call **ONE Task tool per message/response**
+- [OK]Wait for the Task tool result to arrive
+- [OK]Verify the result contains expected data
+- [OK]**THEN** proceed to the next phase in a **NEW message**
 
 **YOU MUST NOT:**
-- ❌ Call multiple Task tools in the same `<function_calls>` block
-- ❌ Proceed to the next phase without receiving and verifying the previous result
-- ❌ Assume parallel execution will work correctly
+- [NG]Call multiple Task tools in the same `<function_calls>` block
+- [NG]Proceed to the next phase without receiving and verifying the previous result
+- [NG]Assume parallel execution will work correctly
 
 **Why This Matters:**
 - When multiple Task tools are called in a single message, Claude Code executes them **IN PARALLEL**
@@ -46,7 +46,7 @@ Message 3: Call Task (project-manager) with both results → WAIT for result
 
 ---
 
-**⚠️ CRITICAL: Sequential Execution Required**
+**[WARNING]CRITICAL: Sequential Execution Required**
 
 The subagents in Phase 0 MUST be executed in the following order:
 1. Phase 0.1: TODO File Reading
@@ -82,8 +82,8 @@ Task({
 // ❌ WRONG: Multiple Task tools in ONE message (causes parallel execution)
 // Single message with multiple Task calls:
 Task({ subagent_type: "Explore", ... });
-Task({ subagent_type: "Plan", ... });  // ⛔ This will run IN PARALLEL, breaking dependencies!
-Task({ subagent_type: "project-manager", ... });  // ⛔ This will run IN PARALLEL!
+Task({ subagent_type: "Plan", ... });  // [PROHIBITED]This will run IN PARALLEL, breaking dependencies!
+Task({ subagent_type: "project-manager", ... });  // [PROHIBITED]This will run IN PARALLEL!
 
 // ❌ WRONG: Parallel execution pattern
 Promise.all([
@@ -222,7 +222,7 @@ Promise.all([
 
 **Purpose**: Discover related files, patterns, and dependencies through comprehensive codebase exploration
 
-**🚨 EXECUTION REQUIREMENT: Call Task tool in THIS message, THEN WAIT for result**
+**[CRITICAL]EXECUTION REQUIREMENT: Call Task tool in THIS message, THEN WAIT for result**
 
 **YOU MUST:**
 1. Call the Explore Task tool in this message
@@ -265,7 +265,7 @@ const exploration_result = await Task({
   - Sections: Summary, Key Discoveries, Patterns, Tech Stack, Blockers, Recommendations
   - Verification: File creation will be confirmed in Phase 0.5
 
-**⚠️ WAIT: Verify Explore Subagent Completion**
+**[WARNING]WAIT: Verify Explore Subagent Completion**
 
 **THIS IS A MANDATORY CHECKPOINT - DO NOT PROCEED UNTIL VERIFIED:**
 
@@ -277,9 +277,9 @@ Before proceeding to Phase 0.3, ensure:
 - [ ] NO errors occurred during exploration
 
 **IF ANY OF THE ABOVE ARE NOT TRUE:**
-- ⛔ **STOP** - Do not proceed to Phase 0.3
-- 🔍 Investigate what went wrong
-- 🔧 Fix the issue before continuing
+- [PROHIBITED]**STOP** - Do not proceed to Phase 0.3
+-Investigate what went wrong
+-Fix the issue before continuing
 
 **ONLY after confirming ALL of the above in a NEW message, proceed to Phase 0.3 (Plan Subagent).**
 
@@ -287,7 +287,7 @@ Before proceeding to Phase 0.3, ensure:
 
 **Purpose**: Design implementation strategy based on exploration results
 
-**🚨 EXECUTION REQUIREMENT: Call Task tool in THIS message, THEN WAIT for result**
+**[CRITICAL]EXECUTION REQUIREMENT: Call Task tool in THIS message, THEN WAIT for result**
 
 **YOU MUST:**
 1. Verify `exploration_results` exists from Phase 0.2
@@ -297,21 +297,21 @@ Before proceeding to Phase 0.3, ensure:
 5. Verify `planning_results` contains valid data
 6. **DO NOT** call project-manager Task tool in the same message
 
-**⚠️ MANDATORY PRECONDITION: Phase 0.2 Explore Subagent MUST Be Completed First**
+**[WARNING]MANDATORY PRECONDITION: Phase 0.2 Explore Subagent MUST Be Completed First**
 
 **DO NOT proceed with Phase 0.3 unless ALL of the following are confirmed:**
-- ✅ Phase 0.2 Explore subagent has successfully completed
-- ✅ `exploration_results` variable exists and contains data
-- ✅ Exploration file saved: `docs/memory/explorations/YYYY-MM-DD-[feature]-exploration.md`
-- ✅ No errors occurred during exploration
+- [OK]Phase 0.2 Explore subagent has successfully completed
+- [OK]`exploration_results` variable exists and contains data
+- [OK]Exploration file saved: `docs/memory/explorations/YYYY-MM-DD-[feature]-exploration.md`
+- [OK]No errors occurred during exploration
 
 **Verify Argument Parsing Variables (from Phase 0.1 Step 2)**:
-- ✅ `HAS_PR_OPTION` is set (boolean value, not undefined)
-- ✅ `HAS_BRANCH_OPTION` is set (boolean value, not undefined)
-- ✅ `BRANCH_NAME` is set (string value, may be empty if auto-generation needed)
-- ✅ `IS_AUTO_GENERATED` is set (boolean value, not undefined)
-- ✅ If `HAS_BRANCH_OPTION = true` and `IS_AUTO_GENERATED = true`, verify `BRANCH_NAME` was populated in Phase 0.1 Step 3
-- ✅ Report to user if variables are NOT set (CRITICAL ERROR)
+- [OK]`HAS_PR_OPTION` is set (boolean value, not undefined)
+- [OK]`HAS_BRANCH_OPTION` is set (boolean value, not undefined)
+- [OK]`BRANCH_NAME` is set (string value, may be empty if auto-generation needed)
+- [OK]`IS_AUTO_GENERATED` is set (boolean value, not undefined)
+- [OK]If `HAS_BRANCH_OPTION = true` and `IS_AUTO_GENERATED = true`, verify `BRANCH_NAME` was populated in Phase 0.1 Step 3
+- [OK]Report to user if variables are NOT set (CRITICAL ERROR)
 
 **Why This Matters:**
 The Plan subagent requires exploration results (`exploration_results.summary`, `exploration_results.files`, `exploration_results.patterns`, `exploration_results.tech_stack`) to create an accurate implementation plan. Running Plan before Explore completes will result in incomplete or incorrect planning.
@@ -354,7 +354,7 @@ Task({
   - Sections: Approach, Task Breakdown, Critical Files, Trade-offs, Risks and Mitigation, Feasibility Assessment
   - Verification: File creation will be confirmed in Phase 0.5
 
-**⚠️ WAIT: Verify Plan Subagent Completion**
+**[WARNING]WAIT: Verify Plan Subagent Completion**
 
 **THIS IS A MANDATORY CHECKPOINT - DO NOT PROCEED UNTIL VERIFIED:**
 
@@ -367,9 +367,9 @@ Before proceeding to Phase 0.4, ensure:
 - [ ] NO errors occurred during planning
 
 **IF ANY OF THE ABOVE ARE NOT TRUE:**
-- ⛔ **STOP** - Do not proceed to Phase 0.4
-- 🔍 Investigate what went wrong
-- 🔧 Fix the issue before continuing
+- [PROHIBITED]**STOP** - Do not proceed to Phase 0.4
+-Investigate what went wrong
+-Fix the issue before continuing
 
 **ONLY after confirming ALL of the above in a NEW message, proceed to Phase 0.4 (project-manager).**
 
@@ -377,7 +377,7 @@ Before proceeding to Phase 0.4, ensure:
 
 **Purpose**: Integrate exploration and planning results and organize strategically
 
-**🚨 EXECUTION REQUIREMENT: Call Task tool in THIS message, THEN WAIT for result**
+**[CRITICAL]EXECUTION REQUIREMENT: Call Task tool in THIS message, THEN WAIT for result**
 
 **YOU MUST:**
 1. Verify both `exploration_results` and `planning_results` exist
@@ -387,14 +387,14 @@ Before proceeding to Phase 0.4, ensure:
 5. Verify `strategic_plan` contains valid data
 6. Proceed to Phase 0.5 verification
 
-**⚠️ MANDATORY PRECONDITION: Both Phase 0.2 AND Phase 0.3 MUST Be Completed First**
+**[WARNING]MANDATORY PRECONDITION: Both Phase 0.2 AND Phase 0.3 MUST Be Completed First**
 
 **DO NOT proceed with Phase 0.4 unless ALL of the following are confirmed:**
-- ✅ Phase 0.2 Explore subagent has successfully completed
-- ✅ Phase 0.3 Plan subagent has successfully completed
-- ✅ Both `exploration_results` and `planning_results` variables exist
-- ✅ Both exploration and planning files exist in `docs/memory/`
-- ✅ No errors occurred during exploration or planning
+- [OK]Phase 0.2 Explore subagent has successfully completed
+- [OK]Phase 0.3 Plan subagent has successfully completed
+- [OK]Both `exploration_results` and `planning_results` variables exist
+- [OK]Both exploration and planning files exist in `docs/memory/`
+- [OK]No errors occurred during exploration or planning
 
 **Sequential Dependency Chain:**
 ```
@@ -450,7 +450,7 @@ Task({
 #### Phase 0.5: Result Verification and Preparation
 
 1. **Subagent Execution Verification**
-   - **⚠️ Verify Sequential Execution Order**
+   - **[WARNING]Verify Sequential Execution Order**
      - [ ] Phase 0.2 (Explore) completed FIRST
      - [ ] Phase 0.3 (Plan) completed SECOND (after Explore)
      - [ ] Phase 0.4 (project-manager) completed THIRD (after Plan)
@@ -469,12 +469,12 @@ Task({
 
 2. **docs/memory File Confirmation**
    - [ ] **Check if exploration file exists**: `docs/memory/explorations/YYYY-MM-DD-[feature]-exploration.md`
-     - **If NOT exists**: 🚨 CRITICAL ERROR - Exploration file must be created
+     - **If NOT exists**: [CRITICAL]CRITICAL ERROR - Exploration file must be created
        - Action: Create file immediately using Write tool with exploration_results data
        - Format: Structured markdown with Summary, Files, Patterns, Tech Stack, Blockers, Recommendations sections
        - Verify exploration_results variable has valid data before creating file
    - [ ] **Check if planning file exists**: `docs/memory/planning/YYYY-MM-DD-[feature]-plan.md`
-     - **If NOT exists**: 🚨 CRITICAL ERROR - Planning file must be created
+     - **If NOT exists**: [CRITICAL]CRITICAL ERROR - Planning file must be created
        - Action: Create file immediately using Write tool with planning_results data
        - Format: Structured markdown with Approach, Tasks, Critical Files, Trade-offs, Risks, Feasibility sections
        - Verify planning_results variable has valid data before creating file

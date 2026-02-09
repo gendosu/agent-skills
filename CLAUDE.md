@@ -1,0 +1,1 @@
+- When creating a pull request, please use .github/PULL_REQUEST_TEMPLATE.md
