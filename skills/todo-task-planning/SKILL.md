@@ -28,7 +28,7 @@ user-invocable: true
 - `--pr` (optional): Create a pull request after task completion. When specified, tasks will include branch creation (auto-generated if --branch not specified), commits, and PR creation
 - `--branch <name>` (optional): Branch name to create and use for task execution. Creates the specified branch and commits all changes to it. Can be used independently or with --pr option
 
-##Command Overview
+## Command Overview
 
 This command reads the specified file ($ARGUMENTS) and performs comprehensive task planning.
 It can be executed repeatedly on the same file and also manages, confirms, and updates questions.
@@ -42,7 +42,7 @@ Also, do not excessively abbreviate research results; retain them.
 Check each time whether you have researched something in the past.
 Do not neglect checking to avoid duplicating research results and tasks.
 
-##Branch and PR Options Usage
+## Branch and PR Options Usage
 
 ### Option Behavior
 
@@ -118,7 +118,7 @@ When these options are specified, the task planning should include:
 - Final task to create a pull request with proper description
 - PR description should summarize all changes made
 
-##Reference Documentation
+## Reference Documentation
 
 - [todo-task-run skill](../todo-task-run/SKILL.md)
 - [key-guidelines skill](../key-guidelines/SKILL.md)
@@ -136,7 +136,7 @@ Before starting any task, read and follow `/key-guidelines`
 - After file update is complete, confirm, verify, and report the updated content
 - **CRITICAL**: The $ARGUMENTS file update is NOT optional - it must be executed in every run
 
-##Processing Flow
+## Processing Flow
 
 ### [CRITICAL]Phase Dependency and Execution Rules
 
@@ -255,7 +255,7 @@ Phase 0 → Phase 1 → Phase 2 → Phase 3 → Phase 4 → Phase 5
 - Even if no questions exist, Phase 3 MUST be executed to document this fact
 - Phase 4 entrance gate verifies Phase 3 completion
 
-##Variable Scope and Persistence
+## Variable Scope and Persistence
 
 **IMPORTANT**: Variables set in Phase 0 persist throughout all subsequent phases (Phase 1-5).
 
@@ -274,7 +274,7 @@ Phase 4 → Use variables for conditional logic
 
 ---
 
-##Related Documentation
+## Related Documentation
 
 For detailed information about each phase, see:
 
