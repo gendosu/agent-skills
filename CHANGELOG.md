@@ -5,6 +5,17 @@ All notable changes to the CCCP plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.4.3] - 2026-02-11
+
+### Fixed
+
+- **todo-task-planning**: Fixed incorrect tool usage for project-manager in Phase 4
+  - Changed from Task tool (subagent_type: "project-manager") to Skill tool (skill: "project-manager")
+  - Updated PHASE-4-PROJECT-MANAGER.md to use Skill tool instead of Task tool
+  - Updated ADVANCED-USAGE.md code examples to reflect correct Skill tool usage
+  - Updated SKILL.md phase flow diagram to indicate Skill tool usage
+  - project-manager is a skill, not a subagent, and must be invoked via Skill tool
+
 ## [3.4.2] - 2026-02-10
 
 ### Removed

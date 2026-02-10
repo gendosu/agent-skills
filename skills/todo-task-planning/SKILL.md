@@ -180,7 +180,7 @@ Phase 3: Plan Subagent → [詳細](PHASE-3-PLAN.md)                      [OK]MA
    └─ Output: planning_results
               ↓
 Phase 4: project-manager skill → [詳細](PHASE-4-PROJECT-MANAGER.md)   [OK]MANDATORY
-└─ Call Task tool (project-manager) with exploration + planning results
+└─ Call Skill tool (project-manager) with exploration + planning results
    └─ Output: strategic_plan
               ↓
 Phase 5: Verification → [詳細](PHASE-5-VERIFICATION.md)               [OK]MANDATORY
