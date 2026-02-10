@@ -5,6 +5,40 @@ All notable changes to the CCCP plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.2.0] - 2026-02-10
+
+### Changed
+
+- **Structure**: Flatten Phase structure in todo-task-planning skill to prevent parallel execution
+  - Removed sub-phase structure (Phase 0.1-0.5) that was causing parallel execution
+  - Split Phase 0 into 5 independent Phases (0-4): TODO Reading, Explore, Plan, project-manager, Verification
+  - Renumbered existing Phases (1-5 → 5-9): Analysis, Breakdown, Questions, Update, Verification
+  - Each Phase is now independent and must be executed in a separate turn/message
+  - Updated all Phase references and navigation links across all documentation files
+  - **Breaking Change**: Phase numbering has changed (Phase 1 is now Phase 5, etc.)
+  - **Benefit**: Prevents Explore/Plan/project-manager from being called in parallel
+  - **Result**: Sequential execution is now enforced by Phase structure, not just documentation
+
+### Removed
+
+- `PHASE-0-PREPARATION.md` - Split into 5 separate Phase files
+
+### Added
+
+- `PHASE-0-TODO-READING.md` - Phase 0: TODO File Reading
+- `PHASE-1-EXPLORE.md` - Phase 1: Explore Subagent
+- `PHASE-2-PLAN.md` - Phase 2: Plan Subagent
+- `PHASE-3-PROJECT-MANAGER.md` - Phase 3: project-manager skill
+- `PHASE-4-VERIFICATION.md` - Phase 4: Verification
+
+### Renamed
+
+- `PHASE-1-ANALYSIS.md` → `PHASE-5-ANALYSIS.md`
+- `PHASE-2-BREAKDOWN.md` → `PHASE-6-BREAKDOWN.md`
+- `PHASE-3-QUESTIONS.md` → `PHASE-7-QUESTIONS.md`
+- `PHASE-4-UPDATE.md` → `PHASE-8-UPDATE.md`
+- `PHASE-5-VERIFICATION.md` → `PHASE-9-VERIFICATION.md`
+
 ## [3.1.8] - 2026-02-10
 
 ### Changed
