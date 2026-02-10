@@ -253,6 +253,10 @@ const task_N_result = await Task({
        - Note any issues or blockers encountered
        - Provide context for next task
 
+    5. **⚠️ MANDATORY: Check for remaining tasks**
+       - See "Execution Checkpoints" section (Lines 482-612) for detailed 3-step procedure
+       - Must re-read TODO.md, detect `- [ ]` pattern, and branch appropriately
+
     ## Expected Output Format
 
     Return structured results for context accumulation:
@@ -371,6 +375,91 @@ When a task encounters an error or blocker:
 
 #### Task Execution Loop
 
+**High-Level Flow Diagram**:
+
+```
+╔═══════════════════════════════════════════════════════════════════════════╗
+║                     TASK EXECUTION LOOP FLOW                              ║
+╚═══════════════════════════════════════════════════════════════════════════╝
+
+    START: Read TODO.md and identify first incomplete task
+      │
+      ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│  PHASE 1: TASK EXECUTION                                                │
+│  ─────────────────────────                                              │
+│                                                                          │
+│  1. Read TODO.md → identify next incomplete task (`- [ ]`)              │
+│  2. Classify task → determine subagent_type                             │
+│  3. Execute Task tool with accumulated context                          │
+│  4. Verify completion (verification gate)                               │
+│  5. Update TODO.md status (`- [ ]` → `- [x]`)                           │
+│  6. Store task result for next task's context                           │
+│                                                                          │
+└────────────────────────────┬────────────────────────────────────────────┘
+                             │
+                             ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│  🚨 PHASE 2: CONTINUATION CHECK PROCEDURE (MANDATORY GATE)              │
+│  ────────────────────────────────────────────────────────              │
+│                                                                          │
+│  Step 1: Re-read TODO.md from disk                                      │
+│           const todo_content = await Read({ file_path: $ARGUMENTS })    │
+│                                                                          │
+│  Step 2: Detect incomplete tasks                                        │
+│           const has_incomplete_tasks = todo_content.includes('- [ ]')   │
+│                                                                          │
+│  Step 3: Branch Decision ──────────────┐                                │
+│                                         │                                │
+└─────────────────────────────────────────┼────────────────────────────────┘
+                                          │
+                    ┌─────────────────────┴────────────────────┐
+                    │                                           │
+                    ▼                                           ▼
+        ┌───────────────────────┐                 ┌────────────────────────┐
+        │  has_incomplete_tasks │                 │  has_incomplete_tasks  │
+        │  === true             │                 │  === false             │
+        └───────────────────────┘                 └────────────────────────┘
+                    │                                           │
+                    │                                           │
+                    ▼                                           ▼
+        ┌───────────────────────┐                 ┌────────────────────────┐
+        │  PATH A:              │                 │  PATH B:               │
+        │  CONTINUE LOOP        │                 │  FINAL COMPLETION      │
+        │                       │                 │                        │
+        │  ✅ Execute next task │                 │  ✅ Verify ALL [x]     │
+        │     via Task tool     │                 │  ✅ Add timestamp      │
+        │                       │                 │  ✅ Generate report    │
+        │  ❌ DO NOT proceed to │                 │  ✅ End session        │
+        │     Final Completion  │                 │                        │
+        │                       │                 │                        │
+        │  ❌ DO NOT end session│                 │  🎯 COMPLETE           │
+        └───────────────────────┘                 └────────────────────────┘
+                    │                                           │
+                    │                                           │
+                    │ (loop back to PHASE 1)                   END
+                    │
+                    └──────────────┐
+                                   │
+                                   ▼
+                    Return to PHASE 1: Execute next task
+```
+
+**Critical Decision Points**:
+
+1. **Verification Gate** (After each task): Did the task complete successfully?
+   - ✅ YES → Continue to Continuation Check
+   - ❌ NO → Mark blocker (`🚧`), report to user, STOP
+
+2. **Continuation Check Gate** (Mandatory after EACH task): Are there incomplete tasks?
+   - ✅ YES (`- [ ]` found) → PATH A: Continue to next task (loop back to PHASE 1)
+   - ✅ NO (all `- [x]`) → PATH B: Proceed to Final Completion Process
+
+**Loop Termination Conditions**:
+- ✅ **Normal completion**: All tasks marked `- [x]` → Final Completion Process
+- 🚧 **Blocked**: Task encounters blocker → STOP, report to user
+- ❌ **Error**: Unrecoverable error → STOP, report to user
+
 Repeat the Task tool pattern for each incomplete task until:
 - All tasks are marked `- [x]` (completed), OR
 - A task is blocked with `🚧` marker (stop and report)
@@ -388,29 +477,227 @@ Repeat the Task tool pattern for each incomplete task until:
 
 **⚠️ MANDATORY CONTINUATION CHECK**:
 
-After completing EACH task, you MUST:
+See "Execution Checkpoints" section (Lines 482-612) for the required 3-step procedure that MUST be executed after EACH task completion.
+
+#### Execution Checkpoints: 3-Step Post-Task Procedure
+
+**⚠️ CRITICAL: Execute After EVERY Task Completion**
+
+After each Task tool execution completes, you MUST execute this 3-step checkpoint procedure:
+
+```
+╔════════════════════════════════════════════════════════════════╗
+║  🎯 EXECUTION CHECKPOINT - POST-TASK VERIFICATION             ║
+║  ─────────────────────────────────────────────────────────     ║
+║                                                                ║
+║  Execute this 3-step procedure after EVERY task completion:   ║
+║                                                                ║
+║  ┌──────────────────────────────────────────────────────┐    ║
+║  │ STEP 1: Re-read TODO.md from disk                    │    ║
+║  │         ↓                                             │    ║
+║  │         const todo = await Read({ file_path: ... })   │    ║
+║  │                                                        │    ║
+║  │ Purpose: Get fresh state, not stale in-memory data    │    ║
+║  └──────────────────────────────────────────────────────┘    ║
+║                          │                                     ║
+║                          ▼                                     ║
+║  ┌──────────────────────────────────────────────────────┐    ║
+║  │ STEP 2: Check for '- [ ]' pattern existence          │    ║
+║  │         ↓                                             │    ║
+║  │         const has_incomplete = todo.includes('- [ ]') │    ║
+║  │                                                        │    ║
+║  │ Purpose: Detect if ANY incomplete tasks remain        │    ║
+║  └──────────────────────────────────────────────────────┘    ║
+║                          │                                     ║
+║                          ▼                                     ║
+║  ┌──────────────────────────────────────────────────────┐    ║
+║  │ STEP 3: Branch decision based on detection result    │    ║
+║  │                                                        │    ║
+║  │  if (has_incomplete === true) {                       │    ║
+║  │    → Continue to next task (loop back to PHASE 1)    │    ║
+║  │    → DO NOT end session                               │    ║
+║  │  } else {                                             │    ║
+║  │    → Proceed to Final Completion Process             │    ║
+║  │    → Safe to end session after final steps           │    ║
+║  │  }                                                     │    ║
+║  │                                                        │    ║
+║  │ Purpose: Prevent premature session termination        │    ║
+║  └──────────────────────────────────────────────────────┘    ║
+║                                                                ║
+╚════════════════════════════════════════════════════════════════╝
+```
+
+**Checkpoint Implementation Code**:
+
 ```typescript
-// After task_N execution and TODO.md update
+// ════════════════════════════════════════════════════════════════
+// EXECUTION CHECKPOINT - Execute after EVERY task completion
+// ════════════════════════════════════════════════════════════════
+
+// STEP 1: Re-read TODO.md from disk
 const todo_content = await Read({ file_path: $ARGUMENTS });
+
+// STEP 2: Check for '- [ ]' pattern existence
 const has_incomplete_tasks = todo_content.includes('- [ ]');
 
+// STEP 3: Branch decision
 if (has_incomplete_tasks) {
-  // ✅ Continue to next task immediately
-  // DO NOT proceed to Final Completion Process
-  // DO NOT end the session
-  const next_task_result = await Task({ ... });
+  // ✅ PATH A: At least one incomplete task exists
+  // → MUST continue to next task
+  // → CANNOT proceed to Final Completion Process
+  // → CANNOT end session
+
+  console.log('✅ Checkpoint: Incomplete tasks detected, continuing loop...');
+
+  // Return to PHASE 1: Execute next task
+  const next_task_result = await Task({
+    subagent_type: "[determined_type]",
+    description: "Execute next incomplete task",
+    prompt: `[task instructions with accumulated context]`
+  });
+
+  // After next task completes, return to this checkpoint (recursive loop)
+
 } else {
-  // ✅ All tasks complete - proceed to Final Completion Process
-  // Only now can you proceed to final steps
+  // ✅ PATH B: NO incomplete tasks remain
+  // → All tasks are marked '- [x]'
+  // → Safe to proceed to Final Completion Process
+  // → Session can end after final steps
+
+  console.log('✅ Checkpoint: All tasks complete, proceeding to final steps...');
+
+  // Proceed to "Final Completion Process" section
 }
 ```
 
-**Session Continuation Rules**:
-- ❌ **NEVER end the session while incomplete tasks (`- [ ]`) remain in TODO.md**
-- ❌ **DO NOT proceed to "Final Completion Process" if ANY task is incomplete**
-- ✅ **ALWAYS re-read TODO.md after each task to check for incomplete tasks**
-- ✅ **IMMEDIATELY continue to next task if incomplete tasks exist**
-- ✅ **ONLY proceed to final steps when ALL tasks are marked `- [x]`**
+**Checkpoint Failure Indicators**:
+
+If you find yourself in any of these situations, the checkpoint was not executed correctly:
+
+| ❌ Failure Indicator | ✅ Correct Action |
+|----------------------|-------------------|
+| Ending session while `- [ ]` exists in TODO.md | Execute checkpoint → Detect incomplete tasks → Continue loop |
+| Proceeding to Final Completion without reading TODO.md | Execute STEP 1: Re-read file from disk |
+| Assuming all tasks done based on in-memory state | Execute STEP 2: Explicit pattern detection |
+| Skipping checkpoint "because task seemed final" | ALWAYS execute checkpoint after EVERY task |
+
+**Visual Reminder - When to Execute**:
+
+```
+Task Execution Timeline:
+════════════════════════════════════════════════════════════════
+
+Task N-1        Task N          🎯 CHECKPOINT      Task N+1
+   │               │                  │               │
+   │               │                  │               │
+   ▼               ▼                  ▼               ▼
+[Execute]  →  [Complete]  →  [3-Step Check]  →  [Continue/End]
+               [Update TODO]   │
+                               ├─ Step 1: Read
+                               ├─ Step 2: Detect
+                               └─ Step 3: Branch
+                                       │
+                                       ├─ Found [ ] → Next Task
+                                       └─ All [x]  → Final Steps
+
+🚨 CRITICAL: Checkpoint executes AFTER TODO.md update, BEFORE next decision
+```
+
+**Connection to Continuation Check Procedure**:
+
+This checkpoint procedure is the **in-loop implementation** of the "Continuation Check Procedure" section (Lines 614-701):
+- **Checkpoint** = Execution code after each task (what you DO)
+- **Continuation Check Procedure** = Detailed specification (what it MEANS)
+
+Both sections describe the same mandatory 3-step process from different perspectives. The checkpoint ensures continuous execution until completion.
+
+### Continuation Check Procedure
+
+**⚠️ MANDATORY GATE: This procedure is the critical decision point between task execution and final completion.**
+
+After completing each task, you MUST execute this 3-step continuation check procedure:
+
+#### Step 1: Re-read TODO.md
+
+**Why this is mandatory**:
+- TODO.md is the single source of truth for task completion status
+- The file may have been updated by the previous Task execution
+- In-memory state may be stale - always read from disk
+
+#### Step 2: Detect Incomplete Tasks
+
+**Detection logic**:
+- Pattern found → At least one task remains incomplete
+- Pattern not found → All tasks are complete (`- [x]`)
+
+(See Lines 532-571 in "Execution Checkpoints" for implementation code)
+
+#### Step 3: Branch Decision
+
+```
+┌─────────────────────────────────────────────────────┐
+│         Continuation Check Decision Tree            │
+└─────────────────────────────────────────────────────┘
+                          │
+                          ▼
+         ┌────────────────────────────────┐
+         │ has_incomplete_tasks?          │
+         └────────────────────────────────┘
+                 /                \
+                /                  \
+              YES                  NO
+               │                    │
+               ▼                    ▼
+    ┌──────────────────┐   ┌─────────────────────┐
+    │ ✅ Continue Loop │   │ ✅ Final Completion │
+    │                  │   │                     │
+    │ - Execute next   │   │ - Verify ALL tasks  │
+    │   task via Task  │   │   are [x]           │
+    │   tool           │   │ - Add completion    │
+    │                  │   │   timestamp         │
+    │ - DO NOT proceed │   │ - Generate final    │
+    │   to Final       │   │   report            │
+    │   Completion     │   │                     │
+    │                  │   │ - End session       │
+    │ - DO NOT end     │   │                     │
+    │   session        │   │                     │
+    └──────────────────┘   └─────────────────────┘
+           │
+           │ (loop continues)
+           ▼
+    Return to Step 1 after
+    next task completion
+```
+
+#### Implementation Template
+
+See Lines 532-571 in "Execution Checkpoints" section for complete implementation code with detailed comments.
+
+**⚠️ WARNING: Common Mistakes to Avoid**:
+
+| ❌ WRONG | ✅ CORRECT |
+|----------|------------|
+| Proceeding to Final Completion while `- [ ]` exists | Always check TODO.md before final steps |
+| Ending session with incomplete tasks | Continue loop until all `- [x]` |
+| Assuming all tasks are done without checking | Explicit file read + pattern detection |
+| Using stale in-memory state | Fresh `Read()` call every time |
+
+**Visual Reminder**:
+
+```
+╔═══════════════════════════════════════════════════════════╗
+║  🚨 CRITICAL CHECKPOINT                                   ║
+║                                                           ║
+║  Before proceeding to Final Completion Process:          ║
+║                                                           ║
+║  ✅ Read TODO.md from disk                               ║
+║  ✅ Check for '- [ ]' pattern                            ║
+║  ✅ If found → Continue to next task                     ║
+║  ✅ If NOT found → Proceed to Final Completion           ║
+║                                                           ║
+║  This gate prevents premature session termination        ║
+╚═══════════════════════════════════════════════════════════╝
+```
 
 ### Error Handling and Investigation
 
@@ -443,26 +730,30 @@ When encountering errors or unexpected issues during task execution:
 
 ### Final Completion Process (Using Task Tool)
 
-**⚠️ CRITICAL PREREQUISITE CHECK**:
-
-Before proceeding to this section, you MUST verify:
-```typescript
-const todo_content = await Read({ file_path: $ARGUMENTS });
-const has_incomplete_tasks = todo_content.includes('- [ ]');
-
-if (has_incomplete_tasks) {
-  // ❌ STOP - Cannot proceed to Final Completion Process
-  // ✅ Return to Task Execution Loop immediately
-  throw new Error("Cannot proceed to Final Completion Process - incomplete tasks remain in TODO.md");
-}
-
-// ✅ All tasks complete - safe to proceed
+```
+╔═══════════════════════════════════════════════════════════════════════════╗
+║  🚨 CRITICAL PREREQUISITE CHECK                                          ║
+║                                                                           ║
+║  This section is ONLY accessible after:                                  ║
+║  1. Executing "Execution Checkpoints" 3-step procedure (Lines 482-612)  ║
+║  2. Passing "Continuation Check Procedure" gate (Lines 614-701)         ║
+║  3. Confirming PATH B (Final Completion) - NO '- [ ]' in TODO.md        ║
+║                                                                           ║
+║  If '- [ ]' exists → Return to Task Execution Loop (PATH A)             ║
+║  Only proceed if ALL tasks are '- [x]' (PATH B confirmed)               ║
+╚═══════════════════════════════════════════════════════════════════════════╝
 ```
 
-**ONLY proceed with final completion steps if ALL of these conditions are met**:
-1. ✅ All tasks in TODO.md are marked `- [x]` (NO `- [ ]` remains)
-2. ✅ No tasks are blocked with `🚧` marker
-3. ✅ Task execution loop has completed fully
+**⚠️ MANDATORY VERIFICATION**:
+
+This section is ONLY accessible if the Continuation Check Procedure (Lines 614-701) returned PATH B (all tasks complete).
+
+Before proceeding, verify:
+1. ✅ Continuation Check completed (3-step procedure executed)
+2. ✅ ALL tasks marked `- [x]` (no `- [ ]` pattern exists)
+3. ✅ No blocked tasks (no `🚧` markers)
+
+(See Lines 532-571 in "Execution Checkpoints" for verification code template)
 
 **Required steps upon all tasks completion**:
 1. **Final update of file specified in $ARGUMENTS**:
