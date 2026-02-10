@@ -5,6 +5,18 @@ All notable changes to the CCCP plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.4.1] - 2026-02-10
+
+### Changed
+
+- **todo-task-planning**: Unified conditional logic language to English in PHASE-9-UPDATE.md
+  - Translated Branch Creation Task (Conditional) section to English
+  - Translated PR Creation Tasks (Conditional) section to English
+  - Translated Conditional Behavior Summary section to English
+  - Updated SKILL.md Phase 9 description to reflect conditional task insertion logic
+  - Standardized Decision Point, Variables Referenced, and Insertion Rules sections
+  - Improved consistency with overall documentation structure
+
 ## [3.4.0] - 2026-02-10
 
 ### Added
