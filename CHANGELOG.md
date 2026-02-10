@@ -5,6 +5,43 @@ All notable changes to the CCCP plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.3.0] - 2026-02-10
+
+### Fixed
+
+- **todo-task-run**: Fixed critical issue where session would terminate prematurely despite incomplete tasks remaining
+  - Added explicit continuation check after each task completion
+  - Created dedicated "Continuation Check Procedure" section with clear visual indicators
+  - Enhanced "Final Completion Process" with explicit prerequisite verification
+  - Prerequisites must be satisfied before final completion: (1) ALL tasks marked complete, (2) ALL blockers resolved
+  - Added runtime checkpoints to verify incomplete task presence before proceeding to completion
+
+### Added
+
+- **todo-task-run**: Added visual execution flow diagram illustrating task execution loop
+  - Shows decision flow: Task Selection → Execution → Continuation Check → Next Task / Final Completion
+  - Clarifies when to continue vs when to complete the session
+  - Located in Task Execution Template section for immediate reference
+
+- **todo-task-run**: Added execution checkpoints for better process control
+  - Checkpoint after each task: Re-read TODO.md and verify incomplete task count
+  - Checkpoint before final completion: Verify all prerequisite conditions met
+  - Prevents premature session termination with clear verification steps
+
+### Changed
+
+- **todo-task-run**: Restructured task execution documentation for improved clarity
+  - Separated "Continuation Check Procedure" from "Final Completion Process" into distinct sections
+  - Moved continuation logic before completion logic to emphasize continuation priority
+  - Added clear visual markers ([CONTINUE] vs [COMPLETE]) for quick identification
+  - Improved section hierarchy: Task Execution Template → Continuation Check → Final Completion
+
+- **todo-task-run**: Reduced documentation redundancy by 14.5% (905 lines → 774 lines)
+  - Consolidated duplicate continuation check instructions into single authoritative section
+  - Removed redundant TypeScript pseudocode examples while preserving critical logic
+  - Merged overlapping CRITICAL warnings into cohesive verification procedures
+  - Enhanced cross-referencing between related sections for better maintainability
+
 ## [3.2.0] - 2026-02-10
 
 ### Changed
