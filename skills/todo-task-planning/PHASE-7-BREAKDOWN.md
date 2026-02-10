@@ -1,13 +1,13 @@
-# Phase 6: Task Breakdown
+# Phase 7: Task Breakdown
 
-[← Previous: Phase 5](PHASE-5-ANALYSIS.md) | [Main](SKILL.md) | [Next: Phase 7 →](PHASE-7-QUESTIONS.md)
+[← Previous: Phase 6](PHASE-6-ANALYSIS.md) | [Main](SKILL.md) | [Next: Phase 8 →](PHASE-8-QUESTIONS.md)
 
 ---
 
-### Phase 6: Thorough Task Analysis, Breakdown, Design, and Verification
+### Phase 7: Thorough Task Analysis, Breakdown, Design, and Verification
 
-**🔍 Starting Phase 6: Task Detailing and Integration**
-**Integrating Phase 0-4 planning results with Phase 5 existing tasks...**
+**🔍 Starting Phase 7: Task Detailing and Integration**
+**Integrating Phase 1-5 planning results with Phase 5 existing tasks...**
 
 **【CRITICAL - MUST NOT SKIP】**
 
@@ -30,14 +30,14 @@ Received from Phase 5:
 - duplicateTasks: {Q} duplicate tasks identified
 ```
 
-3. **Utilizing Phase 0-4 Planning Results**
+3. **Utilizing Phase 1-5 Planning Results**
    - **Referencing Planning Results**
      - Check implementation approach, task breakdown, critical files from `planning_results` variable
      - Reference `docs/memory/planning/YYYY-MM-DD-[feature]-plan.md`
-     - Utilize implementation strategy designed by Plan subagent in Phase 0-4.3
+     - Utilize implementation strategy designed by Plan subagent in Phase 1-5.3
    - **Utilizing Strategic Plan**
      - Get tasks by feasibility, user questions, checklist structure from `strategic_plan`
-     - Utilize strategic plan organized by project-manager skill in Phase 0-4.4
+     - Utilize strategic plan organized by project-manager skill in Phase 1-5.4
    - **Existing Research Check**: Check past analysis results in docs/memory to avoid duplicate analysis
 
 4. **Scientific Analysis of Implementation Feasibility**
@@ -78,4 +78,4 @@ Proceeding to Phase 3...
 
 ---
 
-[← Previous: Phase 5](PHASE-5-ANALYSIS.md) | [Main](SKILL.md) | [Next: Phase 7 →](PHASE-7-QUESTIONS.md)
+[← Previous: Phase 6](PHASE-6-ANALYSIS.md) | [Main](SKILL.md) | [Next: Phase 8 →](PHASE-8-QUESTIONS.md)

@@ -1,10 +1,10 @@
-# Phase 5: File Analysis
+# Phase 6: File Analysis
 
-[← Previous: Phase 4](PHASE-4-VERIFICATION.md) | [Main](SKILL.md) | [Next: Phase 6 →](PHASE-6-BREAKDOWN.md)
+[← Previous: Phase 5](PHASE-5-VERIFICATION.md) | [Main](SKILL.md) | [Next: Phase 7 →](PHASE-7-BREAKDOWN.md)
 
 ---
 
-### Phase 5: Thorough File Analysis and Existing Status Confirmation
+### Phase 6: Thorough File Analysis and Existing Status Confirmation
 
 **【CRITICAL - MUST NOT SKIP】**
 
@@ -18,7 +18,7 @@
 
 **You MUST complete Phase 5-6 before proceeding to Phase 8, even if Phase 0-4 have been completed.**
 
-**🔍 Starting Phase 5: Existing TODO.md Analysis**
+**🔍 Starting Phase 6: Existing TODO.md Analysis**
 **This phase is MANDATORY to preserve existing progress.**
 
 1. **$ARGUMENTS File Reading**
@@ -53,4 +53,4 @@ Proceeding to Phase 6...
 
 ---
 
-[← Previous: Phase 4](PHASE-4-VERIFICATION.md) | [Main](SKILL.md) | [Next: Phase 6 →](PHASE-6-BREAKDOWN.md)
+[← Previous: Phase 5](PHASE-5-VERIFICATION.md) | [Main](SKILL.md) | [Next: Phase 7 →](PHASE-7-BREAKDOWN.md)

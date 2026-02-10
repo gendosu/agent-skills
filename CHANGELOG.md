@@ -5,6 +5,32 @@ All notable changes to the CCCP plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.4.0] - 2026-02-10
+
+### Added
+
+- **todo-task-planning**: Added Phase 0 to read and apply key-guidelines skill at the start of execution
+  - Ensures development principles (DRY, KISS, YAGNI, SOLID, TDD, Micro-commits) are applied throughout task planning
+  - New PHASE-0-KEY-GUIDELINES.md file with Skill tool invocation for key-guidelines
+  - Outputs `guidelines_loaded` boolean to confirm successful loading
+
+### Changed
+
+- **todo-task-planning**: Renumbered existing phases from 0-9 to 1-10 to accommodate new Phase 0
+  - Phase 0 (TODO Reading) → Phase 1
+  - Phase 1 (Explore) → Phase 2
+  - Phase 2 (Plan) → Phase 3
+  - Phase 3 (Project Manager) → Phase 4
+  - Phase 4 (Verification) → Phase 5
+  - Phase 5 (Analysis) → Phase 6
+  - Phase 6 (Breakdown) → Phase 7
+  - Phase 7 (Questions) → Phase 8
+  - Phase 8 (Update) → Phase 9
+  - Phase 9 (Verification) → Phase 10
+  - Updated all phase references, navigation links, flowcharts, and documentation in SKILL.md
+  - Updated prohibited phase shortcuts to reflect new numbering
+  - Updated variable scope documentation to reference Phase 1 instead of Phase 0
+
 ## [3.3.0] - 2026-02-10
 
 ### Fixed

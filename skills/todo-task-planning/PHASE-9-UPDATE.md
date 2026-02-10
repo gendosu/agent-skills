@@ -1,10 +1,10 @@
-# Phase 8: File Update
+# Phase 9: File Update
 
-[← Phase 7](PHASE-7-QUESTIONS.md) | [Main](SKILL.md) | [Next: Phase 9 →](PHASE-9-VERIFICATION.md)
+[← Previous: Phase 8](PHASE-8-QUESTIONS.md) | [Main](SKILL.md) | [Next: Phase 10 →](PHASE-10-VERIFICATION.md)
 
 ---
 
-### Phase 8: $ARGUMENTS File Update
+### Phase 9: $ARGUMENTS File Update
 
 **⚠️ VERIFICATION REQUIRED**: Before proceeding, execute all verification protocols defined in [VERIFICATION-PROTOCOLS.md](VERIFICATION-PROTOCOLS.md):
 - [Phase 4 Entrance Gate Verification](VERIFICATION-PROTOCOLS.md#phase-4-entrance-gate-verification)
@@ -24,7 +24,7 @@
 
 **🚨 CRITICAL: docs/memory Files Must Be Created in This Phase**
 
-The following files MUST be created by the Main Claude executor (NOT by subagents) in Phase 8:
+The following files MUST be created by the Main Claude executor (NOT by subagents) in Phase 9:
 
 1. **Exploration results file** (from Phase 0.2):
    - [ ] **Create** `docs/memory/explorations/YYYY-MM-DD-[feature]-exploration.md`
@@ -109,7 +109,7 @@ The following files MUST be created by the Main Claude executor (NOT by subagent
       - **IMPORTANT**: Do NOT add PR creation task when only `--branch` is specified
       - Task format example:
         ```markdown
-        ### Phase 8: PRとマージ ✅/⏳
+        ### Phase 9: PRとマージ ✅/⏳
 
         - [ ] ✅ 4.1 PRテンプレートに従ったPR作成
           - [ ] `.github/PULL_REQUEST_TEMPLATE.md` 読み込み
@@ -143,4 +143,4 @@ The following files MUST be created by the Main Claude executor (NOT by subagent
 
 ---
 
-[← Phase 7](PHASE-7-QUESTIONS.md) | [Main](SKILL.md) | [Next: Phase 9 →](PHASE-9-VERIFICATION.md)
+[← Previous: Phase 8](PHASE-8-QUESTIONS.md) | [Main](SKILL.md) | [Next: Phase 10 →](PHASE-10-VERIFICATION.md)

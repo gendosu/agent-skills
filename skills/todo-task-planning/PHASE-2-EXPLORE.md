@@ -1,12 +1,12 @@
-# Phase 1: Explore Subagent
+# Phase 2: Explore Subagent
 
-[← Previous: Phase 0](PHASE-0-TODO-READING.md) | [Next: Phase 2 →](PHASE-2-PLAN.md)
+ [← Previous: Phase 1](PHASE-1-TODO-READING.md) | [Next: Phase 3 →](PHASE-3-PLAN.md)
 
 ---
 
 ## Overview
 
-Phase 1 calls the Explore subagent to discover related files, patterns, and dependencies through comprehensive codebase exploration.
+Phase 2 calls the Explore subagent to discover related files, patterns, and dependencies through comprehensive codebase exploration.
 
 **Critical Output:**
 - `exploration_results`: Structured data containing codebase exploration findings
@@ -22,7 +22,7 @@ Phase 1 calls the Explore subagent to discover related files, patterns, and depe
 ## Prerequisites
 
 Before starting Phase 1, verify:
-- [ ] Phase 0 completed successfully
+- [ ] Phase 1 completed successfully
 - [ ] TODO file has been read
 - [ ] Context has been prepared
 
@@ -68,11 +68,11 @@ Task({
   - `recommendations`: Recommendations for planning phase
 - **IMPORTANT**: Subagent does NOT create files directly (Task tool limitation)
 
-**Main Claude executor responsibility** (executed in Phase 8):
+**Main Claude executor responsibility** (executed in Phase 9):
 - **MANDATORY**: Use Write tool to create `docs/memory/explorations/YYYY-MM-DD-[feature]-exploration.md`
 - Format: Transform exploration_results data into structured markdown
 - Sections: Summary, Key Discoveries, Patterns, Tech Stack, Blockers, Recommendations
-- Verification: File creation will be confirmed in Phase 4
+- Verification: File creation will be confirmed in Phase 5
 
 ---
 
@@ -82,19 +82,19 @@ Task({
 
 **THIS IS A MANDATORY CHECKPOINT - DO NOT PROCEED UNTIL VERIFIED:**
 
-Before proceeding to Phase 2, ensure:
+Before proceeding to Phase 3, ensure:
 - [ ] Explore subagent Task tool has completed successfully
 - [ ] You have **RECEIVED** the Task tool result in the conversation
 - [ ] `exploration_results` variable contains valid data
 - [ ] NO errors occurred during exploration
 
 **IF ANY OF THE ABOVE ARE NOT TRUE:**
-- [PROHIBITED] **STOP** - Do not proceed to Phase 2
+- [PROHIBITED] **STOP** - Do not proceed to Phase 3
 - Investigate what went wrong
 - Fix the issue before continuing
 
-**ONLY after confirming ALL of the above in a NEW message, proceed to Phase 2 (Plan Subagent).**
+**ONLY after confirming ALL of the above in a NEW message, proceed to Phase 3 (Plan Subagent).**
 
 ---
 
-[← Previous: Phase 0](PHASE-0-TODO-READING.md) | [Next: Phase 2 →](PHASE-2-PLAN.md)
+ [← Previous: Phase 1](PHASE-1-TODO-READING.md) | [Next: Phase 3 →](PHASE-3-PLAN.md)
