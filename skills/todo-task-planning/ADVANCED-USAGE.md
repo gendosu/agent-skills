@@ -46,7 +46,7 @@ Used by main Claude executor in Phase 0.4:
 1. **Phase 0.2: Explore Subagent** → Find all salary-related files and their relationships (thoroughness: medium)
 2. **Phase 0.3: Plan Subagent** (after Explore completes) → Design implementation approach for adding calculation period feature
 3. **Phase 0.4: project-manager Skill** (after Plan completes) → Organize tasks by feasibility and prepare checklist structure
-4. **Phase 1-5** → Use subagent results to execute remaining phases and update $ARGUMENTS file
+4. **Phase 1-5** → Use skill results to execute remaining phases and update $ARGUMENTS file
 
 ### [WARNING] Common Mistakes to Avoid
 
@@ -87,19 +87,27 @@ if (!planning_results) {
   throw new Error("Plan subagent failed");
 }
 
-// NOW we can safely run project-manager skill
-const strategic_plan = await Task({
-  subagent_type: "project-manager",
-  prompt: `
+// NOW we can safely call project-manager skill for strategic organization
+const strategic_plan_output = await Skill({
+  skill: "project-manager",
+  args: `
     ## Context
     ### Exploration Results Summary
     ${exploration_results.summary}
 
     ### Planning Results Summary
     ${planning_results.approach_summary}
-    ...
+
+    ## Required Deliverables
+    - tasks_by_feasibility: Categorize tasks as {ready, pending, research, blocked}
+    - user_questions: List questions with structured options
+    - checklist_structure: Complete markdown checklist format
+    - implementation_recommendations: Next actions and quality metrics
   `
 });
+
+// Parse the skill output to extract strategic_plan
+const strategic_plan = parseProjectManagerOutput(strategic_plan_output);
 ```
 
 **Key Points:**
