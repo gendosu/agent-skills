@@ -24,3 +24,4 @@ npm-debug.log
 .claude/settings.local.json
 docs/memory/
 TODO.md
+.claude/skills
