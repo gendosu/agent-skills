@@ -209,7 +209,11 @@ Phase 8: Question Management → [詳細](PHASE-8-QUESTIONS.md)           [WARNI
 Phase 9: File Update → [詳細](PHASE-9-UPDATE.md)                      [OK]MANDATORY
 ├─ Create docs/memory files (exploration, planning, questions)
 ├─ Update $ARGUMENTS file with task checklist
-└─ Insert branch/PR tasks if needed
+├─ Conditional branch/PR task insertion:
+│  └─ Evaluate HAS_BRANCH_OPTION and HAS_PR_OPTION
+│  └─ Insert branch creation task if needed (beginning)
+│  └─ Insert PR creation task if needed (end)
+└─ Output: Complete TODO.md with all tasks
               ↓
 Phase 10: Verification & Feedback → [詳細](PHASE-10-VERIFICATION.md)  [OK]MANDATORY
 └─ Verify file updates, AskUserQuestion execution
@@ -230,7 +234,7 @@ Phase 10: Verification & Feedback → [詳細](PHASE-10-VERIFICATION.md)  [OK]MA
 | **Phase 6** | [OK]MANDATORY | 🚫 NO | Phase 5 | existingTasks, taskProgress |
 | **Phase 7** | [OK]MANDATORY | 🚫 NO | Phase 1-6 | Task breakdown, feasibility |
 | **Phase 8** | [WARNING]CONDITIONAL | 🚫 NO (See conditions) | Phase 7 | User decisions (if questions exist) |
-| **Phase 9** | [OK]MANDATORY | 🚫 NO | Phase 1-8 | Updated $ARGUMENTS file, docs/memory files |
+| **Phase 9** | [OK]MANDATORY | 🚫 NO | Phase 1-8 | Updated $ARGUMENTS file, docs/memory files, branch/PR tasks inserted |
 | **Phase 10** | [OK]MANDATORY | 🚫 NO | Phase 9 | Verification report |
 
 **Phase 8 Conditions:**
