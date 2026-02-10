@@ -91,36 +91,122 @@ The following files MUST be created by the Main Claude executor (NOT by subagent
     - **🚨 CRITICAL**: This step is the CORE PURPOSE of the command and MUST be executed
     - Use Edit or Write tool to update the file specified in $ARGUMENTS parameter
     - If file update fails, report as CRITICAL ERROR and retry
-    - **🔀 Branch Creation Task (when --branch or --pr option is specified)**
-      - **Add branch creation task as the FIRST task** in the task list section
-      - Task format example:
-        ```markdown
-        ### Phase 0: ブランチ作成 ✅
 
-        - [ ] ✅ **ブランチを作成**
-          - コマンド: `git checkout -b [branch_name]`
-          - 📋 このブランチで全ての変更をコミット
-          - 推定時間: 1分
-        ```
-      - Replace `[branch_name]` with the actual branch name (specified or auto-generated)
-      - Place this section before all other task phases
-    - **🔀 PR Creation Task (only when --pr option is specified)**
-      - **IMPORTANT**: Add PR creation task as the **LAST task** in the task list ONLY when `--pr` option is specified
-      - **IMPORTANT**: Do NOT add PR creation task when only `--branch` is specified
-      - Task format example:
-        ```markdown
-        ### Phase 9: PRとマージ ✅/⏳
+    - **🔀 Branch Creation Task (Conditional)**
 
-        - [ ] ✅ 4.1 PRテンプレートに従ったPR作成
-          - [ ] `.github/PULL_REQUEST_TEMPLATE.md` 読み込み
-          - [ ] PR本文作成（開発理由、開発内容、影響内容を含む）
-          - [ ] `gh pr create --title "..." --body "..."` 実行
+      **Decision Point**: Determine if branch creation task should be inserted based on argument parsing results from Phase 0.1.
 
-        - [ ] ⏳ 4.2 レビューとマージ
-          - [ ] チームレビュー待機
-          - [ ] 承認後マージ実行 `gh pr merge`
-        ```
-      - Do not include 📁 file references in PR creation tasks (because it's a Git operation task)
+      ```
+      IF (HAS_BRANCH_OPTION = true) THEN
+          → Execute branch creation task insertion
+      ELSE
+          → Skip branch creation task insertion, proceed to PR check
+      END IF
+      ```
+
+      **Variables Referenced**:
+      - `HAS_BRANCH_OPTION` (boolean): Set in Phase 0.1 Step 2, indicates `--branch` flag presence
+      - `BRANCH_NAME` (string): Branch name from argument or auto-generated in Phase 0.1 Step 3
+      - `IS_AUTO_GENERATED` (boolean): Indicates whether branch name was auto-generated
+
+      **Branch Name Determination**:
+      ```
+      IF (IS_AUTO_GENERATED = false) THEN
+          → Use BRANCH_NAME as-is (user explicitly specified branch name)
+      ELSE IF (IS_AUTO_GENERATED = true) THEN
+          → Use BRANCH_NAME generated in Phase 0.1 Step 3 (auto-generated from feature description)
+      END IF
+      ```
+
+      **Task Template to Insert** (when `HAS_BRANCH_OPTION = true`):
+
+      ```markdown
+      ### Phase 0: Branch Creation ✅
+
+      - [ ] ✅ **Create Branch**
+        - Branch name: `{BRANCH_NAME}`
+        - Command: `git checkout -b {BRANCH_NAME}`
+        - Verification: Confirm current branch is `{BRANCH_NAME}`
+        - 📋 Commit all changes on this branch
+        - Estimated time: 1 minute
+      ```
+
+      **Insertion Rules**:
+      - **Location**: Insert BEFORE Phase 1 tasks (as Phase 0)
+      - **Placeholder Replacement**: Replace `{BRANCH_NAME}` with actual branch name
+      - **Deduplication**: If existing Phase 0 task exists, REPLACE with this template
+      - **Numbering**: Renumber subsequent phases if necessary (existing Phase 1 remains Phase 1, etc.)
+
+    - **🔀 PR Creation Tasks (Conditional)**
+
+      **Decision Point**: Determine if PR creation tasks should be inserted based on argument parsing results from Phase 0.1.
+
+      ```
+      IF (HAS_PR_OPTION = true) THEN
+          → Execute PR creation task insertion
+      ELSE
+          → Skip PR creation task insertion, finalize task list without PR tasks
+      END IF
+      ```
+
+      **Variables Referenced**:
+      - `HAS_PR_OPTION` (boolean): Set in Phase 0.1 Step 2, indicates `--pr` flag presence
+      - `BRANCH_NAME` (string): Branch name from argument or auto-generated (used in push command)
+
+      **Task Template to Insert** (when `HAS_PR_OPTION = true`):
+
+      ```markdown
+      ### Phase N+1: Pull Request Creation and Merge ✅/⏳
+
+      - [ ] ✅ N+1.1 PR Preparation Following Template
+        - [ ] Read `.github/PULL_REQUEST_TEMPLATE.md` or `.github/pull_request_template.md`
+        - [ ] If template exists, create PR description following its structure
+        - [ ] If no template, use standard format: Summary, Changes, Testing
+        - Estimated time: 5 minutes
+
+      - [ ] ✅ N+1.2 Create Pull Request
+        - [ ] Push changes to remote: `git push -u origin {BRANCH_NAME}`
+        - [ ] Verify remote branch was created successfully
+        - [ ] Create PR using gh CLI: `gh pr create --title "[Title]" --body "[Description created from template]"`
+        - [ ] Alternative: Use GitHub Web interface if gh CLI is unavailable
+        - [ ] Verify PR was created successfully and record PR number
+        - Estimated time: 3 minutes
+
+      - [ ] ⏳ N+1.3 Review and Merge
+        - [ ] Check CI/CD pipeline results
+        - [ ] Address review comments if any
+        - [ ] Request review from team members if necessary
+        - [ ] After approval, execute merge: `gh pr merge`
+        - Estimated time: Variable (depends on review wait time)
+      ```
+
+      **Insertion Rules**:
+      - **Location**: Insert AFTER all existing task phases (as Phase N+1)
+      - **Placeholder Replacement**: Replace `{BRANCH_NAME}` with the actual branch name
+      - **Deduplication**: If existing final phase contains PR tasks, REPLACE with this template
+      - **Phase Number Calculation**: Calculate N based on highest existing phase number (N+1 becomes the new final phase)
+      - **Important**: Do NOT insert when only `--branch` is specified without `--pr`
+
+    - **🔀 Conditional Behavior Summary**
+
+      **Task Insertion Matrix**:
+
+      | `HAS_BRANCH_OPTION` | `HAS_PR_OPTION` | Branch Task (Phase 0) | PR Task (Phase N+1) | Total Additional Phases |
+      |---------------------|-----------------|----------------------|---------------------|------------------------|
+      | `false` | `false` | ❌ Not inserted | ❌ Not inserted | 0 (base task list only) |
+      | `true` | `false` | ✅ Inserted | ❌ Not inserted | +1 (Phase 0 added) |
+      | `false` | `true` | ❌ Not inserted | ✅ Inserted | +1 (Phase N+1 added) |
+      | `true` | `true` | ✅ Inserted | ✅ Inserted | +2 (Phase 0 and N+1 added) |
+
+      **Branch Name Handling**:
+      - **User-provided name** (`IS_AUTO_GENERATED = false`): Use `BRANCH_NAME` as-is
+      - **Auto-generated name** (`IS_AUTO_GENERATED = true`): Use `BRANCH_NAME` generated in Phase 0.1 Step 3
+
+      **Deduplication Strategy**:
+      - Check for existing Phase 0 before branch task insertion → Replace if exists
+      - Check for existing final phase before PR task insertion → Replace if contains PR-related tasks
+      - Do not create duplicate phases with identical functionality
+
     - **Integrating Phase 0 Results**
       - Update file based on `strategic_plan.checklist_structure`
       - Include links to docs/memory:
