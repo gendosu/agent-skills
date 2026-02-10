@@ -1,12 +1,12 @@
-# Phase 0: TODO File Reading
+# Phase 1: TODO File Reading
 
-[← Main](SKILL.md) | [Next: Phase 1 →](PHASE-1-EXPLORE.md)
+[← Previous: Phase 0](PHASE-0-KEY-GUIDELINES.md) | [Next: Phase 2 →](PHASE-2-EXPLORE.md)
 
 ---
 
 ## Overview
 
-Phase 0 reads and parses the TODO file specified in `$ARGUMENTS`, extracts context, and prepares variables for subsequent phases.
+Phase 1 reads and parses the TODO file specified in `$ARGUMENTS`, extracts context, and prepares variables for subsequent phases.
 
 **Critical Output:**
 - `HAS_PR_OPTION`: Boolean indicating if PR creation is requested
@@ -149,21 +149,21 @@ Result:
 
 ## Variable Persistence
 
-**IMPORTANT**: Variables set in Phase 0 persist throughout all subsequent phases (Phase 1-9).
+**IMPORTANT**: Variables set in Phase 1 persist throughout all subsequent phases (Phase 2-10).
 
-**Phase 0 Variables Used in Later Phases**:
+**Phase 1 Variables Used in Later Phases**:
 - `HAS_PR_OPTION`, `HAS_BRANCH_OPTION`, `BRANCH_NAME`, `IS_AUTO_GENERATED`
-  - Set in: Phase 0 Step 2 (argument parsing)
-  - Used in: Phase 8 (conditional task insertion)
+  - Set in: Phase 1 Step 2 (argument parsing)
+  - Used in: Phase 9 (conditional task insertion)
   - Scope: Available throughout entire skill execution
 
 **Variable Lifecycle**:
 ```
-Phase 0 → Set variables
+Phase 1 → Set variables
     ↓
-Phase 8 → Use variables for conditional logic
+Phase 9 → Use variables for conditional logic
 ```
 
 ---
 
-[← Main](SKILL.md) | [Next: Phase 1 →](PHASE-1-EXPLORE.md)
+[← Previous: Phase 0](PHASE-0-KEY-GUIDELINES.md) | [Next: Phase 2 →](PHASE-2-EXPLORE.md)

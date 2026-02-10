@@ -1,6 +1,6 @@
-# Phase 2: Plan Subagent
+# Phase 3: Plan Subagent
 
-[← Previous: Phase 1](PHASE-1-EXPLORE.md) | [Next: Phase 3 →](PHASE-3-PROJECT-MANAGER.md)
+[← Previous: Phase 2](PHASE-2-EXPLORE.md) | [Next: Phase 4 →](PHASE-4-PROJECT-MANAGER.md)
 
 ---
 
@@ -120,4 +120,4 @@ Before proceeding to Phase 3, ensure:
 
 ---
 
-[← Previous: Phase 1](PHASE-1-EXPLORE.md) | [Next: Phase 3 →](PHASE-3-PROJECT-MANAGER.md)
+[← Previous: Phase 2](PHASE-2-EXPLORE.md) | [Next: Phase 4 →](PHASE-4-PROJECT-MANAGER.md)

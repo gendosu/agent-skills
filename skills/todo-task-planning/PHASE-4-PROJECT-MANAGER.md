@@ -1,6 +1,6 @@
-# Phase 3: project-manager Skill
+# Phase 4: project-manager Skill
 
-[← Previous: Phase 2](PHASE-2-PLAN.md) | [Next: Phase 4 →](PHASE-4-VERIFICATION.md)
+[← Previous: Phase 3](PHASE-3-PLAN.md) | [Next: Phase 5 →](PHASE-5-VERIFICATION.md)
 
 ---
 
@@ -106,4 +106,4 @@ After Phase 3 completes successfully, proceed to Phase 4 (Verification) in a NEW
 
 ---
 
-[← Previous: Phase 2](PHASE-2-PLAN.md) | [Next: Phase 4 →](PHASE-4-VERIFICATION.md)
+[← Previous: Phase 3](PHASE-3-PLAN.md) | [Next: Phase 5 →](PHASE-5-VERIFICATION.md)

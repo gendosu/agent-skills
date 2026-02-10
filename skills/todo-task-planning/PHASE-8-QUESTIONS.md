@@ -1,10 +1,10 @@
-# Phase 7: Question Management
+# Phase 8: Question Management
 
-[← Phase 6](PHASE-6-BREAKDOWN.md) | [Main](SKILL.md) | [Next: Phase 8 →](PHASE-8-UPDATE.md)
+[← Previous: Phase 7](PHASE-7-BREAKDOWN.md) | [Main](SKILL.md) | [Next: Phase 9 →](PHASE-9-UPDATE.md)
 
 ---
 
-### Phase 7: Thorough Question Management, User Confirmation, and Specification Recommendations
+### Phase 8: Thorough Question Management, User Confirmation, and Specification Recommendations
 
 6. **Question Extraction (Only What Is Necessary to Achieve the Objective)**
    - **Utilizing Phase 0 Strategic Plan**
@@ -290,4 +290,4 @@ END IF
 
 ---
 
-[← Phase 6](PHASE-6-BREAKDOWN.md) | [Main](SKILL.md) | [Next: Phase 8 →](PHASE-8-UPDATE.md)
+[← Previous: Phase 7](PHASE-7-BREAKDOWN.md) | [Main](SKILL.md) | [Next: Phase 9 →](PHASE-9-UPDATE.md)
