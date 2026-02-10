@@ -162,48 +162,52 @@ The following phase shortcuts are **STRICTLY PROHIBITED**:
 │                 (MUST FOLLOW SEQUENTIAL ORDER)                  │
 └─────────────────────────────────────────────────────────────────┘
 
-Phase 0: Multi-Subagent Orchestration → [詳細](PHASE-0-PREPARATION.md)  [OK]MANDATORY
-├─ 0.1: TODO File Reading               [OK]MANDATORY
-├─ 0.2: Explore Subagent                [OK]MANDATORY
-│      └─ Output: exploration_results
-├─ 0.3: Plan Subagent                   [OK]MANDATORY
-│      └─ Input: exploration_results
-│      └─ Output: planning_results
-├─ 0.4: project-manager skill           [OK]MANDATORY
-│      └─ Input: exploration_results, planning_results
-│      └─ Output: strategic_plan
-└─ 0.5: Verification                    [OK]MANDATORY
-       └─ Verify: All subagents completed, variables exist
+Phase 0: TODO File Reading → [詳細](PHASE-0-TODO-READING.md)          [OK]MANDATORY
+└─ Read and parse $ARGUMENTS file
+   └─ Parse --pr and --branch options
+   └─ Output: HAS_PR_OPTION, HAS_BRANCH_OPTION, BRANCH_NAME
               ↓
-              [PROHIBITED]CANNOT SKIP TO PHASE 4
+Phase 1: Explore Subagent → [詳細](PHASE-1-EXPLORE.md)                [OK]MANDATORY
+└─ Call Task tool (Explore)
+   └─ Output: exploration_results
               ↓
-Phase 1: File Analysis → [詳細](PHASE-1-ANALYSIS.md)                  [OK]MANDATORY
+Phase 2: Plan Subagent → [詳細](PHASE-2-PLAN.md)                      [OK]MANDATORY
+└─ Call Task tool (Plan) with exploration_results
+   └─ Output: planning_results
+              ↓
+Phase 3: project-manager skill → [詳細](PHASE-3-PROJECT-MANAGER.md)   [OK]MANDATORY
+└─ Call Task tool (project-manager) with exploration + planning results
+   └─ Output: strategic_plan
+              ↓
+Phase 4: Verification → [詳細](PHASE-4-VERIFICATION.md)               [OK]MANDATORY
+└─ Verify all subagents completed successfully
+   └─ Verify: exploration_results, planning_results, strategic_plan exist
+              ↓
+Phase 5: File Analysis → [詳細](PHASE-5-ANALYSIS.md)                  [OK]MANDATORY
 └─ Read $ARGUMENTS file
    └─ Output: existingTasks, taskProgress
               ↓
-              [PROHIBITED]CANNOT SKIP TO PHASE 4
-              ↓
-Phase 2: Task Analysis & Breakdown → [詳細](PHASE-2-BREAKDOWN.md)      [OK]MANDATORY
-└─ Input: Phase 0 results + Phase 1 results
+Phase 6: Task Analysis & Breakdown → [詳細](PHASE-6-BREAKDOWN.md)     [OK]MANDATORY
+└─ Input: Phase 0-4 results + Phase 5 results
    └─ Output: Task breakdown, feasibility analysis
               ↓
-Phase 3: Question Management → [詳細](PHASE-3-QUESTIONS.md)            [WARNING]CONDITIONAL
+Phase 7: Question Management → [詳細](PHASE-7-QUESTIONS.md)           [WARNING]CONDITIONAL
 ├─ CONDITION A: Questions exist         [OK]MANDATORY
 │  └─ Execute AskUserQuestion tool
 │  └─ Wait for user responses
 │  └─ Create questions.md file
 │  └─ Output: User decisions recorded
 ├─ CONDITION B: No questions            [OK]ALLOWED (Must document reason)
-│  └─ Proceed to Phase 4
+│  └─ Proceed to Phase 8
 │  └─ Document why no questions needed
-└─ [PROHIBITED]GATE: Phase 4 entrance checkpoint
+└─ [PROHIBITED]GATE: Phase 8 entrance checkpoint
               ↓
-Phase 4: File Update → [詳細](PHASE-4-UPDATE.md)                    [OK]MANDATORY
+Phase 8: File Update → [詳細](PHASE-8-UPDATE.md)                      [OK]MANDATORY
 ├─ Create docs/memory files (exploration, planning, questions)
 ├─ Update $ARGUMENTS file with task checklist
 └─ Insert branch/PR tasks if needed
               ↓
-Phase 5: Verification & Feedback → [詳細](PHASE-5-VERIFICATION.md)        [OK]MANDATORY
+Phase 9: Verification & Feedback → [詳細](PHASE-9-VERIFICATION.md)    [OK]MANDATORY
 └─ Verify file updates, AskUserQuestion execution
    └─ Report to user
 
@@ -213,16 +217,20 @@ Phase 5: Verification & Feedback → [詳細](PHASE-5-VERIFICATION.md)        [O
 
 | Phase | Status | Skippable? | Dependencies | Critical Output |
 |-------|--------|------------|--------------|-----------------|
-| **Phase 0** | [OK]MANDATORY | 🚫 NO | None | exploration_results, planning_results, strategic_plan |
-| **Phase 1** | [OK]MANDATORY | 🚫 NO | Phase 0 | existingTasks, taskProgress |
-| **Phase 2** | [OK]MANDATORY | 🚫 NO | Phase 0 + Phase 1 | Task breakdown, feasibility |
-| **Phase 3** | [WARNING]CONDITIONAL | 🚫 NO (See conditions) | Phase 2 | User decisions (if questions exist) |
-| **Phase 4** | [OK]MANDATORY | 🚫 NO | Phase 0-3 | Updated $ARGUMENTS file, docs/memory files |
-| **Phase 5** | [OK]MANDATORY | 🚫 NO | Phase 4 | Verification report |
+| **Phase 0** | [OK]MANDATORY | 🚫 NO | None | HAS_PR_OPTION, HAS_BRANCH_OPTION, BRANCH_NAME |
+| **Phase 1** | [OK]MANDATORY | 🚫 NO | Phase 0 | exploration_results |
+| **Phase 2** | [OK]MANDATORY | 🚫 NO | Phase 1 | planning_results |
+| **Phase 3** | [OK]MANDATORY | 🚫 NO | Phase 2 | strategic_plan |
+| **Phase 4** | [OK]MANDATORY | 🚫 NO | Phase 3 | Verification status |
+| **Phase 5** | [OK]MANDATORY | 🚫 NO | Phase 4 | existingTasks, taskProgress |
+| **Phase 6** | [OK]MANDATORY | 🚫 NO | Phase 0-5 | Task breakdown, feasibility |
+| **Phase 7** | [WARNING]CONDITIONAL | 🚫 NO (See conditions) | Phase 6 | User decisions (if questions exist) |
+| **Phase 8** | [OK]MANDATORY | 🚫 NO | Phase 0-7 | Updated $ARGUMENTS file, docs/memory files |
+| **Phase 9** | [OK]MANDATORY | 🚫 NO | Phase 8 | Verification report |
 
-**Phase 3 Conditions:**
+**Phase 7 Conditions:**
 - [OK]**Questions exist**: MUST execute AskUserQuestion tool and wait for responses
-- [OK]**No questions**: MUST proceed to Phase 4 and document reason in Phase 5
+- [OK]**No questions**: MUST proceed to Phase 8 and document reason in Phase 9
 
 ### [WARNING]Critical Phase Transition Rules
 
@@ -230,30 +238,33 @@ Phase 5: Verification & Feedback → [詳細](PHASE-5-VERIFICATION.md)        [O
 - Each phase MUST complete before the next phase begins
 - No parallel execution of phases
 - No skipping of phases
+- Each Phase is independent and must be executed in a separate turn/message
 
-**Rule 2: Phase 0 → Phase 4 Direct Transition is PROHIBITED**
+**Rule 2: Subagent Phases (1-3) Must Execute Sequentially**
 ```
-[NG]WRONG FLOW:
-Phase 0 (subagents complete) → Phase 4 (file update) → Phase 5 (verification)
+[NG]WRONG FLOW (Parallel Execution):
+Phase 1 (Explore) + Phase 2 (Plan) + Phase 3 (project-manager) → Called in same message
                     ↓
-            MISSING PHASE 1-3
+            PARALLEL EXECUTION
                     ↓
-    Result: Data loss, no integration, missing user validation
+    Result: Phase 2/3 start before Phase 1 completes, missing dependencies
 
-[OK]CORRECT FLOW:
-Phase 0 → Phase 1 → Phase 2 → Phase 3 → Phase 4 → Phase 5
-   ↓         ↓         ↓         ↓         ↓         ↓
-  Sub-    File     Task    Question   File     Verify
- agents  Analysis  Break   Manage    Update
+[OK]CORRECT FLOW (Sequential Execution):
+Phase 0 → Phase 1 (wait) → Phase 2 (wait) → Phase 3 (wait) → Phase 4 → ...
+   ↓         ↓                ↓                ↓                ↓
+  TODO    Explore          Plan          project-mgr      Verify
+ Reading  (output)       (needs P1)      (needs P1+P2)   (check all)
 ```
 
-**Rule 3: Phase 1 Results are Mandatory Input for Phase 2**
-- Phase 2 CANNOT proceed without Phase 1 results (existingTasks, taskProgress)
-- Skipping Phase 1 causes duplicate tasks and data loss
+**Rule 3: Never Skip to Phase 8 (File Update)**
+- Phase 8 requires outputs from ALL previous phases
+- Skipping Phase 5-7 causes data loss and missing integration
+- Phase 5 (File Analysis) results are mandatory for Phase 6
+- Phase 7 (Questions) is the entrance gate to Phase 8
 
-**Rule 4: Phase 3 is a Mandatory Checkpoint**
-- Even if no questions exist, Phase 3 MUST be executed to document this fact
-- Phase 4 entrance gate verifies Phase 3 completion
+**Rule 4: Phase 7 is a Mandatory Checkpoint**
+- Even if no questions exist, Phase 7 MUST be executed to document this fact
+- Phase 8 entrance gate verifies Phase 7 completion
 
 ## Variable Scope and Persistence
 
@@ -278,12 +289,16 @@ Phase 4 → Use variables for conditional logic
 
 For detailed information about each phase, see:
 
-- [Phase 0: Preparation](PHASE-0-PREPARATION.md) - Multi-Subagent Orchestration
-- [Phase 1: Analysis](PHASE-1-ANALYSIS.md) - File Analysis and Status Confirmation
-- [Phase 2: Breakdown](PHASE-2-BREAKDOWN.md) - Task Analysis and Breakdown
-- [Phase 3: Questions](PHASE-3-QUESTIONS.md) - Question Management and User Confirmation
-- [Phase 4: Update](PHASE-4-UPDATE.md) - $ARGUMENTS File Update and Branch/PR Creation
-- [Phase 5: Verification](PHASE-5-VERIFICATION.md) - Verification and Feedback
+- [Phase 0: TODO Reading](PHASE-0-TODO-READING.md) - Read and parse TODO file and arguments
+- [Phase 1: Explore](PHASE-1-EXPLORE.md) - Explore subagent execution
+- [Phase 2: Plan](PHASE-2-PLAN.md) - Plan subagent execution
+- [Phase 3: Project Manager](PHASE-3-PROJECT-MANAGER.md) - project-manager skill execution
+- [Phase 4: Verification](PHASE-4-VERIFICATION.md) - Verify all subagents completed
+- [Phase 5: Analysis](PHASE-5-ANALYSIS.md) - File Analysis and Status Confirmation
+- [Phase 6: Breakdown](PHASE-6-BREAKDOWN.md) - Task Analysis and Breakdown
+- [Phase 7: Questions](PHASE-7-QUESTIONS.md) - Question Management and User Confirmation
+- [Phase 8: Update](PHASE-8-UPDATE.md) - $ARGUMENTS File Update and Branch/PR Creation
+- [Phase 9: Verification](PHASE-9-VERIFICATION.md) - Verification and Feedback
 
 Additional resources:
 

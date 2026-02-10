@@ -1,10 +1,10 @@
-# Phase 4: File Update
+# Phase 8: File Update
 
-[← Phase 3](PHASE-3-QUESTIONS.md) | [Main](SKILL.md) | [Next: Phase 5 →](PHASE-5-VERIFICATION.md)
+[← Phase 7](PHASE-7-QUESTIONS.md) | [Main](SKILL.md) | [Next: Phase 9 →](PHASE-9-VERIFICATION.md)
 
 ---
 
-### Phase 4: $ARGUMENTS File Update
+### Phase 8: $ARGUMENTS File Update
 
 **⚠️ VERIFICATION REQUIRED**: Before proceeding, execute all verification protocols defined in [VERIFICATION-PROTOCOLS.md](VERIFICATION-PROTOCOLS.md):
 - [Phase 4 Entrance Gate Verification](VERIFICATION-PROTOCOLS.md#phase-4-entrance-gate-verification)
@@ -16,7 +16,7 @@
 
 ---
 
-**⚠️ MANDATORY PRECONDITION**: All questions extracted in Phase 3 MUST be answered via AskUserQuestion tool before starting this phase. If questions exist but were not answered, STOP and return to Phase 3 step 9.
+**⚠️ MANDATORY PRECONDITION**: All questions extracted in Phase 7 MUST be answered via AskUserQuestion tool before starting this phase. If questions exist but were not answered, STOP and return to Phase 7 step 9.
 
 **🚨 CRITICAL REQUIREMENT**: This phase MUST complete with the $ARGUMENTS file successfully updated. File update is NOT optional - it is the primary output of this command. Failure to update the file is a critical execution failure.
 
@@ -24,7 +24,7 @@
 
 **🚨 CRITICAL: docs/memory Files Must Be Created in This Phase**
 
-The following files MUST be created by the Main Claude executor (NOT by subagents) in Phase 4:
+The following files MUST be created by the Main Claude executor (NOT by subagents) in Phase 8:
 
 1. **Exploration results file** (from Phase 0.2):
    - [ ] **Create** `docs/memory/explorations/YYYY-MM-DD-[feature]-exploration.md`
@@ -38,7 +38,7 @@ The following files MUST be created by the Main Claude executor (NOT by subagent
    - Tool: Use Write tool
    - Format: Structured markdown with sections: Approach, Task Breakdown, Critical Files, Trade-offs, Risks, Feasibility
 
-3. **User answers file** (from Phase 3, if AskUserQuestion was executed):
+3. **User answers file** (from Phase 7, if AskUserQuestion was executed):
    - [ ] **Create** `docs/memory/questions/YYYY-MM-DD-[feature]-answers.md` (if user questions existed)
    - Source: User responses from AskUserQuestion tool
    - Tool: Use Write tool
@@ -48,7 +48,7 @@ The following files MUST be created by the Main Claude executor (NOT by subagent
 - **Phase 0.2-0.4**: Subagents return data as variables (`exploration_results`, `planning_results`, `strategic_plan`)
 - **Phase 0.5**: Verify subagent completion and data variables exist
 - **👉 Phase 4 (THIS PHASE)**: Main Claude executor creates persistent docs/memory files using Write tool
-- **Phase 5**: Verify file creation and report to user
+- **Phase 9**: Verify file creation and report to user
 
 **Why Subagents Cannot Create Files:**
 - Task tool subagents run in isolated processes
@@ -67,7 +67,7 @@ The following files MUST be created by the Main Claude executor (NOT by subagent
       - Format: Markdown with sections: Approach, Task Breakdown, Critical Files, Trade-offs, Risks, Feasibility
     - [ ] **Create questions file** (if user questions existed) using Write tool:
       - Path: `docs/memory/questions/YYYY-MM-DD-[feature]-answers.md`
-      - Source data: User responses from AskUserQuestion tool in Phase 3
+      - Source data: User responses from AskUserQuestion tool in Phase 7
       - Format: Q&A format with questions and user's selected answers
     - [ ] **Verify all files were created successfully**
       - Use Bash tool with `ls -la` to confirm file existence
@@ -109,7 +109,7 @@ The following files MUST be created by the Main Claude executor (NOT by subagent
       - **IMPORTANT**: Do NOT add PR creation task when only `--branch` is specified
       - Task format example:
         ```markdown
-        ### Phase 4: PRとマージ ✅/⏳
+        ### Phase 8: PRとマージ ✅/⏳
 
         - [ ] ✅ 4.1 PRテンプレートに従ったPR作成
           - [ ] `.github/PULL_REQUEST_TEMPLATE.md` 読み込み
@@ -143,4 +143,4 @@ The following files MUST be created by the Main Claude executor (NOT by subagent
 
 ---
 
-[← Phase 3](PHASE-3-QUESTIONS.md) | [Main](SKILL.md) | [Next: Phase 5 →](PHASE-5-VERIFICATION.md)
+[← Phase 7](PHASE-7-QUESTIONS.md) | [Main](SKILL.md) | [Next: Phase 9 →](PHASE-9-VERIFICATION.md)

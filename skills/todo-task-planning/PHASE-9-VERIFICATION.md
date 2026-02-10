@@ -1,10 +1,10 @@
-# Phase 5: Verification
+# Phase 9: Verification
 
-[← Phase 4](PHASE-4-UPDATE.md) | [Main](SKILL.md)
+[← Phase 8](PHASE-8-UPDATE.md) | [Main](SKILL.md)
 
 ---
 
-### Phase 5: Thorough Verification and Feedback
+### Phase 9: Thorough Verification and Feedback
 
 11. **Multi-faceted Update Result Verification**
     - **Required**: Reload and confirm the updated file
@@ -22,7 +22,7 @@
     - **Analysis Results**: Report the number of newly created tasks and their classification
     - **Verification Status**: Report identified questions and confirmation items
     - **$ARGUMENTS File Update Verification** (MANDATORY):
-      - [ ] **CRITICAL**: Confirm that the $ARGUMENTS file (specified in command argument) was updated in Phase 4
+      - [ ] **CRITICAL**: Confirm that the $ARGUMENTS file (specified in command argument) was updated in Phase 8
         - Read the file using Read tool to verify the update was successful
         - Compare file modification timestamp to confirm recent update
         - If NOT updated: Report as CRITICAL ERROR - the file update is mandatory
@@ -54,4 +54,4 @@
 
 ---
 
-[← Phase 4](PHASE-4-UPDATE.md) | [Main](SKILL.md)
+[← Phase 8](PHASE-8-UPDATE.md) | [Main](SKILL.md)

@@ -1,43 +1,43 @@
-# Phase 2: Task Breakdown
+# Phase 6: Task Breakdown
 
-[← Phase 1](PHASE-1-ANALYSIS.md) | [Main](SKILL.md) | [Next: Phase 3 →](PHASE-3-QUESTIONS.md)
+[← Previous: Phase 5](PHASE-5-ANALYSIS.md) | [Main](SKILL.md) | [Next: Phase 7 →](PHASE-7-QUESTIONS.md)
 
 ---
 
-### Phase 2: Thorough Task Analysis, Breakdown, Design, and Verification
+### Phase 6: Thorough Task Analysis, Breakdown, Design, and Verification
 
-**🔍 Starting Phase 2: Task Detailing and Integration**
-**Integrating Phase 0 planning results with Phase 1 existing tasks...**
+**🔍 Starting Phase 6: Task Detailing and Integration**
+**Integrating Phase 0-4 planning results with Phase 5 existing tasks...**
 
 **【CRITICAL - MUST NOT SKIP】**
 
 **⛔ PHASE 1 RESULTS ARE MANDATORY INPUT - CANNOT PROCEED WITHOUT THEM ⛔**
 
-**WARNING: Skipping Phase 2 after Phase 1 will cause serious problems:**
-- **No Integration**: Phase 1 results (existingTasks, taskProgress) will not be integrated into new tasks
+**WARNING: Skipping Phase 6 after Phase 5 will cause serious problems:**
+- **No Integration**: Phase 5 results (existingTasks, taskProgress) will not be integrated into new tasks
 - **No Deduplication**: Duplicate tasks will remain undetected, causing confusion and wasted effort
 - **Incomplete Analysis**: Task breakdown will lack context from existing TODO.md file
 - **Data Loss**: Progress status and existing task information will be ignored
 
-**You MUST utilize Phase 1 results (existingTasks, taskProgress) as mandatory input for Phase 2 analysis.**
+**You MUST utilize Phase 5 results (existingTasks, taskProgress) as mandatory input for Phase 6 analysis.**
 
-**Phase 1 Results Reception Confirmation:**
+**Phase 5 Results Reception Confirmation:**
 ```
-Received from Phase 1:
+Received from Phase 5:
 - existingTasks: {N} tasks
 - taskProgress: {M} completed, {K} in-progress, {L} pending
 - existingQuestions: {P} questions
 - duplicateTasks: {Q} duplicate tasks identified
 ```
 
-3. **Utilizing Phase 0 Planning Results**
+3. **Utilizing Phase 0-4 Planning Results**
    - **Referencing Planning Results**
      - Check implementation approach, task breakdown, critical files from `planning_results` variable
      - Reference `docs/memory/planning/YYYY-MM-DD-[feature]-plan.md`
-     - Utilize implementation strategy designed by Plan subagent in Phase 0.3
+     - Utilize implementation strategy designed by Plan subagent in Phase 0-4.3
    - **Utilizing Strategic Plan**
      - Get tasks by feasibility, user questions, checklist structure from `strategic_plan`
-     - Utilize strategic plan organized by project-manager skill in Phase 0.4
+     - Utilize strategic plan organized by project-manager skill in Phase 0-4.4
    - **Existing Research Check**: Check past analysis results in docs/memory to avoid duplicate analysis
 
 4. **Scientific Analysis of Implementation Feasibility**
@@ -67,9 +67,9 @@ Received from Phase 1:
      - ✅ **Clear dependencies**: Dependencies between tasks must be easily identifiable
      - ❌ **Too broad**: Avoid tasks like "implement XX feature" without specific file/function targets
 
-**✅ Phase 2 Completion Confirmation:**
+**✅ Phase 6 Completion Confirmation:**
 ```
-✅ Phase 2 Completed:
+✅ Phase 6 Completed:
 - Created feasibilityAnalysis with {N} categorized tasks
 - Generated detailedTasks: {M} total tasks ({K} existing + {L} new)
 - Removed {P} duplicate tasks
@@ -78,4 +78,4 @@ Proceeding to Phase 3...
 
 ---
 
-[← Phase 1](PHASE-1-ANALYSIS.md) | [Main](SKILL.md) | [Next: Phase 3 →](PHASE-3-QUESTIONS.md)
+[← Previous: Phase 5](PHASE-5-ANALYSIS.md) | [Main](SKILL.md) | [Next: Phase 7 →](PHASE-7-QUESTIONS.md)

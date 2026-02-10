@@ -1,10 +1,10 @@
-# Phase 3: Question Management
+# Phase 7: Question Management
 
-[← Phase 2](PHASE-2-BREAKDOWN.md) | [Main](SKILL.md) | [Next: Phase 4 →](PHASE-4-UPDATE.md)
+[← Phase 6](PHASE-6-BREAKDOWN.md) | [Main](SKILL.md) | [Next: Phase 8 →](PHASE-8-UPDATE.md)
 
 ---
 
-### Phase 3: Thorough Question Management, User Confirmation, and Specification Recommendations
+### Phase 7: Thorough Question Management, User Confirmation, and Specification Recommendations
 
 6. **Question Extraction (Only What Is Necessary to Achieve the Objective)**
    - **Utilizing Phase 0 Strategic Plan**
@@ -79,7 +79,7 @@
    - Questions were extracted during Phase 3 analysis
    - Unclear specifications or multiple valid approaches identified
 
-   **🚨 MANDATORY**: You MUST execute AskUserQuestion tool before proceeding to Phase 4
+   **🚨 MANDATORY**: You MUST execute AskUserQuestion tool before proceeding to Phase 8
 
    **Execution Steps**:
    - [ ] Present each question using AskUserQuestion tool with **required parameters**:
@@ -89,7 +89,7 @@
        - `label` (string): Short option identifier
        - `description` (string): Explain implications of each choice
      - `multiSelect` (boolean): Set `true` when multiple answers can be selected
-   - [ ] Wait for user responses - **DO NOT proceed to Phase 4 until answered**
+   - [ ] Wait for user responses - **DO NOT proceed to Phase 8 until answered**
    - [ ] Validate that all questions received responses
 
    **After Receiving Answers**:
@@ -114,14 +114,14 @@
    **Error Handling**:
    - If AskUserQuestion tool fails → **STOP execution** and report error to user
    - If questions.md file creation fails → Retry once, then escalate to user
-   - Do NOT proceed to Phase 4 if any question remains unanswered
+   - Do NOT proceed to Phase 8 if any question remains unanswered
 
    ---
 
    ### CONDITION B: No Questions (MANDATORY Documentation)
 
    **⚠️ MANDATORY**: If there are genuinely no questions or uncertainties:
-   - [ ] Proceed directly to Phase 4
+   - [ ] Proceed directly to Phase 8
    - [ ] **REQUIRED**: Document in Phase 5 summary why no questions were needed
    - [ ] Explain what made the requirements clear enough to skip user interaction
 
@@ -141,7 +141,7 @@
 
 ## 🚨 CRITICAL GATE: MANDATORY PHASE 4 ENTRANCE REQUIREMENTS
 
-**PURPOSE**: Prevent execution of Phase 4 without completing Phase 3 question processing when questions exist.
+**PURPOSE**: Prevent execution of Phase 8 without completing Phase 3 question processing when questions exist.
 ### Step 1: Check Branch Creation Requirement
 
 **Decision Point**: Determine if branch creation task should be inserted based on argument parsing results from Phase 0.1.
@@ -277,7 +277,7 @@ END IF
 
 **IF Checkpoint FAILS** (questions exist but AskUserQuestion was not executed):
 
-1. **STOP immediately** - Do NOT proceed to Phase 4
+1. **STOP immediately** - Do NOT proceed to Phase 8
 2. **Return to Phase 3 Step 9** - Execute CONDITION A as defined in Phase 3 Step 9
 3. **Execute AskUserQuestion tool** - Present all questions to user
 4. **Wait for responses** - Do NOT continue until all questions are answered
@@ -290,4 +290,4 @@ END IF
 
 ---
 
-[← Phase 2](PHASE-2-BREAKDOWN.md) | [Main](SKILL.md) | [Next: Phase 4 →](PHASE-4-UPDATE.md)
+[← Phase 6](PHASE-6-BREAKDOWN.md) | [Main](SKILL.md) | [Next: Phase 8 →](PHASE-8-UPDATE.md)

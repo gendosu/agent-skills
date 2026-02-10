@@ -1,24 +1,24 @@
-# Phase 1: File Analysis
+# Phase 5: File Analysis
 
-[← Phase 0](PHASE-0-PREPARATION.md) | [Main](SKILL.md) | [Next: Phase 2 →](PHASE-2-BREAKDOWN.md)
+[← Previous: Phase 4](PHASE-4-VERIFICATION.md) | [Main](SKILL.md) | [Next: Phase 6 →](PHASE-6-BREAKDOWN.md)
 
 ---
 
-### Phase 1: Thorough File Analysis and Existing Status Confirmation
+### Phase 5: Thorough File Analysis and Existing Status Confirmation
 
 **【CRITICAL - MUST NOT SKIP】**
 
-**⛔ DO NOT PROCEED TO PHASE 4 WITHOUT COMPLETING PHASE 1 ⛔**
+**⛔ DO NOT PROCEED TO PHASE 8 WITHOUT COMPLETING PHASE 5 ⛔**
 
-**WARNING: Skipping Phase 1-2 will cause serious problems:**
+**WARNING: Skipping Phase 5-6 will cause serious problems:**
 - **Loss of Existing Progress**: Existing tasks and progress status will be overwritten
 - **Duplicate Tasks**: Same tasks will be created multiple times, causing confusion
 - **Context Loss**: Critical information from $ARGUMENTS file will be ignored
-- **Workflow Violation**: Phase 0 → Phase 4 direct transitions are PROHIBITED
+- **Workflow Violation**: Phase 4 → Phase 8 direct transitions are PROHIBITED
 
-**You MUST complete Phase 1-2 before proceeding to Phase 4, even if Phase 0 has been completed.**
+**You MUST complete Phase 5-6 before proceeding to Phase 8, even if Phase 0-4 have been completed.**
 
-**🔍 Starting Phase 1: Existing TODO.md Analysis**
+**🔍 Starting Phase 5: Existing TODO.md Analysis**
 **This phase is MANDATORY to preserve existing progress.**
 
 1. **$ARGUMENTS File Reading**
@@ -28,29 +28,29 @@
    - Confirm the progress status of related existing tasks
    - Identify duplicate tasks and related tasks
 
-**Phase 1 Data Extraction Checklist:**
+**Phase 5 Data Extraction Checklist:**
 - [ ] `existingTasks`: Existing task list extracted from $ARGUMENTS file
 - [ ] `taskProgress`: Progress status categorized (completed, inProgress, pending)
 - [ ] `existingQuestions`: Existing question list extracted from $ARGUMENTS file
 - [ ] `duplicateTasks`: Duplicate task identification results
 
-**✅ Phase 1 Completion Confirmation:**
+**✅ Phase 5 Completion Confirmation:**
 ```
-✅ Phase 1 Completed:
+✅ Phase 5 Completed:
 - Extracted {N} existing tasks
 - Identified {M} completed tasks
 - Found {K} duplicate tasks
-Proceeding to Phase 2...
+Proceeding to Phase 6...
 ```
 
-2. **Utilizing Phase 0 Results**
+2. **Utilizing Phase 0-4 Results**
    - **Referencing Exploration Results**
-     - Check key files, patterns, dependencies from `exploration_results` variable
+     - Check key files, patterns, dependencies from `exploration_results` variable (from Phase 1)
      - Reference `docs/memory/explorations/YYYY-MM-DD-[feature]-exploration.md`
-     - Utilize research results conducted by Explore subagent in Phase 0.2
+     - Utilize research results conducted by Explore subagent in Phase 1
    - **Duplicate Check**: Check existing research results in docs/memory to avoid duplicate research
-   - **Additional Research**: Conduct supplementary research if information is missing from Phase 0
+   - **Additional Research**: Conduct supplementary research if information is missing from Phase 0-4
 
 ---
 
-[← Phase 0](PHASE-0-PREPARATION.md) | [Main](SKILL.md) | [Next: Phase 2 →](PHASE-2-BREAKDOWN.md)
+[← Previous: Phase 4](PHASE-4-VERIFICATION.md) | [Main](SKILL.md) | [Next: Phase 6 →](PHASE-6-BREAKDOWN.md)
