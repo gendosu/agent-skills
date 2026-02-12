@@ -5,6 +5,17 @@ All notable changes to the CCCP plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.4.5] - 2026-02-12
+
+### Changed
+
+- **Documentation**: Simplified plugin description and README structure for improved clarity
+  - Updated plugin.json description: removed redundant "agent" terminology for consistency
+  - Simplified README.md table structure by removing "Type" column from features table
+  - Reorganized skills section: removed subsection headers, unified heading levels (#### → ###)
+  - Consolidated usage examples into single comprehensive code block
+  - Applied identical structural improvements to README.ja.md for English-Japanese consistency
+
 ## [3.4.4] - 2026-02-12
 
 ### Fixed

@@ -1,6 +1,6 @@
 {
   "name": "cccp",
-  "version": "3.4.4",
+  "version": "3.4.5",
   "description": "Git operations specialist and workflow commands (commit, micro-commit, pull-request, todo tasks) for Claude Code",
   "skills": "./skills/"
 }
