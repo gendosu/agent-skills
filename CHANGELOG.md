@@ -5,6 +5,64 @@ All notable changes to the CCCP plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.4.4] - 2026-02-12
+
+### Fixed
+
+- **todo-task-planning**: Fixed `--branch` flag functionality to properly insert branch creation tasks
+  - Resolved 8 implementation gaps between specification and executable code
+  - Gap 1: Implemented variable persistence mechanism (Phase 1 → Phase 9)
+  - Gap 2: Converted Phase 1 Step 2 argument parsing from pseudocode to executable instructions
+  - Gap 3: Converted Phase 1 Step 3 branch name generation from pseudocode to executable instructions
+  - Gap 4: Converted Phase 9 branch task insertion from pseudocode to executable instructions
+  - Gap 5: Converted Phase 9 PR task insertion from pseudocode to executable instructions
+  - Gap 6: Added error handling and fallback logic for edge cases
+  - Gap 7: Enhanced verification and logging steps throughout execution
+  - Gap 8: Implemented deduplication logic for Phase 0 task replacement
+
+### Added
+
+- **todo-task-planning**: Added comprehensive edge case handling documentation
+  - New EDGE-CASE-HANDLING.md file documenting 20 edge cases and recovery strategies
+  - Phase 1 argument parsing edge cases (7 cases)
+  - Phase 1 branch name generation edge cases (7 cases)
+  - Phase 9 variable retrieval edge cases (2 cases)
+  - Phase 9 task insertion edge cases (4 cases)
+
+### Changed
+
+- **todo-task-planning**: Enhanced PHASE-1-TODO-READING.md with executable code
+  - Added Step 2.5 for variable persistence (Phase 1 Variables Summary output)
+  - Converted Step 2 pseudocode to 4 executable sub-steps (2.1-2.4)
+  - Converted Step 3 pseudocode to 4 executable sub-steps (3.1-3.4)
+  - Added Post-Implementation Verification Checklist section
+
+- **todo-task-planning**: Enhanced PHASE-9-UPDATE.md with executable code
+  - Added Step 9.5 for variable retrieval from Phase 1
+  - Converted Sub-step 10.1 (branch task insertion) to 6 executable steps
+  - Converted Sub-step 10.2 (PR task insertion) to 6 executable steps
+  - Implemented INSERT/REPLACE/APPEND strategies for task insertion
+  - Added Post-Implementation Verification Checklist section
+
+- **todo-task-planning**: Enhanced VERIFICATION-PROTOCOLS.md
+  - Added Phase 1 Argument Parsing Verification Protocol
+  - Added Phase 9 Conditional Task Insertion Verification Protocol
+  - Documented expected results for 5 flag combination patterns
+  - Included recovery procedures for verification failures
+
+### Testing
+
+- All 23 test cases passed (100% success rate)
+  - Phase 1 argument parsing: 7/7 tests passed
+  - Phase 9 integration testing: 4/4 scenarios passed
+  - Edge case testing: 5/5 cases passed
+  - Phase 1 unit testing: 7/7 tests passed
+- Verified all 4 flag combinations work correctly:
+  - No flags: no tasks inserted
+  - `--branch` only: branch task inserted
+  - `--pr` only: both tasks inserted (auto-enables --branch)
+  - `--pr --branch`: both tasks inserted
+
 ## [3.4.3] - 2026-02-11
 
 ### Fixed
