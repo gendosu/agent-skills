@@ -1,20 +1,20 @@
 # CCCP - Claude Code Command Pack
 
-A plugin for Claude Code that provides Git operations specialist agent, Git workflow commands, and task planning and execution workflow (todo-task-planning/todo-task-run).
+A plugin for Claude Code that provides Git operations specialist, Git workflow commands, and task planning and execution workflow (todo-task-planning/todo-task-run).
 
 ## Overview
 
 This plugin provides Claude Code with an integrated development support centered on task planning and execution workflow (todo-task-planning/todo-task-run), complemented by Git operation commands:
 
-| Feature | Type | Description | Options |
-|---------|------|-------------|---------|
-| **git-operations-specialist** | Agent | Expert Git operations including history analysis, conflict resolution, branch strategy, and GitHub CLI operations | - |
-| **project-manager** | Agent | Project management and task organization specialist | - |
-| **commit** | Command | Commit staged changes with appropriate commit messages | - |
-| **micro-commit** | Command | Create fine-grained commits following Lucas Rocha's micro-commit methodology | - |
-| **pull-request** | Command | Create or update pull requests for the current branch | `<issue-number>` - Specify issue number |
-| **todo-task-planning** | Command | Plan and organize tasks with todo lists | `<filepath>` - TODO file path<br>`--pr` - Create PR<br>`--branch [name]` - Create branch |
-| **todo-task-run** | Command | Execute planned tasks from todo lists | `<filepath>` - TODO file path |
+| Feature | Description | Options |
+|---------|-------------|---------|
+| **git-operations-specialist** | Expert Git operations including history analysis, conflict resolution, branch strategy, and GitHub CLI operations | - |
+| **project-manager** | Project management and task organization specialist | - |
+| **commit** | Commit staged changes with appropriate commit messages | - |
+| **micro-commit** | Create fine-grained commits following Lucas Rocha's micro-commit methodology | - |
+| **pull-request** | Create or update pull requests for the current branch | `<issue-number>` - Specify issue number |
+| **todo-task-planning** | Plan and organize tasks with todo lists | `<filepath>` - TODO file path<br>`--pr` - Create PR<br>`--branch [name]` - Create branch |
+| **todo-task-run** | Execute planned tasks from todo lists | `<filepath>` - TODO file path |
 
 ## Prerequisites
 
@@ -59,13 +59,9 @@ Then install the plugin in Claude Code:
 
 ## Skills
 
-This plugin provides a unified collection of skills organized by type:
+This plugin provides a unified collection of skills:
 
-### Agent Skills
-
-Agent skills run in isolated context with specific models for specialized tasks:
-
-#### Git Operations Specialist (`/git-operations-specialist`)
+### Git Operations Specialist (`/git-operations-specialist`)
 
 Expert Git operations including:
 
@@ -75,31 +71,27 @@ Expert Git operations including:
 - **Advanced Git Operations**: Interactive rebase, cherry-picking, stash management, reflog operations
 - **GitHub CLI Operations**: PR creation/management, issue tracking, API operations
 
-#### Project Manager (`/project-manager`)
+### Project Manager (`/project-manager`)
 
 Project management and task organization specialist.
 
-### Command Skills
-
-Command skills provide workflow operations and development automation:
-
-#### Commit Command (`/commit`)
+### Commit Command (`/commit`)
 - Commit staged changes with appropriate commit messages
 - Follows conventional commit format and project guidelines
 
-#### Micro-Commit Command (`/micro-commit`)
+### Micro-Commit Command (`/micro-commit`)
 - Create fine-grained commits following test-driven development cycles
 - Group related changes logically
 - Maintain clean and meaningful commit history
 - Follow one change per commit principle
 
-#### Pull Request Command (`/pull-request`)
+### Pull Request Command (`/pull-request`)
 - Create new pull requests for the current branch
 - Update existing pull requests with latest changes
 - Link pull requests to GitHub issues
 - Automatically generate PR titles and descriptions
 
-#### Todo Task Workflow
+### Todo Task Workflow
 
 This plugin provides a two-phase workflow for task management:
 
@@ -143,11 +135,11 @@ This command executes the generated tasks.
 
 Template skills provide reference materials and standard formats:
 
-#### Key Guidelines (`/key-guidelines`)
+### Key Guidelines (`/key-guidelines`)
 - Core development guidelines and best practices
 - Reference material for consistent development standards
 
-#### Todo Output Template (`/todo-output-template`)
+### Todo Output Template (`/todo-output-template`)
 - Standard TODO.md format specification
 - Ensures consistent task planning structure
 
@@ -155,40 +147,22 @@ Template skills provide reference materials and standard formats:
 
 All skills are invoked using the slash command syntax:
 
-### Agent Skills
-
-Agent skills can be invoked explicitly or automatically based on context:
-
 ```
-/git-operations-specialist        # Explicitly invoke Git operations specialist
-/project-manager                  # Explicitly invoke project manager
+# Git and project management
+/git-operations-specialist        # Invoke Git operations specialist
+/project-manager                  # Invoke project manager
 
-# Agent skills are also automatically invoked based on context:
-"Analyze the git history for this feature branch"
-"Help me resolve this merge conflict"
-"Suggest a branching strategy for this project"
-```
-
-### Command Skills
-
-Invoke command skills directly with optional arguments:
-
-```
+# Git workflow commands
 /commit                           # Commit staged changes
 /micro-commit                     # Create fine-grained commits
 /pull-request                     # Create or update pull request
 /pull-request 123                 # Create PR linked to issue #123
 
-# Two-phase task workflow:
+# Two-phase task workflow
 /todo-task-planning TODO.md       # Phase 1: Plan and create TODO.md
 /todo-task-run TODO.md            # Phase 2: Execute tasks from TODO.md
-```
 
-### Template Skills
-
-Template skills provide reference information:
-
-```
+# Reference materials
 /key-guidelines                   # View core development guidelines
 /todo-output-template             # View TODO.md format specification
 ```

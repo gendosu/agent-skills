@@ -1,20 +1,20 @@
 # CCCP - Claude Code Command Pack
 
-Claude Code用のプラグインで、Git操作スペシャリストエージェント、Gitワークフローコマンド、タスク計画・実行ワークフロー（todo-task-planning/todo-task-run）を提供します。
+Claude Code用のプラグインで、Git操作スペシャリスト、Gitワークフローコマンド、タスク計画・実行ワークフロー（todo-task-planning/todo-task-run）を提供します。
 
 ## 概要
 
 このプラグインはClaude Codeにタスク計画・実行ワークフロー（todo-task-planning/todo-task-run）を中心とした統合開発支援を提供し、Git操作コマンドで補強します：
 
-| 機能 | 種類 | 説明 | オプション |
-|------|------|------|---------|
-| **git-operations-specialist** | Agent | 履歴分析、競合解決、ブランチ戦略、GitHub CLI操作を含む高度なGit操作に対応したエキスパート | - |
-| **project-manager** | Agent | プロジェクト管理とタスク組織のスペシャリスト | - |
-| **commit** | Command | 適切なコミットメッセージでステージされた変更をコミット | - |
-| **micro-commit** | Command | Lucas Rochaのマイクロコミット方法に従った細粒度のコミットを作成 | - |
-| **pull-request** | Command | 現在のブランチに対するプルリクエストを作成または更新 | `<issue-number>` - Issue番号を指定 |
-| **todo-task-planning** | Command | TODOリストでタスクを計画・整理 | `<filepath>` - TODOファイルパス<br>`--pr` - PR作成<br>`--branch [name]` - ブランチ作成 |
-| **todo-task-run** | Command | TODOリストから計画されたタスクを実行 | `<filepath>` - TODOファイルパス |
+| 機能 | 説明 | オプション |
+|------|------|---------|
+| **git-operations-specialist** | 履歴分析、競合解決、ブランチ戦略、GitHub CLI操作を含む高度なGit操作に対応したエキスパート | - |
+| **project-manager** | プロジェクト管理とタスク組織のスペシャリスト | - |
+| **commit** | 適切なコミットメッセージでステージされた変更をコミット | - |
+| **micro-commit** | Lucas Rochaのマイクロコミット方法に従った細粒度のコミットを作成 | - |
+| **pull-request** | 現在のブランチに対するプルリクエストを作成または更新 | `<issue-number>` - Issue番号を指定 |
+| **todo-task-planning** | TODOリストでタスクを計画・整理 | `<filepath>` - TODOファイルパス<br>`--pr` - PR作成<br>`--branch [name]` - ブランチ作成 |
+| **todo-task-run** | TODOリストから計画されたタスクを実行 | `<filepath>` - TODOファイルパス |
 
 ## 前提条件
 
@@ -59,13 +59,9 @@ git clone https://github.com/gendosu/agent-skills.git
 
 ## スキル
 
-このプラグインは、タイプ別に整理された統合されたスキルコレクションを提供します：
+このプラグインは、統合されたスキルコレクションを提供します：
 
-### エージェントスキル
-
-エージェントスキルは、専門タスクのために特定のモデルを使用し、独立したコンテキストで実行されます：
-
-#### Git操作スペシャリスト (`/git-operations-specialist`)
+### Git操作スペシャリスト (`/git-operations-specialist`)
 
 以下を含むエキスパートGit操作：
 
@@ -75,31 +71,27 @@ git clone https://github.com/gendosu/agent-skills.git
 - **高度なGit操作**: インタラクティブリベース、チェリーピック、スタッシュ管理、reflog操作
 - **GitHub CLI操作**: PR作成・管理、Issue追跡、API操作
 
-#### プロジェクトマネージャー (`/project-manager`)
+### プロジェクトマネージャー (`/project-manager`)
 
 プロジェクト管理とタスク組織のスペシャリスト。
 
-### コマンドスキル
-
-コマンドスキルは、ワークフロー操作と開発自動化を提供します：
-
-#### コミットコマンド (`/commit`)
+### コミットコマンド (`/commit`)
 - 適切なコミットメッセージでステージされた変更をコミット
 - Conventional Commitフォーマットとプロジェクトガイドラインに従う
 
-#### マイクロコミットコマンド (`/micro-commit`)
+### マイクロコミットコマンド (`/micro-commit`)
 - テスト駆動開発サイクルに従った細粒度のコミットを作成
 - 関連する変更を論理的にグループ化
 - 清潔で意味のあるコミット履歴を保持
 - 1コミット1変更の原則に従う
 
-#### プルリクエストコマンド (`/pull-request`)
+### プルリクエストコマンド (`/pull-request`)
 - 現在のブランチに対して新しいプルリクエストを作成
 - 既存のプルリクエストを最新の変更で更新
 - プルリクエストをGitHub Issueにリンク
 - PRのタイトルと説明を自動生成
 
-#### Todoタスクワークフロー
+### Todoタスクワークフロー
 
 このプラグインは、タスク管理のための2段階ワークフローを提供します：
 
@@ -143,11 +135,11 @@ git clone https://github.com/gendosu/agent-skills.git
 
 テンプレートスキルは、リファレンス資料と標準フォーマットを提供します：
 
-#### キーガイドライン (`/key-guidelines`)
+### キーガイドライン (`/key-guidelines`)
 - コア開発ガイドラインとベストプラクティス
 - 一貫した開発標準のためのリファレンス資料
 
-#### Todoアウトプットテンプレート (`/todo-output-template`)
+### Todoアウトプットテンプレート (`/todo-output-template`)
 - 標準的なTODO.mdフォーマット仕様
 - 一貫したタスク計画構造を保証
 
@@ -155,40 +147,22 @@ git clone https://github.com/gendosu/agent-skills.git
 
 すべてのスキルはスラッシュコマンド構文で呼び出します:
 
-### エージェントスキル
-
-エージェントスキルは、明示的またはコンテキストに基づいて自動的に呼び出すことができます：
-
 ```
-/git-operations-specialist        # Git操作スペシャリストを明示的に呼び出し
-/project-manager                  # プロジェクトマネージャーを明示的に呼び出し
+# Git操作とプロジェクト管理
+/git-operations-specialist        # Git操作スペシャリストを呼び出し
+/project-manager                  # プロジェクトマネージャーを呼び出し
 
-# エージェントスキルはコンテキストに基づいて自動的に呼び出されます：
-"このフィーチャーブランチのgit履歴を分析して"
-"このマージ競合の解決を手伝って"
-"このプロジェクトのブランチ戦略を提案して"
-```
-
-### コマンドスキル
-
-コマンドスキルはオプションの引数とともに直接呼び出します：
-
-```
+# Gitワークフローコマンド
 /commit                           # ステージされた変更をコミット
 /micro-commit                     # 細粒度のコミットを作成
 /pull-request                     # プルリクエストを作成または更新
 /pull-request 123                 # Issue #123にリンクされたPRを作成
 
-# 2段階のタスクワークフロー：
+# 2段階のタスクワークフロー
 /todo-task-planning TODO.md       # 第1段階：計画してTODO.mdを作成
 /todo-task-run TODO.md            # 第2段階：TODO.mdからタスクを実行
-```
 
-### テンプレートスキル
-
-テンプレートスキルはリファレンス情報を提供します：
-
-```
+# リファレンス資料
 /key-guidelines                   # コア開発ガイドラインを表示
 /todo-output-template             # TODO.mdフォーマット仕様を表示
 ```
