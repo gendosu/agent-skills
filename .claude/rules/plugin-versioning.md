@@ -2,7 +2,7 @@
 paths:
   - ".claude-plugin/plugin.json"
   - "CHANGELOG.md"
-  - "skills/**/*"
+  - "**/*"
 ---
 
 # Plugin Versioning and Changelog
