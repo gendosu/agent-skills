@@ -41,7 +41,7 @@ This document describes edge case handling and error recovery strategies impleme
 - `IS_AUTO_GENERATED = false` (explicit value provided)
 
 **Verification**:
-- Test Case 5 in `/Users/takahashi.g/products/gendosu/agent-skills/docs/memory/debugging/test-6-phase1-unit.log`
+- Test Case 5 in `../../docs/memory/debugging/test-6-phase1-unit.log`
 - Status: ✅ VERIFIED - First branch name correctly extracted
 
 **Implementation**: PHASE-1-TODO-READING.md Step 2.2
@@ -63,7 +63,7 @@ This document describes edge case handling and error recovery strategies impleme
 - `HAS_PR_OPTION = true` (second flag correctly parsed)
 
 **Verification**:
-- Test Case 6 in `/Users/takahashi.g/products/gendosu/agent-skills/docs/memory/debugging/test-6-phase1-unit.log`
+- Test Case 6 in `../../docs/memory/debugging/test-6-phase1-unit.log`
 - Status: ✅ VERIFIED - Auto-generation triggered correctly
 
 **Implementation**: PHASE-1-TODO-READING.md Step 2.2
@@ -85,7 +85,7 @@ This document describes edge case handling and error recovery strategies impleme
 - No parsing errors
 
 **Verification**:
-- Test Case 2 in `/Users/takahashi.g/products/gendosu/agent-skills/docs/memory/debugging/test-6-phase1-unit.log`
+- Test Case 2 in `../../docs/memory/debugging/test-6-phase1-unit.log`
 - Status: ✅ VERIFIED - Auto-generation triggered correctly
 
 **Implementation**: PHASE-1-TODO-READING.md Step 2.2
@@ -110,7 +110,7 @@ This document describes edge case handling and error recovery strategies impleme
 **Rationale**: Pull requests require a branch to exist, so branch creation is automatically enabled.
 
 **Verification**:
-- Test Case 3 in `/Users/takahashi.g/products/gendosu/agent-skills/docs/memory/debugging/test-6-phase1-unit.log`
+- Test Case 3 in `../../docs/memory/debugging/test-6-phase1-unit.log`
 - Status: ✅ VERIFIED - Automatic branch enablement working correctly
 
 **Implementation**: PHASE-1-TODO-READING.md Step 2.3 (PR Requires Branch Validation)
@@ -136,7 +136,7 @@ This document describes edge case handling and error recovery strategies impleme
 - Final `BRANCH_NAME = "feature/task-implementation"`
 
 **Verification**:
-- Edge Case 1 in `/Users/takahashi.g/products/gendosu/agent-skills/docs/memory/debugging/test-8-edge-cases.log`
+- Edge Case 1 in `../../docs/memory/debugging/test-8-edge-cases.log`
 - Status: ✅ VERIFIED - Fallback correctly applied
 
 **Implementation**: PHASE-1-TODO-READING.md Step 3.3 (Sanitization Logic)
@@ -163,7 +163,7 @@ This document describes edge case handling and error recovery strategies impleme
 - Final `BRANCH_NAME = "bugfix/fix-login-error-handling"`
 
 **Verification**:
-- Edge Case 2 in `/Users/takahashi.g/products/gendosu/agent-skills/docs/memory/debugging/test-8-edge-cases.log`
+- Edge Case 2 in `../../docs/memory/debugging/test-8-edge-cases.log`
 - Status: ✅ VERIFIED - Consecutive hyphens correctly normalized
 
 **Implementation**: PHASE-1-TODO-READING.md Step 3.3 (Sanitization Logic, consecutive hyphen reduction)
@@ -186,7 +186,7 @@ This document describes edge case handling and error recovery strategies impleme
 - User notified with clear error message
 
 **Verification**:
-- Edge Case 3 in `/Users/takahashi.g/products/gendosu/agent-skills/docs/memory/debugging/test-8-edge-cases.log`
+- Edge Case 3 in `../../docs/memory/debugging/test-8-edge-cases.log`
 - Status: ✅ VERIFIED - File not found error detected and handled gracefully
 
 **Implementation**: PHASE-1-TODO-READING.md Step 1 (File reading with error handling)
@@ -214,7 +214,7 @@ This document describes edge case handling and error recovery strategies impleme
 - Final `BRANCH_NAME = "feature/add-new-feature-real-time-notifications"`
 
 **Verification**:
-- Edge Case 4 in `/Users/takahashi.g/products/gendosu/agent-skills/docs/memory/debugging/test-8-edge-cases.log`
+- Edge Case 4 in `../../docs/memory/debugging/test-8-edge-cases.log`
 - Status: ✅ VERIFIED - Special characters removed, Git naming conventions met
 
 **Implementation**: PHASE-1-TODO-READING.md Step 3.3 (Sanitization Logic)
@@ -240,7 +240,7 @@ This document describes edge case handling and error recovery strategies impleme
 - Final `BRANCH_NAME = "feature/lorem-ipsum-dolor-sit-amet"`
 
 **Verification**:
-- Edge Case 5 in `/Users/takahashi.g/products/gendosu/agent-skills/docs/memory/debugging/test-8-edge-cases.log`
+- Edge Case 5 in `../../docs/memory/debugging/test-8-edge-cases.log`
 - Status: ✅ VERIFIED - Default "feature" type correctly applied
 
 **Implementation**: PHASE-1-TODO-READING.md Step 3.2 (Branch type determination with default)
@@ -365,7 +365,7 @@ HAS_BRANCH_OPTION = true
   ```
 
 **Verification**:
-- Scenario 3 in `/Users/takahashi.g/products/gendosu/agent-skills/docs/memory/debugging/test-7-phase9-integration.log`
+- Scenario 3 in `../../docs/memory/debugging/test-7-phase9-integration.log`
 - Status: ✅ VERIFIED - REPLACE strategy correctly applied
 
 **Implementation**: PHASE-9-UPDATE.md Sub-step 10.1 Step 2.4 (Phase 0 detection and deduplication)
@@ -502,14 +502,14 @@ HAS_BRANCH_OPTION = true
 All edge cases documented here have been verified through comprehensive testing:
 
 - **Phase 1 Argument Parsing**: Test 4, Test 6 (Unit Tests)
-  - Log: `/Users/takahashi.g/products/gendosu/agent-skills/docs/memory/debugging/test-4-argument-parsing.log`
-  - Log: `/Users/takahashi.g/products/gendosu/agent-skills/docs/memory/debugging/test-6-phase1-unit.log`
+  - Log: `../../docs/memory/debugging/test-4-argument-parsing.log`
+  - Log: `../../docs/memory/debugging/test-6-phase1-unit.log`
 
 - **Phase 1 Branch Name Generation**: Test 8 (Edge Case Tests)
-  - Log: `/Users/takahashi.g/products/gendosu/agent-skills/docs/memory/debugging/test-8-edge-cases.log`
+  - Log: `../../docs/memory/debugging/test-8-edge-cases.log`
 
 - **Phase 9 Task Insertion**: Test 7 (Integration Tests)
-  - Log: `/Users/takahashi.g/products/gendosu/agent-skills/docs/memory/debugging/test-7-phase9-integration.log`
+  - Log: `../../docs/memory/debugging/test-7-phase9-integration.log`
 
 **Test Coverage**: 16/16 tests PASSED (100% success rate)
 

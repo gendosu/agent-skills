@@ -591,7 +591,7 @@ After modifying Phase 9 implementation, verify the following:
   - [ ] Test Scenario 5: Existing Phase 0 replacement works correctly
   - [ ] Test Scenario 6: PR phase number auto-calculation works
 
-**Reference**: See `/Users/takahashi.g/products/gendosu/agent-skills/docs/memory/debugging/test-7-phase9-integration.log` for integration test results.
+**Reference**: See `../../docs/memory/debugging/test-7-phase9-integration.log` for integration test results.
 
 ---
 

@@ -409,7 +409,7 @@ After modifying Phase 1 implementation, verify the following:
   - [ ] Test Case 4: No flags → all variables false/empty
   - [ ] Test Case 5: `--pr --branch custom-name` → both flags + custom name
 
-**Reference**: See `/Users/takahashi.g/products/gendosu/agent-skills/docs/memory/debugging/test-6-phase1-unit.log` for unit test results.
+**Reference**: See `../../docs/memory/debugging/test-6-phase1-unit.log` for unit test results.
 
 ---
 
