@@ -87,6 +87,58 @@ The following files MUST be created by the Main Claude executor (NOT by subagent
 
   **✅ INTEGRATION VERIFICATION PASSED**: Only proceed to step 10 when all integration checks pass OR user explicitly approves proceeding with warnings.
 
+9.5. **Retrieve Phase 1 Variables (MANDATORY BEFORE STEP 10)**
+
+    Before executing Step 10 conditional logic, retrieve the variables set in Phase 0.1.
+
+    **Implementation:**
+
+    1. Search the conversation history for "Phase 1 Variables Summary" or "=== Phase 1 Variables Summary ==="
+       - Look for a block containing the following variables:
+         - `HAS_BRANCH_OPTION`
+         - `HAS_PR_OPTION`
+         - `BRANCH_NAME`
+         - `IS_AUTO_GENERATED`
+
+    2. Extract the variable values from the summary block:
+       - Parse each line to extract the variable name and value
+       - Store the values for use in Step 10
+
+    3. If variables are not found in conversation history:
+       - Set default values:
+         - `HAS_BRANCH_OPTION = false`
+         - `HAS_PR_OPTION = false`
+         - `BRANCH_NAME = ""`
+         - `IS_AUTO_GENERATED = false`
+       - Log warning message:
+         ```
+         ⚠️ WARNING: Phase 1 variables not found in conversation history
+         Using default values:
+           HAS_BRANCH_OPTION = false
+           HAS_PR_OPTION = false
+           BRANCH_NAME = ""
+           IS_AUTO_GENERATED = false
+         ```
+       - Continue execution with default values
+
+    4. Log the retrieved/default values for debugging:
+       ```
+       === Phase 9 Step 9.5: Variables Retrieved ===
+       HAS_BRANCH_OPTION = [value]
+       HAS_PR_OPTION = [value]
+       BRANCH_NAME = [value]
+       IS_AUTO_GENERATED = [value]
+       =============================================
+       ```
+
+    5. Validate variable types:
+       - Confirm `HAS_BRANCH_OPTION` is boolean (true/false)
+       - Confirm `HAS_PR_OPTION` is boolean (true/false)
+       - Confirm `BRANCH_NAME` is string (may be empty)
+       - Confirm `IS_AUTO_GENERATED` is boolean (true/false)
+
+    **⚠️ CRITICAL**: These variables MUST be available for Step 10 conditional logic. If retrieval fails, Step 10 will use default values (no conditional tasks will be inserted).
+
 10. **Thorough Update of $ARGUMENTS File (MANDATORY - MUST BE EXECUTED)**
     - **🚨 CRITICAL**: This step is the CORE PURPOSE of the command and MUST be executed
     - Use Edit or Write tool to update the file specified in $ARGUMENTS parameter
@@ -94,98 +146,359 @@ The following files MUST be created by the Main Claude executor (NOT by subagent
 
     - **🔀 Branch Creation Task (Conditional)**
 
-      **Decision Point**: Determine if branch creation task should be inserted based on argument parsing results from Phase 0.1.
+      ### Sub-step 10.1: Conditional Branch Task Insertion
 
-      ```
-      IF (HAS_BRANCH_OPTION = true) THEN
-          → Execute branch creation task insertion
-      ELSE
-          → Skip branch creation task insertion, proceed to PR check
-      END IF
-      ```
+      **Step 1: Check Condition**
 
-      **Variables Referenced**:
-      - `HAS_BRANCH_OPTION` (boolean): Set in Phase 0.1 Step 2, indicates `--branch` flag presence
-      - `BRANCH_NAME` (string): Branch name from argument or auto-generated in Phase 0.1 Step 3
-      - `IS_AUTO_GENERATED` (boolean): Indicates whether branch name was auto-generated
+      1. Retrieve the value of `HAS_BRANCH_OPTION` from Phase 1 variables (retrieved in Step 9.5)
 
-      **Branch Name Determination**:
-      ```
-      IF (IS_AUTO_GENERATED = false) THEN
-          → Use BRANCH_NAME as-is (user explicitly specified branch name)
-      ELSE IF (IS_AUTO_GENERATED = true) THEN
-          → Use BRANCH_NAME generated in Phase 0.1 Step 3 (auto-generated from feature description)
-      END IF
-      ```
+      2. Log the condition check:
+         ```
+         === Step 10.1: Checking Branch Task Insertion Condition ===
+         HAS_BRANCH_OPTION = [value]
+         ===========================================================
+         ```
 
-      **Task Template to Insert** (when `HAS_BRANCH_OPTION = true`):
+      **Step 2: Execute Conditional Logic**
 
-      ```markdown
-      ### Phase 0: Branch Creation ✅
+      IF `HAS_BRANCH_OPTION = true`:
 
-      - [ ] ✅ **Create Branch**
-        - Branch name: `{BRANCH_NAME}`
-        - Command: `git checkout -b {BRANCH_NAME}`
-        - Verification: Confirm current branch is `{BRANCH_NAME}`
-        - 📋 Commit all changes on this branch
-        - Estimated time: 1 minute
-      ```
+        **Step 2.1: Determine Branch Name**
 
-      **Insertion Rules**:
-      - **Location**: Insert BEFORE Phase 1 tasks (as Phase 0)
-      - **Placeholder Replacement**: Replace `{BRANCH_NAME}` with actual branch name
-      - **Deduplication**: If existing Phase 0 task exists, REPLACE with this template
-      - **Numbering**: Renumber subsequent phases if necessary (existing Phase 1 remains Phase 1, etc.)
+        1. Check the value of `IS_AUTO_GENERATED`:
+           - If `IS_AUTO_GENERATED = true`:
+             - Use the branch name generated in Phase 0.1 Step 3
+             - Retrieve `BRANCH_NAME` from Phase 1 variables
+             - Log: "Using auto-generated branch name: [BRANCH_NAME value]"
+           - If `IS_AUTO_GENERATED = false`:
+             - Use the branch name from `BRANCH_NAME` variable (user-provided)
+             - Retrieve `BRANCH_NAME` from Phase 1 variables
+             - Log: "Using user-provided branch name: [BRANCH_NAME value]"
+
+        2. Validate that `BRANCH_NAME` is not empty:
+           - If `BRANCH_NAME` is empty string AND `IS_AUTO_GENERATED = true`:
+             - Log error:
+               ```
+               ⚠️ ERROR: Branch name generation failed in Phase 0.1
+               Using fallback branch name: feature/task-implementation
+               ```
+             - Set `BRANCH_NAME = "feature/task-implementation"`
+           - If `BRANCH_NAME` is empty string AND `IS_AUTO_GENERATED = false`:
+             - Log error:
+               ```
+               ⚠️ ERROR: Branch name value missing from arguments
+               Using fallback branch name: feature/task-implementation
+               ```
+             - Set `BRANCH_NAME = "feature/task-implementation"`
+
+        3. Log the final branch name to be used:
+           ```
+           Branch name for task insertion: [BRANCH_NAME value]
+           ```
+
+        **Step 2.2: Load Branch Task Template**
+
+        Use the following template exactly as shown:
+
+        ```markdown
+        ### Phase 0: Branch Creation ✅
+
+        - [ ] ✅ **Create Branch**
+          - Branch name: `{BRANCH_NAME}`
+          - Command: `git checkout -b {BRANCH_NAME}`
+          - Verification: Confirm current branch is `{BRANCH_NAME}`
+          - 📋 Commit all changes on this branch
+          - Estimated time: 1 minute
+        ```
+
+        **Step 2.3: Replace Placeholder**
+
+        1. Replace all occurrences of `{BRANCH_NAME}` in the template with the actual branch name value determined in Step 2.1
+
+        2. The result should be a complete markdown section with the actual branch name
+
+        3. Example result (if BRANCH_NAME = "feature/test-fix"):
+           ```markdown
+           ### Phase 0: Branch Creation ✅
+
+           - [ ] ✅ **Create Branch**
+             - Branch name: `feature/test-fix`
+             - Command: `git checkout -b feature/test-fix`
+             - Verification: Confirm current branch is `feature/test-fix`
+             - 📋 Commit all changes on this branch
+             - Estimated time: 1 minute
+           ```
+
+        **Step 2.4: Check for Existing Phase 0**
+
+        1. Read the current TODO file content (the $ARGUMENTS file)
+
+        2. Search for existing Phase 0 section:
+           - Look for the pattern `### Phase 0:` or `## Phase 0:`
+           - Search for the pattern `Phase 0: Branch Creation`
+
+        3. Count the number of existing Phase 0 blocks found
+
+        4. Determine insertion strategy:
+           - If Phase 0 block count = 0:
+             - Strategy: INSERT
+             - Action: Insert new Phase 0 before Phase 1
+             - Log:
+               ```
+               No existing Phase 0 found - will insert new Phase 0 before Phase 1
+               ```
+           - If Phase 0 block count = 1:
+             - Strategy: REPLACE
+             - Action: Remove the existing Phase 0 section and insert new one in same position
+             - Log:
+               ```
+               Existing Phase 0 found - will replace with new Phase 0
+               ```
+           - If Phase 0 block count > 1:
+             - Strategy: REPLACE_ALL
+             - Action: Remove ALL existing Phase 0 sections and insert new one before Phase 1
+             - Log:
+               ```
+               ⚠️ WARNING: Multiple Phase 0 blocks detected (count: [N])
+               Removing all existing Phase 0 blocks and inserting new Phase 0
+               ```
+
+        **Step 2.5: Execute Task Insertion**
+
+        1. Based on the strategy determined in Step 2.4:
+
+           **INSERT mode (no existing Phase 0):**
+           - Locate the position of `## Phase 1:` or `### Phase 1:` in the file
+           - Use Edit tool to insert the new Phase 0 section BEFORE Phase 1
+           - Preserve all blank lines and formatting
+           - Do not modify Phase 1 or subsequent phases
+
+           **REPLACE mode (single existing Phase 0):**
+           - Locate the start and end of the existing Phase 0 section
+           - Phase 0 section starts at `## Phase 0:` or `### Phase 0:`
+           - Phase 0 section ends at the next `## Phase` or `### Phase` heading
+           - Use Edit tool to replace the old Phase 0 section with the new template
+           - Preserve surrounding content and formatting
+
+           **REPLACE_ALL mode (multiple existing Phase 0):**
+           - Locate ALL Phase 0 sections in the file
+           - Remove each Phase 0 section completely
+           - Insert the new Phase 0 section before Phase 1
+           - Use Edit tool for each removal and the final insertion
+
+        2. Verify the insertion:
+           - Read the modified section of the TODO file
+           - Confirm the branch name was correctly replaced (no `{BRANCH_NAME}` placeholders remain)
+           - Confirm the section is in the correct position (before Phase 1)
+           - Confirm Phase 1 and other phases are unchanged
+
+        3. Log the completion:
+           ```
+           ✅ Branch task insertion complete
+           Strategy: [INSERT/REPLACE/REPLACE_ALL]
+           Branch name: [actual value]
+           Phase 0 section verified
+           ```
+
+      ELSE (HAS_BRANCH_OPTION = false):
+
+        Log and skip:
+        ```
+        Branch task insertion condition not met (HAS_BRANCH_OPTION = false)
+        Skipping branch task insertion - no Phase 0 will be added
+        Proceeding to Sub-step 10.2 (PR task check)
+        ```
+
+        Proceed directly to Sub-step 10.2 (PR task insertion check)
 
     - **🔀 PR Creation Tasks (Conditional)**
 
-      **Decision Point**: Determine if PR creation tasks should be inserted based on argument parsing results from Phase 0.1.
+      ### Sub-step 10.2: Conditional PR Task Insertion
 
-      ```
-      IF (HAS_PR_OPTION = true) THEN
-          → Execute PR creation task insertion
-      ELSE
-          → Skip PR creation task insertion, finalize task list without PR tasks
-      END IF
-      ```
+      **Step 1: Check Condition**
 
-      **Variables Referenced**:
-      - `HAS_PR_OPTION` (boolean): Set in Phase 0.1 Step 2, indicates `--pr` flag presence
-      - `BRANCH_NAME` (string): Branch name from argument or auto-generated (used in push command)
+      1. Retrieve the value of `HAS_PR_OPTION` from Phase 1 variables (retrieved in Step 9.5)
 
-      **Task Template to Insert** (when `HAS_PR_OPTION = true`):
+      2. Log the condition check:
+         ```
+         === Step 10.2: Checking PR Task Insertion Condition ===
+         HAS_PR_OPTION = [value]
+         ========================================================
+         ```
 
-      ```markdown
-      ### Phase N+1: Pull Request Creation and Merge ✅/⏳
+      **Step 2: Execute Conditional Logic**
 
-      - [ ] ✅ N+1.1 PR Preparation Following Template
-        - [ ] Read `.github/PULL_REQUEST_TEMPLATE.md` or `.github/pull_request_template.md`
-        - [ ] If template exists, create PR description following its structure
-        - [ ] If no template, use standard format: Summary, Changes, Testing
-        - Estimated time: 5 minutes
+      IF `HAS_PR_OPTION = true`:
 
-      - [ ] ✅ N+1.2 Create Pull Request
-        - [ ] Push changes to remote: `git push -u origin {BRANCH_NAME}`
-        - [ ] Verify remote branch was created successfully
-        - [ ] Create PR using gh CLI: `gh pr create --title "[Title]" --body "[Description created from template]"`
-        - [ ] Alternative: Use GitHub Web interface if gh CLI is unavailable
-        - [ ] Verify PR was created successfully and record PR number
-        - Estimated time: 3 minutes
+        **Step 2.1: Determine Phase Number**
 
-      - [ ] ⏳ N+1.3 Review and Merge
-        - [ ] Check CI/CD pipeline results
-        - [ ] Address review comments if any
-        - [ ] Request review from team members if necessary
-        - [ ] After approval, execute merge: `gh pr merge`
-        - Estimated time: Variable (depends on review wait time)
-      ```
+        1. Read the current TODO file content (the $ARGUMENTS file)
 
-      **Insertion Rules**:
-      - **Location**: Insert AFTER all existing task phases (as Phase N+1)
-      - **Placeholder Replacement**: Replace `{BRANCH_NAME}` with the actual branch name
-      - **Deduplication**: If existing final phase contains PR tasks, REPLACE with this template
-      - **Phase Number Calculation**: Calculate N based on highest existing phase number (N+1 becomes the new final phase)
-      - **Important**: Do NOT insert when only `--branch` is specified without `--pr`
+        2. Count existing phases in the TODO file:
+           - Search for all occurrences of the pattern `## Phase [N]:` or `### Phase [N]:`
+           - Extract all phase numbers found
+           - Identify the highest phase number (N_max)
+
+        3. Calculate new phase number:
+           - New PR phase number = N_max + 1
+           - Store this as `PR_PHASE_NUMBER`
+
+        4. Log the phase calculation:
+           ```
+           Current highest phase number: [N_max]
+           New PR phase will be: Phase [PR_PHASE_NUMBER]
+           ```
+
+        **Step 2.2: Retrieve Branch Name**
+
+        1. Retrieve `BRANCH_NAME` from Phase 1 variables (from Step 9.5)
+
+        2. Validate that `BRANCH_NAME` is not empty:
+           - If `BRANCH_NAME` is empty string:
+             - Log warning:
+               ```
+               ⚠️ WARNING: Branch name is empty for PR task insertion
+               Using fallback branch name: feature/task-implementation
+               ```
+             - Set `BRANCH_NAME = "feature/task-implementation"`
+
+        3. Log the branch name to be used:
+           ```
+           Branch name for PR task insertion: [BRANCH_NAME value]
+           ```
+
+        **Step 2.3: Load PR Task Template**
+
+        Use the following template exactly as shown:
+
+        ```markdown
+        ### Phase {PHASE_NUMBER}: Pull Request Creation and Merge ✅/⏳
+
+        - [ ] ✅ {PHASE_NUMBER}.1 PR Preparation Following Template
+          - [ ] Read `.github/PULL_REQUEST_TEMPLATE.md` or `.github/pull_request_template.md`
+          - [ ] If template exists, create PR description following its structure
+          - [ ] If no template, use standard format: Summary, Changes, Testing
+          - Estimated time: 5 minutes
+
+        - [ ] ✅ {PHASE_NUMBER}.2 Create Pull Request
+          - [ ] Push changes to remote: `git push -u origin {BRANCH_NAME}`
+          - [ ] Verify remote branch was created successfully
+          - [ ] Create PR using gh CLI: `gh pr create --title "[Title]" --body "[Description created from template]"`
+          - [ ] Alternative: Use GitHub Web interface if gh CLI is unavailable
+          - [ ] Verify PR was created successfully and record PR number
+          - Estimated time: 3 minutes
+
+        - [ ] ⏳ {PHASE_NUMBER}.3 Review and Merge
+          - [ ] Check CI/CD pipeline results
+          - [ ] Address review comments if any
+          - [ ] Request review from team members if necessary
+          - [ ] After approval, execute merge: `gh pr merge`
+          - Estimated time: Variable (depends on review wait time)
+        ```
+
+        **Step 2.4: Replace Placeholders**
+
+        1. Replace all occurrences of `{PHASE_NUMBER}` in the template with the actual PR phase number value (PR_PHASE_NUMBER from Step 2.1)
+
+        2. Replace all occurrences of `{BRANCH_NAME}` in the template with the actual branch name value (from Step 2.2)
+
+        3. The result should be a complete markdown section with actual values
+
+        4. Example result (if PR_PHASE_NUMBER = 5 and BRANCH_NAME = "feature/test-fix"):
+           ```markdown
+           ### Phase 5: Pull Request Creation and Merge ✅/⏳
+
+           - [ ] ✅ 5.1 PR Preparation Following Template
+             - [ ] Read `.github/PULL_REQUEST_TEMPLATE.md` or `.github/pull_request_template.md`
+             - [ ] If template exists, create PR description following its structure
+             - [ ] If no template, use standard format: Summary, Changes, Testing
+             - Estimated time: 5 minutes
+
+           - [ ] ✅ 5.2 Create Pull Request
+             - [ ] Push changes to remote: `git push -u origin feature/test-fix`
+             - [ ] Verify remote branch was created successfully
+             - [ ] Create PR using gh CLI: `gh pr create --title "[Title]" --body "[Description created from template]"`
+             - [ ] Alternative: Use GitHub Web interface if gh CLI is unavailable
+             - [ ] Verify PR was created successfully and record PR number
+             - Estimated time: 3 minutes
+
+           - [ ] ⏳ 5.3 Review and Merge
+             - [ ] Check CI/CD pipeline results
+             - [ ] Address review comments if any
+             - [ ] Request review from team members if necessary
+             - [ ] After approval, execute merge: `gh pr merge`
+             - Estimated time: Variable (depends on review wait time)
+           ```
+
+        **Step 2.5: Check for Existing PR Phase**
+
+        1. Search the TODO file for existing PR-related phases:
+           - Look for patterns:
+             - "Pull Request Creation"
+             - "PR Creation"
+             - "Create Pull Request"
+           - Check if the final phase contains PR-related tasks
+
+        2. Determine if deduplication is needed:
+           - If PR-related phase exists at the end:
+             - Strategy: REPLACE
+             - Action: Remove existing PR phase and insert new one
+             - Log:
+               ```
+               Existing PR phase found - will replace with new PR phase
+               ```
+           - If no PR-related phase exists:
+             - Strategy: APPEND
+             - Action: Append new PR phase at the end
+             - Log:
+               ```
+               No existing PR phase found - will append new PR phase at end
+               ```
+
+        **Step 2.6: Execute Task Insertion**
+
+        1. Based on the strategy determined in Step 2.5:
+
+           **APPEND mode (no existing PR phase):**
+           - Locate the end of the TODO file
+           - Use Edit tool to append the new PR phase section at the end
+           - Ensure there is a blank line before the new phase section
+           - Do not modify any existing phases
+
+           **REPLACE mode (existing PR phase):**
+           - Locate the start and end of the existing PR phase section
+           - PR phase section starts at the matching phase heading
+           - PR phase section ends at the end of the file (since it's typically the last phase)
+           - Use Edit tool to replace the old PR phase section with the new template
+           - Preserve formatting
+
+        2. Verify the insertion:
+           - Read the appended/replaced section of the TODO file
+           - Confirm all placeholders were correctly replaced:
+             - No `{PHASE_NUMBER}` placeholders remain
+             - No `{BRANCH_NAME}` placeholders remain
+           - Confirm the phase number is correct (N_max + 1)
+           - Confirm the branch name appears in push commands
+
+        3. Log the completion:
+           ```
+           ✅ PR task insertion complete
+           Strategy: [APPEND/REPLACE]
+           Phase number: [PR_PHASE_NUMBER]
+           Branch name: [actual value]
+           PR phase section verified
+           ```
+
+      ELSE (HAS_PR_OPTION = false):
+
+        Log and skip:
+        ```
+        PR task insertion condition not met (HAS_PR_OPTION = false)
+        Skipping PR task insertion - no PR phase will be added
+        Proceeding to Step 11 (finalization)
+        ```
+
+        Proceed to Step 11 (finalization)
 
     - **🔀 Conditional Behavior Summary**
 
@@ -226,6 +539,59 @@ The following files MUST be created by the Main Claude executor (NOT by subagent
     - Record progress rate and update date
     - Add links to related documents and files
     - Add structured new sections while preserving existing content
+
+---
+
+## Post-Implementation Verification Checklist
+
+After modifying Phase 9 implementation, verify the following:
+
+- [ ] **Variable Retrieval Verification (Step 9.5)**
+  - [ ] Conversation history search for "Phase 1 Variables Summary" works
+  - [ ] All 4 variables are extracted correctly (HAS_BRANCH_OPTION, HAS_PR_OPTION, BRANCH_NAME, IS_AUTO_GENERATED)
+  - [ ] Default values are set correctly when variables not found
+  - [ ] Variable type validation works (boolean/string)
+  - [ ] Retrieved values are logged for debugging
+
+- [ ] **Branch Task Insertion Verification (Sub-step 10.1)**
+  - [ ] Condition check: `HAS_BRANCH_OPTION = true` triggers insertion
+  - [ ] Branch name determination logic works:
+    - [ ] Auto-generated branch name used when `IS_AUTO_GENERATED = true`
+    - [ ] User-provided branch name used when `IS_AUTO_GENERATED = false`
+    - [ ] Fallback to "feature/task-implementation" when `BRANCH_NAME` is empty
+  - [ ] Template loading works correctly
+  - [ ] Placeholder replacement works: `{BRANCH_NAME}` → actual value
+  - [ ] Existing Phase 0 detection works:
+    - [ ] INSERT strategy when no Phase 0 exists
+    - [ ] REPLACE strategy when single Phase 0 exists
+    - [ ] REPLACE_ALL strategy when multiple Phase 0 blocks exist
+  - [ ] Edit tool usage correctly inserts/replaces content
+  - [ ] Post-insertion verification confirms no placeholders remain
+
+- [ ] **PR Task Insertion Verification (Sub-step 10.2)**
+  - [ ] Condition check: `HAS_PR_OPTION = true` triggers insertion
+  - [ ] Phase number calculation works: N_max + 1
+  - [ ] Branch name retrieval works (from Phase 1 variables)
+  - [ ] Fallback branch name used when empty
+  - [ ] Template loading works correctly
+  - [ ] Placeholder replacement works:
+    - [ ] `{PHASE_NUMBER}` → calculated phase number
+    - [ ] `{BRANCH_NAME}` → actual branch name
+  - [ ] Existing PR phase detection works:
+    - [ ] APPEND strategy when no PR phase exists
+    - [ ] REPLACE strategy when existing PR phase exists
+  - [ ] Edit tool usage correctly inserts/replaces content
+  - [ ] Post-insertion verification confirms no placeholders remain
+
+- [ ] **Integration Testing**
+  - [ ] Test Scenario 1: `HAS_BRANCH_OPTION=true, HAS_PR_OPTION=false` → Only Branch Task inserted
+  - [ ] Test Scenario 2: `HAS_BRANCH_OPTION=false, HAS_PR_OPTION=true` → Only PR Task inserted
+  - [ ] Test Scenario 3: `HAS_BRANCH_OPTION=true, HAS_PR_OPTION=true` → Both tasks inserted
+  - [ ] Test Scenario 4: Both false → No additional tasks inserted
+  - [ ] Test Scenario 5: Existing Phase 0 replacement works correctly
+  - [ ] Test Scenario 6: PR phase number auto-calculation works
+
+**Reference**: See `/Users/takahashi.g/products/gendosu/agent-skills/docs/memory/debugging/test-7-phase9-integration.log` for integration test results.
 
 ---
 

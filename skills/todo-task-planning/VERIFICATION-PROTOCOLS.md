@@ -21,6 +21,8 @@ This document contains all verification protocols, validation checklists, and er
 3. [Phase 2 Skip Detection](#phase-2-skip-detection)
 4. [Integration Verification](#integration-verification)
 5. [Questions Processing Integrity Validation](#questions-processing-integrity-validation)
+6. [Phase 1 Argument Parsing Verification Protocol](#phase-1-argument-parsing-verification-protocol)
+7. [Phase 9 Conditional Task Insertion Verification Protocol](#phase-9-conditional-task-insertion-verification-protocol)
 
 ---
 
@@ -448,6 +450,237 @@ When executing Phase 5, refer to this document for:
 ```markdown
 **⚠️ VERIFICATION REQUIRED**: Execute questions processing integrity validation defined in [VERIFICATION-PROTOCOLS.md](VERIFICATION-PROTOCOLS.md#questions-processing-integrity-validation)
 ```
+
+---
+
+## Phase 1 Argument Parsing Verification Protocol
+
+**Purpose**: Verify that Phase 1 Step 2 (Argument Parsing) correctly extracts and sets all git workflow variables.
+
+**When to Execute**: After completing Phase 1 Step 2 and before proceeding to Phase 2.
+
+### Verification Checklist
+
+- [ ] **Variable Existence Check**
+  - [ ] `HAS_BRANCH_OPTION` variable exists and is boolean
+  - [ ] `HAS_PR_OPTION` variable exists and is boolean
+  - [ ] `BRANCH_NAME` variable exists and is string (may be empty)
+  - [ ] `IS_AUTO_GENERATED` variable exists and is boolean
+
+- [ ] **Flag Detection Verification**
+  - [ ] `--pr` flag correctly detected when present in `$ARGUMENTS`
+  - [ ] `--branch` flag correctly detected when present in `$ARGUMENTS`
+  - [ ] Both flags correctly detected when both are present
+  - [ ] No false positives when flags are absent
+
+- [ ] **Branch Name Extraction Verification**
+  - [ ] When `--branch [value]` provided: `BRANCH_NAME = [value]`, `IS_AUTO_GENERATED = false`
+  - [ ] When `--branch` without value: `BRANCH_NAME = ""`, `IS_AUTO_GENERATED = true`
+  - [ ] When `--branch` followed by another flag: `BRANCH_NAME = ""`, `IS_AUTO_GENERATED = true`
+
+- [ ] **PR Requires Branch Validation**
+  - [ ] When `--pr` only: `HAS_BRANCH_OPTION` automatically set to `true`
+  - [ ] When `--pr` only: `IS_AUTO_GENERATED` automatically set to `true`
+  - [ ] Validation message logged correctly
+
+- [ ] **Variable Summary Output**
+  - [ ] "Phase 1 Variables Summary" block present in conversation
+  - [ ] All 4 variables listed in summary with correct values
+  - [ ] Summary format is parseable (key = value format)
+
+- [ ] **Branch Name Generation Verification (if IS_AUTO_GENERATED = true)**
+  - [ ] Step 3 executed (title extraction, type determination, sanitization)
+  - [ ] Generated `BRANCH_NAME` is not empty
+  - [ ] Generated `BRANCH_NAME` follows Git naming conventions
+  - [ ] Fallback used when title extraction fails
+
+### Expected Outcomes by Input Pattern
+
+| Input | HAS_PR_OPTION | HAS_BRANCH_OPTION | BRANCH_NAME | IS_AUTO_GENERATED |
+|-------|---------------|-------------------|-------------|-------------------|
+| `TODO.md` | false | false | "" | false |
+| `TODO.md --branch` | false | true | "" (→ generated in Step 3) | true |
+| `TODO.md --branch feature/auth` | false | true | "feature/auth" | false |
+| `TODO.md --pr` | true | true | "" (→ generated in Step 3) | true |
+| `TODO.md --pr --branch feature/auth` | true | true | "feature/auth" | false |
+
+### Verification Failure Recovery
+
+If verification fails:
+
+1. **Log the failure**:
+   ```
+   ❌ PHASE 1 VERIFICATION FAILED
+   Failed check: [specific checklist item]
+   Current variable values:
+     HAS_BRANCH_OPTION = [value]
+     HAS_PR_OPTION = [value]
+     BRANCH_NAME = [value]
+     IS_AUTO_GENERATED = [value]
+   Expected values: [describe expected state]
+   ```
+
+2. **Re-execute Phase 1 Step 2** with logging enabled
+
+3. **Re-run verification checklist**
+
+4. **If failure persists**: Report to user with detailed error context
+
+**Reference**: See PHASE-1-TODO-READING.md for implementation details.
+
+---
+
+## Phase 9 Conditional Task Insertion Verification Protocol
+
+**Purpose**: Verify that Phase 9 Step 10 (Conditional Task Insertion) correctly inserts branch and PR tasks based on Phase 1 variables.
+
+**When to Execute**: After completing Phase 9 Step 10 and before proceeding to Phase 10.
+
+### Pre-Insertion Verification (Step 9.5)
+
+- [ ] **Variable Retrieval Check**
+  - [ ] Conversation history search for "Phase 1 Variables Summary" executed
+  - [ ] All 4 variables extracted successfully
+  - [ ] Default values used if variables not found (with warning logged)
+  - [ ] Variable types validated (boolean/string)
+
+### Branch Task Insertion Verification (Sub-step 10.1)
+
+- [ ] **Condition Evaluation**
+  - [ ] `HAS_BRANCH_OPTION` value correctly retrieved from Phase 1 variables
+  - [ ] Conditional logic correctly branches:
+    - [ ] If `true`: Branch task insertion executed
+    - [ ] If `false`: Branch task insertion skipped with log message
+
+- [ ] **Branch Name Determination (when HAS_BRANCH_OPTION = true)**
+  - [ ] `IS_AUTO_GENERATED` value checked correctly
+  - [ ] Auto-generated branch name used when `IS_AUTO_GENERATED = true`
+  - [ ] User-provided branch name used when `IS_AUTO_GENERATED = false`
+  - [ ] Fallback to "feature/task-implementation" when `BRANCH_NAME` is empty
+
+- [ ] **Template and Placeholder Replacement**
+  - [ ] Branch task template loaded correctly
+  - [ ] All `{BRANCH_NAME}` placeholders replaced with actual value
+  - [ ] No placeholders remain in final output
+
+- [ ] **Existing Phase 0 Detection**
+  - [ ] Existing Phase 0 section(s) detected correctly
+  - [ ] Correct insertion strategy selected:
+    - [ ] INSERT when no Phase 0 exists
+    - [ ] REPLACE when single Phase 0 exists
+    - [ ] REPLACE_ALL when multiple Phase 0 blocks exist
+
+- [ ] **File Update Execution**
+  - [ ] Edit tool used correctly to modify TODO file
+  - [ ] Phase 0 section inserted/replaced in correct position (before Phase 1)
+  - [ ] Surrounding content preserved (Phase 1+ unchanged)
+  - [ ] Branch name appears correctly in all expected locations
+
+### PR Task Insertion Verification (Sub-step 10.2)
+
+- [ ] **Condition Evaluation**
+  - [ ] `HAS_PR_OPTION` value correctly retrieved from Phase 1 variables
+  - [ ] Conditional logic correctly branches:
+    - [ ] If `true`: PR task insertion executed
+    - [ ] If `false`: PR task insertion skipped with log message
+
+- [ ] **Phase Number Calculation (when HAS_PR_OPTION = true)**
+  - [ ] Existing phase numbers extracted from TODO file
+  - [ ] Maximum phase number (N_max) identified correctly
+  - [ ] PR phase number calculated as N_max + 1
+
+- [ ] **Branch Name Retrieval**
+  - [ ] `BRANCH_NAME` retrieved from Phase 1 variables
+  - [ ] Fallback to "feature/task-implementation" when empty
+  - [ ] Branch name validated as non-empty
+
+- [ ] **Template and Placeholder Replacement**
+  - [ ] PR task template loaded correctly
+  - [ ] All `{PHASE_NUMBER}` placeholders replaced with calculated value
+  - [ ] All `{BRANCH_NAME}` placeholders replaced with actual value
+  - [ ] No placeholders remain in final output
+
+- [ ] **Existing PR Phase Detection**
+  - [ ] Existing PR-related phase detected correctly (if exists)
+  - [ ] Correct insertion strategy selected:
+    - [ ] APPEND when no PR phase exists
+    - [ ] REPLACE when existing PR phase exists
+
+- [ ] **File Update Execution**
+  - [ ] Edit tool used correctly to modify TODO file
+  - [ ] PR phase section appended/replaced in correct position (at end)
+  - [ ] Phase number is sequential (N_max + 1)
+  - [ ] Branch name appears correctly in push commands
+
+### Integration Verification
+
+- [ ] **Task Insertion Matrix Verification**
+  - [ ] Verify actual insertions match expected matrix:
+
+| HAS_BRANCH_OPTION | HAS_PR_OPTION | Expected Branch Task | Expected PR Task | Actual Result |
+|-------------------|---------------|---------------------|------------------|---------------|
+| false | false | ❌ Not inserted | ❌ Not inserted | [ ] Verified |
+| true | false | ✅ Inserted | ❌ Not inserted | [ ] Verified |
+| false | true | ❌ Not inserted | ✅ Inserted | [ ] Verified |
+| true | true | ✅ Inserted | ✅ Inserted | [ ] Verified |
+
+- [ ] **File Integrity Check**
+  - [ ] Original phases (1, 2, 3, etc.) remain unchanged
+  - [ ] Phase numbering is sequential and correct
+  - [ ] No duplicate Phase 0 sections exist (after replacement)
+  - [ ] No duplicate PR phases exist (after replacement)
+  - [ ] Markdown formatting is preserved
+
+### Verification Failure Recovery
+
+If verification fails:
+
+1. **Document the failure state**:
+   ```
+   ❌ PHASE 9 VERIFICATION FAILED
+   Failed check: [specific checklist item]
+
+   Phase 1 Variables:
+     HAS_BRANCH_OPTION = [value]
+     HAS_PR_OPTION = [value]
+     BRANCH_NAME = [value]
+     IS_AUTO_GENERATED = [value]
+
+   Expected insertions:
+     Branch Task: [YES/NO]
+     PR Task: [YES/NO]
+
+   Actual file state:
+     Phase 0 exists: [YES/NO]
+     PR phase exists: [YES/NO]
+     Placeholders remaining: [list any {PLACEHOLDER} found]
+   ```
+
+2. **Read TODO file to inspect actual state**
+
+3. **Compare expected vs actual**:
+   - Expected Phase 0 content vs actual
+   - Expected PR phase content vs actual
+   - Expected phase numbering vs actual
+
+4. **Identify root cause**:
+   - Variable retrieval failure (Step 9.5)
+   - Conditional logic error (Step 10.1/10.2 condition check)
+   - Template loading error
+   - Placeholder replacement incomplete
+   - Edit tool execution failure
+
+5. **Re-execute failed step** with detailed logging
+
+6. **Re-run verification protocol**
+
+7. **If failure persists**: Report to user with:
+   - Detailed error description
+   - Variable states
+   - File content comparison (expected vs actual)
+   - Recommended manual correction steps
+
+**Reference**: See PHASE-9-UPDATE.md for implementation details.
 
 ---
 
