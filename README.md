@@ -24,17 +24,31 @@ This plugin provides Claude Code with an integrated development support centered
 
 ## Installation
 
-### From Marketplace (Recommended)
+### Supported AI Agents
 
-Run the following commands in Claude Code to add the gendosu-claude-plugins marketplace and install the CCCP plugin:
+This skill repository can be used with the following AI agents:
 
-**Step 1: Add gendosu-claude-plugins marketplace**
+| Agent | Type | Installation |
+|-------|------|-------------|
+| **Claude Code** | Anthropic's official CLI | Plugin system |
+| **OpenAI Codex** | OpenAI's agent system | Agent skills directory |
+| **Cursor** | AI pair programming editor | Agent skills directory (same as Codex) |
+
+### Installation by Agent
+
+#### Claude Code
+
+**Storage Location**: Any directory
+
+**Installation Methods**:
+
+**Option 1: From Marketplace (Recommended)**
+
 ```bash
+# Step 1: Add marketplace
 /plugin marketplace add gendosu/gendosu-claude-plugins
-```
 
-**Step 2: Install CCCP plugin**
-```bash
+# Step 2: Install plugin
 /plugin install cccp@gendosu-claude-plugins
 ```
 
@@ -45,37 +59,38 @@ Alternatively, use the interactive interface:
 
 Search for `cccp` in the `Discover` tab and install it.
 
-### From Source
+**Option 2: From Source**
 
-Clone this repository:
 ```bash
+# Clone repository
 git clone https://github.com/gendosu/agent-skills.git
-```
 
-Then install the plugin in Claude Code:
-```bash
+# Install plugin
 /plugin install /path/to/agent-skills
 ```
 
-### For OpenAI Codex
+---
 
-This repository can also be used as agent skills for OpenAI Codex. Agent skills extend Codex with specialized capabilities by packaging instructions, resources, and optional scripts.
+#### OpenAI Codex / Cursor
 
-#### Prerequisites
+**Storage Location**:
+- **Recommended**: `~/.agents/skills/cccp` (user-wide)
+- **Alternative**: `.agents/skills` (project-specific) or any directory (with skill installer)
 
-- OpenAI Codex installed
-- Basic understanding of Codex agent skills system
+**Prerequisites**:
+- OpenAI Codex or Cursor installed
+- Basic understanding of agent skills system
 
-#### Installation Methods
+**Installation Methods**:
 
 **Option 1: Using Skill Installer (Recommended)**
 
-1. Invoke the skill installer in Codex:
+1. Invoke the skill installer:
    ```
    $skill-installer
    ```
 
-2. Clone this repository to your preferred location:
+2. Clone repository to your preferred location:
    ```bash
    git clone https://github.com/gendosu/agent-skills.git
    ```
@@ -87,25 +102,23 @@ This repository can also be used as agent skills for OpenAI Codex. Agent skills 
 
 **Option 2: Manual Installation**
 
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/gendosu/agent-skills.git ~/.agents/skills/cccp
-   ```
+```bash
+# Clone to recommended location
+git clone https://github.com/gendosu/agent-skills.git ~/.agents/skills/cccp
+```
 
-2. Each skill directory in `skills/` contains a `SKILL.md` file that Codex will automatically detect.
+Each skill directory in `skills/` contains a `SKILL.md` file that will be automatically detected.
 
-3. Restart Codex to load the newly installed skills.
+Restart Codex/Cursor to load the newly installed skills.
 
-#### Skill Locations
-
-Codex searches for skills in the following directories (in order of precedence):
+**Skill Search Paths** (in order of precedence):
 - **Project-specific**: `.agents/skills` (repository root)
-- **User-wide**: `~/.agents/skills` (recommended for CCCP installation)
+- **User-wide**: `~/.agents/skills` (recommended)
 - **System-wide**: `/etc/codex/skills` (organization defaults)
 
-#### Available Skills for Codex
+#### Available Skills for Codex/Cursor
 
-The following skills are compatible with OpenAI Codex:
+The following skills are compatible with OpenAI Codex and Cursor:
 
 - **git-operations-specialist**: Git operations expert (history, conflicts, branching)
 - **project-manager**: Project management and task organization
@@ -117,7 +130,7 @@ The following skills are compatible with OpenAI Codex:
 - **key-guidelines**: Core development guidelines reference
 - **todo-output-template**: Standard TODO.md format specification
 
-#### Using Skills in Codex
+#### Using Skills in Codex/Cursor
 
 **Explicit Invocation:**
 ```
@@ -126,9 +139,9 @@ $todo-task-planning
 ```
 
 **Implicit Invocation:**
-Codex automatically selects appropriate skills based on your task description.
+Codex and Cursor automatically select appropriate skills based on your task description.
 
-For more information about Codex agent skills, visit the [OpenAI Codex Skills Documentation](https://developers.openai.com/codex/skills/).
+For more information about agent skills, visit the [OpenAI Codex Skills Documentation](https://developers.openai.com/codex/skills/).
 
 ## Skills
 

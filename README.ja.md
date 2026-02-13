@@ -24,17 +24,31 @@ Claude Code用のプラグインで、Git操作スペシャリスト、Gitワー
 
 ## インストール
 
-### マーケットプレイスから（推奨）
+### サポートされているAIエージェント
 
-Claude Code で以下のコマンドを実行して、gendosu-claude-plugins マーケットプレイスを追加し、CCCP プラグインをインストールします：
+このスキルリポジトリは、以下のAIエージェントで利用できます：
 
-**Step 1: gendosu-claude-plugins マーケットプレイスを追加**
+| エージェント | タイプ | インストール方法 |
+|-------------|--------|----------------|
+| **Claude Code** | Anthropic公式CLI | プラグインシステム |
+| **OpenAI Codex** | OpenAIエージェントシステム | エージェントスキルディレクトリ |
+| **Cursor** | AIペアプログラミングエディタ | エージェントスキルディレクトリ（Codexと同じ） |
+
+### エージェント別インストール方法
+
+#### Claude Code
+
+**格納場所**: 任意のディレクトリ
+
+**インストール方法**:
+
+**方法1: マーケットプレイスから（推奨）**
+
 ```bash
+# Step 1: マーケットプレイスを追加
 /plugin marketplace add gendosu/gendosu-claude-plugins
-```
 
-**Step 2: CCCP プラグインをインストール**
-```bash
+# Step 2: プラグインをインストール
 /plugin install cccp@gendosu-claude-plugins
 ```
 
@@ -43,39 +57,40 @@ Claude Code で以下のコマンドを実行して、gendosu-claude-plugins マ
 /plugin
 ```
 
-`Discover` タブで `cccp` を検索し、インストールします。
+`Discover` タブで `cccp` を検索してインストールします。
 
-### ソースから
+**方法2: ソースから**
 
-このリポジトリをクローン：
 ```bash
+# リポジトリをクローン
 git clone https://github.com/gendosu/agent-skills.git
-```
 
-次に、Claude Codeでプラグインをインストール：
-```bash
+# プラグインをインストール
 /plugin install /path/to/agent-skills
 ```
 
-### OpenAI Codex向け
+---
 
-このリポジトリは、OpenAI Codexのエージェントスキルとしても利用できます。エージェントスキルは、命令、リソース、オプションのスクリプトをパッケージ化することで、Codexの機能を拡張します。
+#### OpenAI Codex / Cursor
 
-#### 前提条件
+**格納場所**:
+- **推奨**: `~/.agents/skills/cccp` (ユーザー全体)
+- **代替**: `.agents/skills` (プロジェクト固有) または任意のディレクトリ（スキルインストーラー使用時）
 
-- OpenAI Codexがインストール済み
-- Codexエージェントスキルシステムの基本的な理解
+**前提条件**:
+- OpenAI CodexまたはCursorがインストール済み
+- エージェントスキルシステムの基本的な理解
 
-#### インストール方法
+**インストール方法**:
 
 **方法1: スキルインストーラーを使用（推奨）**
 
-1. Codexでスキルインストーラーを呼び出します：
+1. スキルインストーラーを呼び出します：
    ```
    $skill-installer
    ```
 
-2. このリポジトリを任意の場所にクローンします：
+2. リポジトリを任意の場所にクローンします：
    ```bash
    git clone https://github.com/gendosu/agent-skills.git
    ```
@@ -87,25 +102,23 @@ git clone https://github.com/gendosu/agent-skills.git
 
 **方法2: 手動インストール**
 
-1. このリポジトリをクローンします：
-   ```bash
-   git clone https://github.com/gendosu/agent-skills.git ~/.agents/skills/cccp
-   ```
+```bash
+# 推奨場所にクローン
+git clone https://github.com/gendosu/agent-skills.git ~/.agents/skills/cccp
+```
 
-2. `skills/`内の各スキルディレクトリには、Codexが自動的に検出する`SKILL.md`ファイルが含まれています。
+各スキルディレクトリには、自動的に検出される`SKILL.md`ファイルが含まれています。
 
-3. Codexを再起動して、新しくインストールされたスキルをロードします。
+Codex/Cursorを再起動して、新しくインストールされたスキルをロードします。
 
-#### スキルの場所
-
-Codexは以下のディレクトリでスキルを検索します（優先順位順）：
+**スキル検索パス**（優先順位順）:
 - **プロジェクト固有**: `.agents/skills` (リポジトリルート)
-- **ユーザー全体**: `~/.agents/skills` (CCCPのインストール推奨)
+- **ユーザー全体**: `~/.agents/skills` (推奨)
 - **システム全体**: `/etc/codex/skills` (組織のデフォルト)
 
-#### OpenAI Codexで利用可能なスキル
+#### OpenAI Codex/Cursorで利用可能なスキル
 
-以下のスキルがOpenAI Codexと互換性があります：
+以下のスキルがOpenAI CodexおよびCursorと互換性があります：
 
 - **git-operations-specialist**: Git操作エキスパート（履歴、競合、ブランチング）
 - **project-manager**: プロジェクト管理とタスク組織
@@ -117,7 +130,7 @@ Codexは以下のディレクトリでスキルを検索します（優先順位
 - **key-guidelines**: コア開発ガイドラインのリファレンス
 - **todo-output-template**: 標準的なTODO.mdフォーマット仕様
 
-#### Codexでのスキル使用方法
+#### Codex/Cursorでのスキル使用方法
 
 **明示的な呼び出し：**
 ```
@@ -126,9 +139,9 @@ $todo-task-planning
 ```
 
 **暗黙的な呼び出し：**
-Codexはタスクの説明に基づいて適切なスキルを自動的に選択します。
+CodexおよびCursorは、タスクの説明に基づいて適切なスキルを自動的に選択します。
 
-Codexエージェントスキルの詳細については、[OpenAI Codex Skills Documentation](https://developers.openai.com/codex/skills/)を参照してください。
+エージェントスキルの詳細については、[OpenAI Codex Skills Documentation](https://developers.openai.com/codex/skills/)を参照してください。
 
 ## スキル
 
