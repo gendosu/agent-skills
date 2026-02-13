@@ -18,7 +18,10 @@ Claude Code用のプラグインで、Git操作スペシャリスト、Gitワー
 
 ## 前提条件
 
-- [Claude Code](https://claude.com/claude-code)がインストール済み
+- 以下のいずれかのAIエージェントがインストール済み：
+  - [Claude Code](https://claude.com/claude-code)
+  - [OpenAI Codex](https://openai.com/index/openai-codex/)
+  - [Cursor](https://www.cursor.com/)
 - Git（バージョン2.0以上）
 - GitHub操作用の[GitHub CLI (gh)](https://cli.github.com/)
 

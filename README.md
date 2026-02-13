@@ -18,7 +18,10 @@ This plugin provides Claude Code with an integrated development support centered
 
 ## Prerequisites
 
-- [Claude Code](https://claude.com/claude-code) installed
+- One of the following AI agents installed:
+  - [Claude Code](https://claude.com/claude-code)
+  - [OpenAI Codex](https://openai.com/index/openai-codex/)
+  - [Cursor](https://www.cursor.com/)
 - Git (version 2.0 or higher)
 - [GitHub CLI (gh)](https://cli.github.com/) for GitHub operations
 
