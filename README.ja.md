@@ -41,7 +41,7 @@ Claude Code用のプラグインで、Git操作スペシャリスト、Gitワー
 
 #### Claude Code
 
-**格納場所**: 任意のディレクトリ
+**格納場所**: `~/.agents/skills/cccp` (複数ツール間での共有を推奨)
 
 **インストール方法**:
 
@@ -65,20 +65,23 @@ Claude Code用のプラグインで、Git操作スペシャリスト、Gitワー
 **方法2: ソースから**
 
 ```bash
-# リポジトリをクローン
-git clone https://github.com/gendosu/agent-skills.git
+# 推奨場所にクローン
+git clone https://github.com/gendosu/agent-skills.git ~/.agents/skills/cccp
 
 # プラグインをインストール
-/plugin install /path/to/agent-skills
+/plugin install ~/.agents/skills/cccp
+```
+
+**補足**: 別のディレクトリからアクセスする必要がある場合は、シンボリックリンクを作成します：
+```bash
+ln -s ~/.agents/skills/cccp /path/to/your/preferred/location
 ```
 
 ---
 
 #### OpenAI Codex / Cursor
 
-**格納場所**:
-- **推奨**: `~/.agents/skills/cccp` (ユーザー全体)
-- **代替**: `.agents/skills` (プロジェクト固有) または任意のディレクトリ（スキルインストーラー使用時）
+**格納場所**: `~/.agents/skills/cccp` (ユーザー全体、推奨)
 
 **前提条件**:
 - OpenAI CodexまたはCursorがインストール済み
@@ -88,19 +91,19 @@ git clone https://github.com/gendosu/agent-skills.git
 
 **方法1: スキルインストーラーを使用（推奨）**
 
-1. スキルインストーラーを呼び出します：
+1. リポジトリを推奨場所にクローンします：
+   ```bash
+   git clone https://github.com/gendosu/agent-skills.git ~/.agents/skills/cccp
+   ```
+
+2. スキルインストーラーを呼び出します：
    ```
    $skill-installer
    ```
 
-2. リポジトリを任意の場所にクローンします：
-   ```bash
-   git clone https://github.com/gendosu/agent-skills.git
-   ```
-
 3. リポジトリから個別のスキルをインストールします：
    ```
-   install the <skill-name> skill from /path/to/agent-skills/skills/<skill-name>
+   install the <skill-name> skill from ~/.agents/skills/cccp/skills/<skill-name>
    ```
 
 **方法2: 手動インストール**
@@ -113,6 +116,12 @@ git clone https://github.com/gendosu/agent-skills.git ~/.agents/skills/cccp
 各スキルディレクトリには、自動的に検出される`SKILL.md`ファイルが含まれています。
 
 Codex/Cursorを再起動して、新しくインストールされたスキルをロードします。
+
+**補足**: プロジェクト固有のアクセスが必要な場合は、シンボリックリンクを作成します：
+```bash
+# プロジェクトルートから実行
+ln -s ~/.agents/skills/cccp .agents/skills/cccp
+```
 
 **スキル検索パス**（優先順位順）:
 - **プロジェクト固有**: `.agents/skills` (リポジトリルート)

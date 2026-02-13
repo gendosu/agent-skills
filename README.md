@@ -41,7 +41,7 @@ This skill repository can be used with the following AI agents:
 
 #### Claude Code
 
-**Storage Location**: Any directory
+**Storage Location**: `~/.agents/skills/cccp` (recommended for sharing across tools)
 
 **Installation Methods**:
 
@@ -65,20 +65,23 @@ Search for `cccp` in the `Discover` tab and install it.
 **Option 2: From Source**
 
 ```bash
-# Clone repository
-git clone https://github.com/gendosu/agent-skills.git
+# Clone to recommended location
+git clone https://github.com/gendosu/agent-skills.git ~/.agents/skills/cccp
 
 # Install plugin
-/plugin install /path/to/agent-skills
+/plugin install ~/.agents/skills/cccp
+```
+
+**Note**: If you need to access from a different directory, create a symbolic link:
+```bash
+ln -s ~/.agents/skills/cccp /path/to/your/preferred/location
 ```
 
 ---
 
 #### OpenAI Codex / Cursor
 
-**Storage Location**:
-- **Recommended**: `~/.agents/skills/cccp` (user-wide)
-- **Alternative**: `.agents/skills` (project-specific) or any directory (with skill installer)
+**Storage Location**: `~/.agents/skills/cccp` (user-wide, recommended)
 
 **Prerequisites**:
 - OpenAI Codex or Cursor installed
@@ -88,19 +91,19 @@ git clone https://github.com/gendosu/agent-skills.git
 
 **Option 1: Using Skill Installer (Recommended)**
 
-1. Invoke the skill installer:
+1. Clone repository to recommended location:
+   ```bash
+   git clone https://github.com/gendosu/agent-skills.git ~/.agents/skills/cccp
+   ```
+
+2. Invoke the skill installer:
    ```
    $skill-installer
    ```
 
-2. Clone repository to your preferred location:
-   ```bash
-   git clone https://github.com/gendosu/agent-skills.git
-   ```
-
 3. Install individual skills from the repository:
    ```
-   install the <skill-name> skill from /path/to/agent-skills/skills/<skill-name>
+   install the <skill-name> skill from ~/.agents/skills/cccp/skills/<skill-name>
    ```
 
 **Option 2: Manual Installation**
@@ -113,6 +116,12 @@ git clone https://github.com/gendosu/agent-skills.git ~/.agents/skills/cccp
 Each skill directory in `skills/` contains a `SKILL.md` file that will be automatically detected.
 
 Restart Codex/Cursor to load the newly installed skills.
+
+**Note**: For project-specific access, create a symbolic link:
+```bash
+# From your project root
+ln -s ~/.agents/skills/cccp .agents/skills/cccp
+```
 
 **Skill Search Paths** (in order of precedence):
 - **Project-specific**: `.agents/skills` (repository root)
