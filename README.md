@@ -41,8 +41,6 @@ This skill repository can be used with the following AI agents:
 
 #### Claude Code
 
-**Storage Location**: `~/.agents/skills/cccp` (recommended for sharing across tools)
-
 **Installation Methods**:
 
 **Option 1: From Marketplace (Recommended)**
