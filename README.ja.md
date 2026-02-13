@@ -57,6 +57,79 @@ git clone https://github.com/gendosu/agent-skills.git
 /plugin install /path/to/agent-skills
 ```
 
+### OpenAI Codex向け
+
+このリポジトリは、OpenAI Codexのエージェントスキルとしても利用できます。エージェントスキルは、命令、リソース、オプションのスクリプトをパッケージ化することで、Codexの機能を拡張します。
+
+#### 前提条件
+
+- OpenAI Codexがインストール済み
+- Codexエージェントスキルシステムの基本的な理解
+
+#### インストール方法
+
+**方法1: スキルインストーラーを使用（推奨）**
+
+1. Codexでスキルインストーラーを呼び出します：
+   ```
+   $skill-installer
+   ```
+
+2. このリポジトリを任意の場所にクローンします：
+   ```bash
+   git clone https://github.com/gendosu/agent-skills.git
+   ```
+
+3. リポジトリから個別のスキルをインストールします：
+   ```
+   install the <skill-name> skill from /path/to/agent-skills/skills/<skill-name>
+   ```
+
+**方法2: 手動インストール**
+
+1. このリポジトリをクローンします：
+   ```bash
+   git clone https://github.com/gendosu/agent-skills.git ~/.agents/skills/cccp
+   ```
+
+2. `skills/`内の各スキルディレクトリには、Codexが自動的に検出する`SKILL.md`ファイルが含まれています。
+
+3. Codexを再起動して、新しくインストールされたスキルをロードします。
+
+#### スキルの場所
+
+Codexは以下のディレクトリでスキルを検索します（優先順位順）：
+- **プロジェクト固有**: `.agents/skills` (リポジトリルート)
+- **ユーザー全体**: `~/.agents/skills` (CCCPのインストール推奨)
+- **システム全体**: `/etc/codex/skills` (組織のデフォルト)
+
+#### OpenAI Codexで利用可能なスキル
+
+以下のスキルがOpenAI Codexと互換性があります：
+
+- **git-operations-specialist**: Git操作エキスパート（履歴、競合、ブランチング）
+- **project-manager**: プロジェクト管理とタスク組織
+- **commit**: Conventional Commitメッセージでステージされた変更をコミット
+- **micro-commit**: TDD方法論に従った細粒度のコミット
+- **pull-request**: プルリクエストの作成と更新
+- **todo-task-planning**: TODOリストでタスクを計画・整理
+- **todo-task-run**: TODOファイルから計画されたタスクを実行
+- **key-guidelines**: コア開発ガイドラインのリファレンス
+- **todo-output-template**: 標準的なTODO.mdフォーマット仕様
+
+#### Codexでのスキル使用方法
+
+**明示的な呼び出し：**
+```
+$git-operations-specialist
+$todo-task-planning
+```
+
+**暗黙的な呼び出し：**
+Codexはタスクの説明に基づいて適切なスキルを自動的に選択します。
+
+Codexエージェントスキルの詳細については、[OpenAI Codex Skills Documentation](https://developers.openai.com/codex/skills/)を参照してください。
+
 ## スキル
 
 このプラグインは、統合されたスキルコレクションを提供します：

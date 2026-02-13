@@ -57,6 +57,79 @@ Then install the plugin in Claude Code:
 /plugin install /path/to/agent-skills
 ```
 
+### For OpenAI Codex
+
+This repository can also be used as agent skills for OpenAI Codex. Agent skills extend Codex with specialized capabilities by packaging instructions, resources, and optional scripts.
+
+#### Prerequisites
+
+- OpenAI Codex installed
+- Basic understanding of Codex agent skills system
+
+#### Installation Methods
+
+**Option 1: Using Skill Installer (Recommended)**
+
+1. Invoke the skill installer in Codex:
+   ```
+   $skill-installer
+   ```
+
+2. Clone this repository to your preferred location:
+   ```bash
+   git clone https://github.com/gendosu/agent-skills.git
+   ```
+
+3. Install individual skills from the repository:
+   ```
+   install the <skill-name> skill from /path/to/agent-skills/skills/<skill-name>
+   ```
+
+**Option 2: Manual Installation**
+
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/gendosu/agent-skills.git ~/.agents/skills/cccp
+   ```
+
+2. Each skill directory in `skills/` contains a `SKILL.md` file that Codex will automatically detect.
+
+3. Restart Codex to load the newly installed skills.
+
+#### Skill Locations
+
+Codex searches for skills in the following directories (in order of precedence):
+- **Project-specific**: `.agents/skills` (repository root)
+- **User-wide**: `~/.agents/skills` (recommended for CCCP installation)
+- **System-wide**: `/etc/codex/skills` (organization defaults)
+
+#### Available Skills for Codex
+
+The following skills are compatible with OpenAI Codex:
+
+- **git-operations-specialist**: Git operations expert (history, conflicts, branching)
+- **project-manager**: Project management and task organization
+- **commit**: Commit staged changes with conventional commit messages
+- **micro-commit**: Fine-grained commits following TDD methodology
+- **pull-request**: Create and update pull requests
+- **todo-task-planning**: Plan and organize tasks with TODO lists
+- **todo-task-run**: Execute planned tasks from TODO files
+- **key-guidelines**: Core development guidelines reference
+- **todo-output-template**: Standard TODO.md format specification
+
+#### Using Skills in Codex
+
+**Explicit Invocation:**
+```
+$git-operations-specialist
+$todo-task-planning
+```
+
+**Implicit Invocation:**
+Codex automatically selects appropriate skills based on your task description.
+
+For more information about Codex agent skills, visit the [OpenAI Codex Skills Documentation](https://developers.openai.com/codex/skills/).
+
 ## Skills
 
 This plugin provides a unified collection of skills:
