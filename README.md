@@ -81,73 +81,35 @@ ln -s ~/.agents/skills/cccp /path/to/your/preferred/location
 
 #### OpenAI Codex / Cursor
 
-**Storage Location**: `~/.agents/skills/cccp` (user-wide, recommended)
-
 **Prerequisites**:
 - OpenAI Codex or Cursor installed
-- Basic understanding of agent skills system
+- Node.js (for npx command)
 
 **Installation Methods**:
 
-**Option 1: Using Skill Installer (Recommended)**
+**Option 1: Using vercel-labs/skills Tool (Recommended)**
 
-1. Clone repository to recommended location:
-   ```bash
-   git clone https://github.com/gendosu/agent-skills.git ~/.agents/skills/cccp
-   ```
-
-2. Invoke the skill installer:
-   ```
-   $skill-installer
-   ```
-
-3. Install individual skills from the repository:
-   ```
-   install the <skill-name> skill from ~/.agents/skills/cccp/skills/<skill-name>
-   ```
-
-**Option 2: Manual Installation**
-
+Install all skills:
 ```bash
-# Clone to recommended location
-git clone https://github.com/gendosu/agent-skills.git ~/.agents/skills/cccp
+npx skills add -g gendosu/agent-skills --skill "*"
 ```
+
+**Key Options**:
+- `-g, --global`: Install to user directory
+- `-a, --agent`: Specify agent (e.g., `-a cursor`)
+- `-y, --yes`: Skip confirmation prompts
+- `--all`: Auto-install all skills to all agents
 
 Each skill directory in `skills/` contains a `SKILL.md` file that will be automatically detected.
 
 Restart Codex/Cursor to load the newly installed skills.
 
-**Note**: For project-specific access, create a symbolic link:
-```bash
-# From your project root
-ln -s ~/.agents/skills/cccp .agents/skills/cccp
-```
-
-**Skill Search Paths** (in order of precedence):
-- **Project-specific**: `.agents/skills` (repository root)
-- **User-wide**: `~/.agents/skills` (recommended)
-- **System-wide**: `/etc/codex/skills` (organization defaults)
-
-#### Available Skills for Codex/Cursor
-
-The following skills are compatible with OpenAI Codex and Cursor:
-
-- **git-operations-specialist**: Git operations expert (history, conflicts, branching)
-- **project-manager**: Project management and task organization
-- **commit**: Commit staged changes with conventional commit messages
-- **micro-commit**: Fine-grained commits following TDD methodology
-- **pull-request**: Create and update pull requests
-- **todo-task-planning**: Plan and organize tasks with TODO lists
-- **todo-task-run**: Execute planned tasks from TODO files
-- **key-guidelines**: Core development guidelines reference
-- **todo-output-template**: Standard TODO.md format specification
-
 #### Using Skills in Codex/Cursor
 
 **Explicit Invocation:**
 ```
-$git-operations-specialist
-$todo-task-planning
+$todo-task-planning TODO.md
+$todo-task-run TODO.md
 ```
 
 **Implicit Invocation:**
