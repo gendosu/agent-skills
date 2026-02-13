@@ -18,44 +18,95 @@ Claude Code用のプラグインで、Git操作スペシャリスト、Gitワー
 
 ## 前提条件
 
-- [Claude Code](https://claude.com/claude-code)がインストール済み
+- 以下のいずれかのAIエージェントがインストール済み：
+  - [Claude Code](https://claude.com/claude-code)
+  - [OpenAI Codex](https://openai.com/index/openai-codex/)
+  - [Cursor](https://www.cursor.com/)
 - Git（バージョン2.0以上）
 - GitHub操作用の[GitHub CLI (gh)](https://cli.github.com/)
 
 ## インストール
 
-### マーケットプレイスから（推奨）
+### サポートされているAIエージェント
 
-Claude Code で以下のコマンドを実行して、gendosu-claude-plugins マーケットプレイスを追加し、CCCP プラグインをインストールします：
+このスキルリポジトリは、以下のAIエージェントで利用できます：
 
-**Step 1: gendosu-claude-plugins マーケットプレイスを追加**
+| エージェント | タイプ | インストール方法 |
+|-------------|--------|----------------|
+| **Claude Code** | Anthropic公式CLI | プラグインシステム |
+| **OpenAI Codex** | OpenAIエージェントシステム | エージェントスキルディレクトリ |
+| **Cursor** | AIペアプログラミングエディタ | エージェントスキルディレクトリ（Codexと同じ） |
+
+### エージェント別インストール方法
+
+#### Claude Code
+
+**インストール方法**:
+
+**方法1: マーケットプレイスから（推奨）**
+
 ```bash
+# Step 1: マーケットプレイスを追加
 /plugin marketplace add gendosu/gendosu-claude-plugins
-```
 
-**Step 2: CCCP プラグインをインストール**
-```bash
+# Step 2: プラグインをインストール
 /plugin install cccp@gendosu-claude-plugins
 ```
 
-または、対話的インターフェースから：
+**方法2: ソースから**
+
 ```bash
-/plugin
+# 推奨場所にクローン
+git clone https://github.com/gendosu/agent-skills.git ~/.agents/skills/cccp
+
+# プラグインをインストール
+/plugin install ~/.agents/skills/cccp
 ```
 
-`Discover` タブで `cccp` を検索し、インストールします。
-
-### ソースから
-
-このリポジトリをクローン：
+**補足**: 別のディレクトリからアクセスする必要がある場合は、シンボリックリンクを作成します：
 ```bash
-git clone https://github.com/gendosu/agent-skills.git
+ln -s ~/.agents/skills/cccp /path/to/your/preferred/location
 ```
 
-次に、Claude Codeでプラグインをインストール：
+---
+
+#### OpenAI Codex / Cursor
+
+**前提条件**:
+- OpenAI CodexまたはCursorがインストール済み
+- Node.js（npxコマンドを使用するため）
+
+**インストール方法**:
+
+**方法1: vercel-labs/skillsツールを使用（推奨）**
+
+全スキルをインストール:
 ```bash
-/plugin install /path/to/agent-skills
+npx skills add -g gendosu/agent-skills --skill "*"
 ```
+
+**主要なオプション**:
+- `-g, --global`: ユーザーディレクトリへインストール
+- `-a, --agent`: 特定エージェントを指定（例: `-a cursor`）
+- `-y, --yes`: 確認プロンプトをスキップ
+- `--all`: 全スキルを全エージェントに自動インストール
+
+各スキルディレクトリには、自動的に検出される`SKILL.md`ファイルが含まれています。
+
+Codex/Cursorを再起動して、新しくインストールされたスキルをロードします。
+
+#### Codex/Cursorでのスキル使用方法
+
+**明示的な呼び出し：**
+```
+$todo-task-planning TODO.md
+$todo-task-run TODO.md
+```
+
+**暗黙的な呼び出し：**
+CodexおよびCursorは、タスクの説明に基づいて適切なスキルを自動的に選択します。
+
+エージェントスキルの詳細については、[OpenAI Codex Skills Documentation](https://developers.openai.com/codex/skills/)を参照してください。
 
 ## スキル
 

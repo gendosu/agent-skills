@@ -5,6 +5,22 @@ All notable changes to the CCCP plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.5.0] - 2026-02-13
+
+### Added
+
+- **Documentation**: Added OpenAI Codex installation and usage instructions
+  - Added "For OpenAI Codex" section to README.md with installation methods
+  - Added Japanese version to README.ja.md
+  - Documented skill installer and manual installation options
+  - Listed Codex-compatible skills with explicit and implicit invocation examples
+  - Added reference to OpenAI Codex Skills Documentation
+
+### Changed
+
+- **Rules**: Expanded plugin-versioning.md path scope from `skills/**/*` to `**/*`
+  - Ensures version updates are triggered for all file changes, not just skills directory
+
 ## [3.4.5] - 2026-02-12
 
 ### Changed

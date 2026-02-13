@@ -18,23 +18,38 @@ This plugin provides Claude Code with an integrated development support centered
 
 ## Prerequisites
 
-- [Claude Code](https://claude.com/claude-code) installed
+- One of the following AI agents installed:
+  - [Claude Code](https://claude.com/claude-code)
+  - [OpenAI Codex](https://openai.com/index/openai-codex/)
+  - [Cursor](https://www.cursor.com/)
 - Git (version 2.0 or higher)
 - [GitHub CLI (gh)](https://cli.github.com/) for GitHub operations
 
 ## Installation
 
-### From Marketplace (Recommended)
+### Supported AI Agents
 
-Run the following commands in Claude Code to add the gendosu-claude-plugins marketplace and install the CCCP plugin:
+This skill repository can be used with the following AI agents:
 
-**Step 1: Add gendosu-claude-plugins marketplace**
+| Agent | Type | Installation |
+|-------|------|-------------|
+| **Claude Code** | Anthropic's official CLI | Plugin system |
+| **OpenAI Codex** | OpenAI's agent system | Agent skills directory |
+| **Cursor** | AI pair programming editor | Agent skills directory (same as Codex) |
+
+### Installation by Agent
+
+#### Claude Code
+
+**Installation Methods**:
+
+**Option 1: From Marketplace (Recommended)**
+
 ```bash
+# Step 1: Add marketplace
 /plugin marketplace add gendosu/gendosu-claude-plugins
-```
 
-**Step 2: Install CCCP plugin**
-```bash
+# Step 2: Install plugin
 /plugin install cccp@gendosu-claude-plugins
 ```
 
@@ -45,17 +60,60 @@ Alternatively, use the interactive interface:
 
 Search for `cccp` in the `Discover` tab and install it.
 
-### From Source
+**Option 2: From Source**
 
-Clone this repository:
 ```bash
-git clone https://github.com/gendosu/agent-skills.git
+# Clone to recommended location
+git clone https://github.com/gendosu/agent-skills.git ~/.agents/skills/cccp
+
+# Install plugin
+/plugin install ~/.agents/skills/cccp
 ```
 
-Then install the plugin in Claude Code:
+**Note**: If you need to access from a different directory, create a symbolic link:
 ```bash
-/plugin install /path/to/agent-skills
+ln -s ~/.agents/skills/cccp /path/to/your/preferred/location
 ```
+
+---
+
+#### OpenAI Codex / Cursor
+
+**Prerequisites**:
+- OpenAI Codex or Cursor installed
+- Node.js (for npx command)
+
+**Installation Methods**:
+
+**Option 1: Using vercel-labs/skills Tool (Recommended)**
+
+Install all skills:
+```bash
+npx skills add -g gendosu/agent-skills --skill "*"
+```
+
+**Key Options**:
+- `-g, --global`: Install to user directory
+- `-a, --agent`: Specify agent (e.g., `-a cursor`)
+- `-y, --yes`: Skip confirmation prompts
+- `--all`: Auto-install all skills to all agents
+
+Each skill directory in `skills/` contains a `SKILL.md` file that will be automatically detected.
+
+Restart Codex/Cursor to load the newly installed skills.
+
+#### Using Skills in Codex/Cursor
+
+**Explicit Invocation:**
+```
+$todo-task-planning TODO.md
+$todo-task-run TODO.md
+```
+
+**Implicit Invocation:**
+Codex and Cursor automatically select appropriate skills based on your task description.
+
+For more information about agent skills, visit the [OpenAI Codex Skills Documentation](https://developers.openai.com/codex/skills/).
 
 ## Skills
 
