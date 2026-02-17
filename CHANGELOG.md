@@ -5,6 +5,19 @@ All notable changes to the CCCP plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.5.1] - 2026-02-17
+
+### Added
+
+- **Documentation**: Split PHASE-1-TODO-READING.md into focused detail files
+  - Added PHASE-1-ARGUMENT-PARSING-DETAIL.md with detailed argument parsing logic
+  - Added PHASE-1-BRANCH-GENERATION-DETAIL.md with branch generation logic
+
+### Changed
+
+- **Skills**: Added context fork note to git-operations-specialist skill
+- **Documentation**: Refactored PHASE-1-TODO-READING.md to reference detail files
+
 ## [3.5.0] - 2026-02-13
 
 ### Added
