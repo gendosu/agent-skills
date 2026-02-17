@@ -5,6 +5,7 @@ description: >
   creating branches, merging, resolving conflicts, managing remotes, or any other
   Git-related tasks.
 model: Haiku
+context: fork
 trigger_words:
   - git
   - commit
