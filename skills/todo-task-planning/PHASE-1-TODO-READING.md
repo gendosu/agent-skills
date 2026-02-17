@@ -40,11 +40,18 @@ Parse `$ARGUMENTS` string to extract file path and flags (`--pr`, `--branch`), t
 
 **Implementation Steps**:
 
-1. **Parse `--pr` flag**: Check if `$ARGUMENTS` contains `--pr` and set `HAS_PR_OPTION`
-2. **Parse `--branch` flag**: Check if `$ARGUMENTS` contains `--branch` and extract optional value
-   - If value provided: Set `BRANCH_NAME` to that value, `IS_AUTO_GENERATED = false`
-   - If no value: Set `BRANCH_NAME = ""`, `IS_AUTO_GENERATED = true`
-3. **Validation**: If `HAS_PR_OPTION = true` but `HAS_BRANCH_OPTION = false`, automatically enable branch creation (PR requires branch)
+1. **Parse `--pr` flag**: Check if `$ARGUMENTS` contains `--pr`
+   - If found: Set `HAS_PR_OPTION = true`
+   - If not found: Set `HAS_PR_OPTION = false`
+2. **Parse `--branch` flag**: Check if `$ARGUMENTS` contains `--branch`
+   - If NOT found: Set `HAS_BRANCH_OPTION = false`, `BRANCH_NAME = ""`, `IS_AUTO_GENERATED = false`
+   - If found: Set `HAS_BRANCH_OPTION = true`, then extract optional value:
+     - If value provided (next token doesn't start with `--`): Set `BRANCH_NAME` to that value, `IS_AUTO_GENERATED = false`
+     - If no value: Set `BRANCH_NAME = ""`, `IS_AUTO_GENERATED = true`
+3. **Validation**: If `HAS_PR_OPTION = true` AND `HAS_BRANCH_OPTION = false`:
+   - Set `HAS_BRANCH_OPTION = true` (PR requires a branch)
+   - Set `IS_AUTO_GENERATED = true`
+   - Set `BRANCH_NAME = ""` (will be auto-generated in Step 3)
 4. **Output Variables Summary**: Display all four variables in a structured format for Phase 9 access
 
 **Variable Reference**:
