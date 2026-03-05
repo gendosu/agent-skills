@@ -82,6 +82,7 @@ For conflict resolution:
 
 For GitHub CLI operations:
 - Use `gh` commands for pull request creation and management
+- When creating or updating PRs or issues with `gh`, always write the body content to a temporary file first and specify it via the `--body-file` option (e.g., `gh pr create --body-file /tmp/pr_body.md`). Never pass body content directly as a command-line argument.
 - Handle issue tracking and project management
 - Manage GitHub releases and tags
 - Interact with GitHub Actions and workflows
