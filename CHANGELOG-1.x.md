@@ -1,0 +1,95 @@
+# Changelog - 1.x / 0.x
+
+All notable changes to the CCCP plugin will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [1.0.5] - 2026-01-26
+
+### Changed
+
+- **todo-task-planning**: Clarified file creation responsibility and timeline in Phase 0 and Phase 4
+  - Added explicit separation of agent vs main executor responsibilities
+  - Agents return data as variables (exploration_results, planning_results, strategic_plan)
+  - Main Claude executor creates persistent docs/memory files in Phase 4 using Write tool
+  - Added detailed file creation instructions in Phase 4 step 9
+  - Added file verification procedures in Phase 0.5 with error recovery actions
+  - Clarified that strategic_plan is not saved to disk (used as intermediate data)
+  - Improved docs/memory files creation reporting requirements in Phase 5
+
+## [1.0.4] - 2026-01-25
+
+### Fixed
+
+- **todo-task-planning**: Removed automatic git commit from planning phase
+  - Removed Phase 4 Step 10 which executed micro-commit after TODO.md update
+  - Planning command now focuses purely on task planning without git operations
+  - Git operations remain the responsibility of todo-task-run command during task execution
+  - Ensures planning commands don't modify git history unexpectedly
+
+## [1.0.3] - 2026-01-24
+
+### Fixed
+
+- **todo-task-run**: Fixed critical issue where session would terminate prematurely with incomplete tasks remaining
+  - Added explicit execution policy requiring continuation until ALL tasks are marked complete
+  - Added mandatory TODO.md re-read and incomplete task check after each task completion
+  - Added session continuation rules preventing premature termination
+  - Added Final Completion Process prerequisite check to verify all tasks are complete
+  - Added blocker resolution continuation procedure
+  - Added execution guarantee documentation clarifying that all tasks will be executed
+  - Tasks will now continue executing sequentially until completion or blocker is encountered
+
+## [1.0.2] - 2026-01-23
+
+### Fixed
+
+- **todo-task-planning**: Fixed critical issue where AskUserQuestion tool was not being executed despite being documented as mandatory
+  - Added explicit Phase 3 step 9: "AskUserQuestion Tool Execution (MANDATORY BEFORE PHASE 4)"
+  - Added mandatory precondition to Phase 4 requiring all questions to be answered before proceeding
+  - Added AskUserQuestion execution verification in Phase 5 (steps 11 and 12)
+  - Questions will now always be presented to users via AskUserQuestion tool instead of only being written to TODO files
+  - User responses will be recorded in `docs/memory/questions/YYYY-MM-DD-[feature]-answers.md`
+
+## [1.0.0] - 2026-01-18
+
+### Breaking Changes
+
+- **todo-task-run**: Removed planning functionality from execution command
+  - Planning responsibilities moved exclusively to `todo-task-planning` command
+  - `todo-task-run` now focuses solely on executing pre-created TODO.md files
+  - Users must use two-phase workflow: planning → execution
+
+### Changed
+
+- **todo-task-run**: Clarified execution-only mode with explicit `mode: run` declaration
+- **todo-task-run**: Removed Task Creation section and TDD conversion guidelines
+- **todo-task-run**: Removed Investigation Results Storage Guidelines section
+- **todo-task-run**: Simplified setup procedure to focus on TODO.md input contract
+
+### Added
+
+- **todo-task-run**: Command Overview section explaining execution mode and relationship with todo-task-planning
+- **todo-task-run**: Prerequisites section documenting TODO.md input contract
+- **todo-task-run**: Error Handling section with hybrid investigation approach
+- **README**: Two-phase workflow documentation with clear planning/execution separation
+- **README**: Workflow diagram showing complete task lifecycle
+
+### Removed
+
+- **todo-task-run**: Planning-related guidelines (moved to todo-task-planning)
+- **todo-task-run**: Investigation guidelines (replaced with hybrid approach in Error Handling)
+
+## [0.4.1] - 2025-01-XX
+
+### Added
+
+- Initial version with git-operations-specialist agent
+- commit, micro-commit, pull-request commands
+- todo-task-planning and todo-task-run commands
+- project-manager agent
+- key-guidelines skill
+
+[1.0.0]: https://github.com/gendosu/gendosu-claude-plugins/compare/v0.4.1...v1.0.0
+[0.4.1]: https://github.com/gendosu/gendosu-claude-plugins/releases/tag/v0.4.1
