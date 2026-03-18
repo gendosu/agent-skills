@@ -1,35 +1,14 @@
 ---
 name: git-operations-specialist
 description: >
-  Use this skill when you need to perform Git operations such as committing changes,
-  creating branches, merging, resolving conflicts, managing remotes, or any other
-  Git-related tasks.
-model: Haiku
-context: fork
-trigger_words:
-  - git
-  - commit
-  - branch
-  - merge
-  - rebase
-  - pull request
-  - GitHub
-  - gh
-  - conflict
-  - push
-  - pull
-  - checkout
-  - stash
-  - tag
-  - remote
-  - cherry-pick
-  - reset
-  - reflog
-  - コミット
-  - プッシュ
-  - プルリク
-  - プルリクエスト
-context: fork
+  Use this skill for ANY Git or GitHub operation — committing, staging, branching,
+  merging, rebasing, cherry-picking, tagging, pushing, pulling, stashing, resetting,
+  resolving conflicts, managing remotes, creating or reviewing pull requests, handling
+  GitHub issues and releases, and running GitHub CLI (gh) commands. Invoke this skill
+  whenever the user mentions git, commits, branches, PRs, push/pull, conflicts,
+  GitHub, or any version control task — even if they phrase it casually like
+  "save my changes", "submit my code", "make a PR", or "undo my last commit".
+  Do not attempt Git operations without invoking this skill first.
 user-invocable: true
 ---
 
