@@ -1,67 +1,90 @@
 ---
 name: micro-commit
-description: Split git changes into context-based micro-commits
+description: Use when you have uncommitted changes spanning multiple contexts and need to split them into logical, independently meaningful commits — especially before a PR or code review
 user-invocable: true
 ---
 
-This approach is inspired by **Lucas Rocha's micro-commit** methodology, which emphasizes breaking down changes into small, logical, and independently meaningful commits.
+## Overview
 
-## Core Guidelines
+Splits uncommitted changes into small, logical commits — one per feature, fix, or layer. Each commit should be independently meaningful and reviewable.
 
-Before starting any task, read and follow `/key-guidelines`
+## When to Use
 
----
+- Working tree has changes across multiple files with different purposes
+- About to open a PR and want a clean, readable history
+- Mixed changes: feature + refactor + config in one dirty working tree
 
-Commits unstaged changes by grouping them into logical micro-commits using the git-operations-specialist skill.
-
-## Dependencies
-
-- use git-operations-specialist skill
+**Not needed when:** all changes belong to a single logical unit — just commit normally.
 
 ## Instructions
 
-**IMPORTANT: Use the git-operations-specialist skill (via Skill tool) for ALL git-related operations in this command.**
+**IMPORTANT: ALL git operations (status checks, staging, committing) MUST be delegated to a Haiku sub-agent via the `Agent` tool. Do NOT execute any git commands directly in the main session.**
 
-Analyze all unstaged changes and execute multiple micro-commits, grouping related changes together.
+Execute the following steps:
 
-### Required Execution Items
+### Step 1: Launch a Haiku sub-agent
 
-1. **Check Current Status**: Run `git status` to identify all unstaged changes
+Use the `Agent` tool with `model: "haiku"` and pass the following prompt verbatim:
 
-2. **Group Changes by Context**: Analyze the changes and group them logically:
-   - **By File Type**: Group similar file types (e.g., all TypeScript files, all config files)
-   - **By Feature**: Group files that implement the same feature
-   - **By Layer**: Group by architectural layer (e.g., API changes, frontend changes, database changes)
-   - **By Purpose**: Group by purpose (e.g., new features, bug fixes, refactoring, configuration)
+````
+You are a Git Operations Specialist. Your job is to collect the current repository state, group changes into logical units, and execute micro-commits.
 
-3. **Create Micro-Commits**: For each logical group:
-   - Stage only the files in that group using `git add`
-   - Create a focused commit with a clear message
-   - Verify the commit was successful
+## Step A: Collect Repository State
 
-4. **Commit Message Guidelines**:
-   - Follow the `.gitmessage` template format
-   - Use appropriate commit type prefixes: `feat`, `fix`, `refactor`, `docs`, `style`, `test`, `chore`
-   - Each commit should describe ONE logical change
+Run the following commands using the Bash tool:
 
-5. **Final Verification**: After all commits, run `git status` to confirm no changes remain unstaged
+```bash
+git status --short
+git diff HEAD
+git ls-files --others --exclude-standard
+```
 
-### ⚠️ Important Constraints
-- **Stage files explicitly** - Use `git add <file>` for each group before committing
-- **Use HEREDOC** - Maintain proper formatting of commit messages
-- **One Context Per Commit** - Each commit should represent a single logical change
-- **Sequential Processing** - Process one group at a time, verifying each commit before moving to the next
+For each untracked file listed by `git ls-files`, read its contents using the Read tool.
 
-### Example Grouping Strategy
+## Step B: Group Changes
 
-If you have changes to:
-- `apps/api/src/routes/timeline.ts` (API logic)
-- `apps/dashboard/src/types/api.ts` (Type definitions)
-- `apps/dashboard/src/components/TimelineVisjs.tsx` (UI component)
-- `apps/api/tsconfig.json` (Configuration)
+Group changes into logical commits using these criteria (in order of preference):
+- By feature: files that implement the same feature
+- By layer: API / model / frontend / config / test / docs
+- By purpose: new feature, bug fix, refactoring, configuration
 
-Group them as:
-1. **Commit 1**: API logic changes (`apps/api/src/routes/timeline.ts`)
-2. **Commit 2**: Type definitions (`apps/dashboard/src/types/api.ts`)
-3. **Commit 3**: UI component changes (`apps/dashboard/src/components/TimelineVisjs.tsx`)
-4. **Commit 4**: Configuration changes (`apps/api/tsconfig.json`)
+## Step C: Execute Micro-Commits
+
+For each logical group:
+1. Stage files explicitly — use `git add <file>` for tracked changes, `git add <untracked-file>` for new files
+2. Commit with a clear message using this exact HEREDOC format:
+```
+git commit -m "$(cat <<'EOF'
+<type>(<scope>): <description>
+EOF
+)"
+```
+3. Run `git status --short` after each commit to verify it succeeded before proceeding
+
+Commit type prefixes: feat, fix, refactor, docs, style, test, chore
+- One logical change per commit
+- Process groups sequentially
+- If a commit fails (e.g., pre-commit hook error), report the error and stop — do not force-skip hooks
+
+After all commits, run `git status` to confirm the working tree is clean.
+
+## Required Return Format
+
+Return a summary report with:
+- List of commits created: git hash + message + files included
+- Any errors encountered and which files were skipped
+- Final repository status (branch name, commits ahead of remote, working tree state)
+````
+
+### Step 2: Report results
+
+Relay the sub-agent's summary report to the user. If the sub-agent reported errors, surface them clearly so the user can take action.
+
+## Common Mistakes
+
+| Mistake | Fix |
+|---|---|
+| HEREDOC `EOF` is indented | `EOF` must be at column 0; use `<<-'EOF'` only if stripping tabs intentionally |
+| Staging all files at once (`git add .`) | Stage files per logical group to keep commits focused |
+| Skipping `git status` between commits | Always verify each commit succeeded before proceeding |
+| Force-skipping hooks (`--no-verify`) | Fix the hook error instead — don't bypass it |

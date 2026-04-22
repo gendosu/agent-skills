@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 For older versions, see [CHANGELOG-2.x.md](./CHANGELOG-2.x.md) and [CHANGELOG-1.x.md](./CHANGELOG-1.x.md).
 
+## [3.5.4] - 2026-04-22
+
+### Changed
+
+- **micro-commit**: Changed to isolate git operations from the main session and delegate them to a Haiku sub-agent. Removed the `git-operations-specialist` invocation via the `Skill` tool and replaced it with the `Agent` tool (`model: "haiku"`) to launch a sub-agent, preventing git operation details from being exposed in the main chat session.
+
 ## [3.5.3] - 2026-03-18
 
 ### Changed
