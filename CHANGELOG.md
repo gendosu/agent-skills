@@ -9,6 +9,12 @@ For older versions, see [CHANGELOG-2.x.md](./CHANGELOG-2.x.md) and [CHANGELOG-1.
 
 ## [Unreleased]
 
+## [3.5.6] - 2026-04-23
+
+### Fixed
+
+- **git-operations-specialist**: Fixed "Agent type 'cccp:git-operations-specialist' not found" error by explicitly specifying `subagent_type: "general-purpose"` in the Agent tool call template. The model was incorrectly inferring the skill name as the agent type.
+
 ## [3.5.5] - 2026-04-23
 
 ### Changed
