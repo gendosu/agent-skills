@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 For older versions, see [CHANGELOG-2.x.md](./CHANGELOG-2.x.md) and [CHANGELOG-1.x.md](./CHANGELOG-1.x.md).
 
+## [Unreleased]
+
+## [3.5.5] - 2026-04-23
+
+### Changed
+
+- **git-operations-specialist**: Required sub-agent dispatching for all Git/GitHub operations to prevent git operation details from being exposed in the main chat session
+
 ## [3.5.4] - 2026-04-22
 
 ### Changed
