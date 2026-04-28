@@ -18,7 +18,7 @@ Before starting any task, read and follow `/key-guidelines`
 
 ---
 
-**CRITICAL: When this skill is invoked from the main session, the caller MUST dispatch ALL Git operations to a sub-agent using the Agent tool with `subagent_type: "general-purpose"`. The caller MUST NOT execute any git or gh commands directly using the Bash tool in the main session.**
+**CRITICAL: When this skill is invoked from the main session, the caller MUST dispatch ALL Git operations to a sub-agent using the Agent tool with `subagent_type: "general-purpose"` and `model: "haiku"`. The caller MUST NOT execute any git or gh commands directly using the Bash tool in the main session.**
 
 ## How to Invoke as a Sub-Agent
 
@@ -27,6 +27,7 @@ When the main session receives a Git/GitHub operation request, it MUST use the A
 ```
 Agent({
   subagent_type: "general-purpose",
+  model: "haiku",
   description: "Git operation: <brief description>",
   prompt: "You are a Git Operations Specialist. Use the cccp:git-operations-specialist skill and perform the following operation in the repository at <working directory>:\n\n<detailed instructions>\n\nReport the result including commit hashes, branch names, PR URLs, and any next steps."
 })
