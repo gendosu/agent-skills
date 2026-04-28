@@ -9,6 +9,16 @@ For older versions, see [CHANGELOG-2.x.md](./CHANGELOG-2.x.md) and [CHANGELOG-1.
 
 ## [Unreleased]
 
+## [3.6.0] - 2026-04-29
+
+### Added
+
+- **Settings**: Added `.claude/settings.json` with deny rules to prevent access to sensitive files (`.env`, `.env.*`, `*.pem`, `*.key`, `id_rsa*`, `id_ed25519*`, `*.p12`, `*.pfx`, `credentials.json`, `*secret*`)
+
+### Changed
+
+- **git-operations-specialist**: Now dispatches sub-agents using the `haiku` model to reduce cost and improve performance for Git/GitHub operations
+
 ## [3.5.6] - 2026-04-23
 
 ### Fixed
