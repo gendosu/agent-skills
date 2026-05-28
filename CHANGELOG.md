@@ -9,6 +9,13 @@ For older versions, see [CHANGELOG-2.x.md](./CHANGELOG-2.x.md) and [CHANGELOG-1.
 
 ## [Unreleased]
 
+## [4.0.0] - 2026-05-29
+
+### Removed
+
+- **commit**: Removed the `commit` skill. Use Anthropic's official `commit-commands` plugin (`/commit`) instead, as the functionality is now duplicated.
+- **pull-request**: Removed the `pull-request` skill. Use the official `commit-commands` plugin (`/commit-push-pr`) for pull request creation.
+
 ## [3.6.0] - 2026-04-29
 
 ### Added

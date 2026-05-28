@@ -10,9 +10,7 @@ Claude Code用のプラグインで、Git操作スペシャリスト、Gitワー
 |------|------|---------|
 | **git-operations-specialist** | 履歴分析、競合解決、ブランチ戦略、GitHub CLI操作を含む高度なGit操作に対応したエキスパート | - |
 | **project-manager** | プロジェクト管理とタスク組織のスペシャリスト | - |
-| **commit** | 適切なコミットメッセージでステージされた変更をコミット | - |
 | **micro-commit** | Lucas Rochaのマイクロコミット方法に従った細粒度のコミットを作成 | - |
-| **pull-request** | 現在のブランチに対するプルリクエストを作成または更新 | `<issue-number>` - Issue番号を指定 |
 | **todo-task-planning** | TODOリストでタスクを計画・整理 | `<filepath>` - TODOファイルパス<br>`--pr` - PR作成<br>`--branch [name]` - ブランチ作成 |
 | **todo-task-run** | TODOリストから計画されたタスクを実行 | `<filepath>` - TODOファイルパス |
 
@@ -126,21 +124,11 @@ CodexおよびCursorは、タスクの説明に基づいて適切なスキルを
 
 プロジェクト管理とタスク組織のスペシャリスト。
 
-### コミットコマンド (`/commit`)
-- 適切なコミットメッセージでステージされた変更をコミット
-- Conventional Commitフォーマットとプロジェクトガイドラインに従う
-
 ### マイクロコミットコマンド (`/micro-commit`)
 - テスト駆動開発サイクルに従った細粒度のコミットを作成
 - 関連する変更を論理的にグループ化
 - 清潔で意味のあるコミット履歴を保持
 - 1コミット1変更の原則に従う
-
-### プルリクエストコマンド (`/pull-request`)
-- 現在のブランチに対して新しいプルリクエストを作成
-- 既存のプルリクエストを最新の変更で更新
-- プルリクエストをGitHub Issueにリンク
-- PRのタイトルと説明を自動生成
 
 ### Todoタスクワークフロー
 
@@ -204,10 +192,7 @@ CodexおよびCursorは、タスクの説明に基づいて適切なスキルを
 /project-manager                  # プロジェクトマネージャーを呼び出し
 
 # Gitワークフローコマンド
-/commit                           # ステージされた変更をコミット
 /micro-commit                     # 細粒度のコミットを作成
-/pull-request                     # プルリクエストを作成または更新
-/pull-request 123                 # Issue #123にリンクされたPRを作成
 
 # 2段階のタスクワークフロー
 /todo-task-planning TODO.md       # 第1段階：計画してTODO.mdを作成
@@ -238,9 +223,7 @@ cccp/
 ├── skills/                            # 全スキル（エージェント、コマンド、テンプレート）
 │   ├── git-operations-specialist/     # Git操作スキル
 │   ├── project-manager/               # プロジェクト管理エージェントスキル
-│   ├── commit/                        # コミットコマンドスキル
 │   ├── micro-commit/                  # マイクロコミットコマンドスキル
-│   ├── pull-request/                  # プルリクエストコマンドスキル
 │   ├── todo-task-planning/            # タスク計画コマンドスキル
 │   ├── todo-task-run/                 # タスク実行コマンドスキル
 │   ├── key-guidelines/                # コアガイドラインテンプレートスキル

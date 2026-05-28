@@ -10,9 +10,7 @@ This plugin provides Claude Code with an integrated development support centered
 |---------|-------------|---------|
 | **git-operations-specialist** | Expert Git operations including history analysis, conflict resolution, branch strategy, and GitHub CLI operations | - |
 | **project-manager** | Project management and task organization specialist | - |
-| **commit** | Commit staged changes with appropriate commit messages | - |
 | **micro-commit** | Create fine-grained commits following Lucas Rocha's micro-commit methodology | - |
-| **pull-request** | Create or update pull requests for the current branch | `<issue-number>` - Specify issue number |
 | **todo-task-planning** | Plan and organize tasks with todo lists | `<filepath>` - TODO file path<br>`--pr` - Create PR<br>`--branch [name]` - Create branch |
 | **todo-task-run** | Execute planned tasks from todo lists | `<filepath>` - TODO file path |
 
@@ -133,21 +131,11 @@ Expert Git operations including:
 
 Project management and task organization specialist.
 
-### Commit Command (`/commit`)
-- Commit staged changes with appropriate commit messages
-- Follows conventional commit format and project guidelines
-
 ### Micro-Commit Command (`/micro-commit`)
 - Create fine-grained commits following test-driven development cycles
 - Group related changes logically
 - Maintain clean and meaningful commit history
 - Follow one change per commit principle
-
-### Pull Request Command (`/pull-request`)
-- Create new pull requests for the current branch
-- Update existing pull requests with latest changes
-- Link pull requests to GitHub issues
-- Automatically generate PR titles and descriptions
 
 ### Todo Task Workflow
 
@@ -211,10 +199,7 @@ All skills are invoked using the slash command syntax:
 /project-manager                  # Invoke project manager
 
 # Git workflow commands
-/commit                           # Commit staged changes
 /micro-commit                     # Create fine-grained commits
-/pull-request                     # Create or update pull request
-/pull-request 123                 # Create PR linked to issue #123
 
 # Two-phase task workflow
 /todo-task-planning TODO.md       # Phase 1: Plan and create TODO.md
@@ -245,9 +230,7 @@ cccp/
 ├── skills/                            # All skills (agents, commands, templates)
 │   ├── git-operations-specialist/     # Git operations skill
 │   ├── project-manager/               # Project management agent skill
-│   ├── commit/                        # Commit command skill
 │   ├── micro-commit/                  # Micro-commit command skill
-│   ├── pull-request/                  # Pull request command skill
 │   ├── todo-task-planning/            # Task planning command skill
 │   ├── todo-task-run/                 # Task execution command skill
 │   ├── key-guidelines/                # Core guidelines template skill
