@@ -9,6 +9,12 @@ For older versions, see [CHANGELOG-2.x.md](./CHANGELOG-2.x.md) and [CHANGELOG-1.
 
 ## [Unreleased]
 
+## [4.0.1] - 2026-06-01
+
+### Changed
+
+- **git-operations-specialist**: Optimized performance by making `/key-guidelines` loading conditional (only for commit operations), limiting `git status` to operations that depend on working tree state, and simplifying reports to the minimum required per task type (simple/state-changing/destructive)
+
 ## [4.0.0] - 2026-05-29
 
 ### Removed

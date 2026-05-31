@@ -14,7 +14,8 @@ user-invocable: true
 
 ## Core Guidelines
 
-Before starting any task, read and follow `/key-guidelines`
+When creating or modifying commits, read and follow `/key-guidelines`.
+For all other Git operations (push, PR creation, branch management, tagging, etc.), skip `/key-guidelines`.
 
 ---
 
@@ -93,65 +94,34 @@ For GitHub CLI operations:
 - Leverage GraphQL for complex data retrieval (e.g., fetching latest comments and other operations that are not efficient with REST API)
 - Perform advanced GitHub data operations including repository metadata, pull request details, and issue information
 
-You will always check the current Git status before performing operations and provide clear feedback about the results of each command. When errors occur, you will explain the issue and provide actionable solutions.
+Check `git status` before operations that depend on working tree state: commit, stash, merge, rebase, cherry-pick, checkout (with changes).
+Skip `git status` for: push, pull, PR creation, branch creation, tagging, gh CLI operations.
+
+When errors occur, explain the issue and provide actionable solutions.
 
 ## Reporting Git Operations
 
-**CRITICAL: When Git operations change the repository state, you MUST provide a comprehensive report to the requester that includes:**
+Report the minimum information required for the task type:
 
-1. **Operation Summary**:
-   - Clear description of what operation was performed
-   - Success or failure status
-   - Any warnings or important notices
+### Simple operations (PR creation, push, branch creation, tagging)
+Report only:
+- ✓/✗ Success or failure
+- Key output (PR URL, commit hash, branch name)
+- Error message if failed
 
-2. **State Changes**:
-   - Before and after repository state (when applicable)
-   - Branch information (current branch, tracking status)
-   - Commit details (commit hashes, messages, authors)
-   - Files affected (added, modified, deleted, renamed)
-   - Merge/rebase status and conflicts (if any)
+### State-changing operations (commit, merge, rebase, cherry-pick)
+Report:
+- ✓/✗ Success or failure
+- Commit hash(es) and message(s)
+- Current branch and working tree status
 
-3. **Key Information**:
-   - Commit hashes for new commits
-   - Branch names for created/switched branches
-   - Remote status (ahead/behind commits)
-   - Tag information for tagging operations
-   - PR numbers and URLs for pull request operations
-
-4. **Next Steps**:
-   - Suggest logical next actions (e.g., "Ready to push to remote", "Run tests before pushing")
-   - Warn about required follow-up actions (e.g., "Need to resolve conflicts", "Requires force push")
-   - Provide guidance for completing multi-step workflows
-
-5. **Format Requirements**:
-   - Use clear, structured formatting (markdown headers, lists, code blocks)
-   - Include relevant git command outputs when helpful
-   - Highlight critical information (warnings, errors, important hashes)
-   - Provide context for non-obvious results
-
-**Example Report Format:**
-```
-## Summary
-✓ Successfully created 3 micro-commits
-
-## Commits Created:
-1. **abc1234** - `feat: add user authentication`
-   - Files: src/auth.ts, src/types.ts
-2. **def5678** - `test: add auth unit tests`
-   - Files: tests/auth.test.ts
-3. **ghi9012** - `docs: update API documentation`
-   - Files: README.md, docs/api.md
-
-## Repository Status:
-- Current branch: feature/auth
-- Ahead of origin/main: 3 commits
-- Working tree: clean
-
-## Next Steps:
-- Run tests to verify changes
-- Push to remote: `git push origin feature/auth`
-- Create pull request when ready
-```
+### Destructive operations (reset, force push, branch deletion)
+Report the full details:
+1. Operation performed and its effect
+2. Before/after state
+3. Files affected
+4. Any warnings
+5. Next steps
 
 When working with GitHub:
 - Verify authentication status before GitHub operations
