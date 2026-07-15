@@ -1,6 +1,6 @@
 # CCCP - Claude Code Command Pack
 
-Claude Code用のプラグインで、Git操作スペシャリスト、Gitワークフローコマンド、タスク計画・実行ワークフロー（todo-task-planning/todo-task-run）を提供します。
+Claude Code用のプラグインで、Gitワークフローコマンド、タスク計画・実行ワークフロー（todo-task-planning/todo-task-run）を提供します。
 
 ## 概要
 
@@ -8,7 +8,6 @@ Claude Code用のプラグインで、Git操作スペシャリスト、Gitワー
 
 | 機能 | 説明 | オプション |
 |------|------|---------|
-| **git-operations-specialist** | 履歴分析、競合解決、ブランチ戦略、GitHub CLI操作を含む高度なGit操作に対応したエキスパート | - |
 | **project-manager** | プロジェクト管理とタスク組織のスペシャリスト | - |
 | **micro-commit** | Lucas Rochaのマイクロコミット方法に従った細粒度のコミットを作成 | - |
 | **todo-task-planning** | TODOリストでタスクを計画・整理 | `<filepath>` - TODOファイルパス<br>`--pr` - PR作成<br>`--branch [name]` - ブランチ作成 |
@@ -110,16 +109,6 @@ CodexおよびCursorは、タスクの説明に基づいて適切なスキルを
 
 このプラグインは、統合されたスキルコレクションを提供します：
 
-### Git操作スペシャリスト (`/git-operations-specialist`)
-
-以下を含むエキスパートGit操作：
-
-- **Git履歴分析**: コミット履歴、ブランチ関係、ファイル変更を分析
-- **競合解決**: 適切な戦略でマージ競合を解決するガイダンス
-- **ブランチ戦略**: GitFlowやGitHub Flowなどのブランチワークフローを推奨・実装
-- **高度なGit操作**: インタラクティブリベース、チェリーピック、スタッシュ管理、reflog操作
-- **GitHub CLI操作**: PR作成・管理、Issue追跡、API操作
-
 ### プロジェクトマネージャー (`/project-manager`)
 
 プロジェクト管理とタスク組織のスペシャリスト。
@@ -187,8 +176,7 @@ CodexおよびCursorは、タスクの説明に基づいて適切なスキルを
 すべてのスキルはスラッシュコマンド構文で呼び出します:
 
 ```
-# Git操作とプロジェクト管理
-/git-operations-specialist        # Git操作スペシャリストを呼び出し
+# プロジェクト管理
 /project-manager                  # プロジェクトマネージャーを呼び出し
 
 # Gitワークフローコマンド
@@ -221,7 +209,6 @@ cccp/
 ├── .claude-plugin/
 │   └── plugin.json                    # プラグイン設定
 ├── skills/                            # 全スキル（エージェント、コマンド、テンプレート）
-│   ├── git-operations-specialist/     # Git操作スキル
 │   ├── project-manager/               # プロジェクト管理エージェントスキル
 │   ├── micro-commit/                  # マイクロコミットコマンドスキル
 │   ├── todo-task-planning/            # タスク計画コマンドスキル

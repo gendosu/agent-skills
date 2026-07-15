@@ -9,6 +9,10 @@ For older versions, see [CHANGELOG-2.x.md](./CHANGELOG-2.x.md) and [CHANGELOG-1.
 
 ## [Unreleased]
 
+### Removed
+
+- **git-operations-specialist**: Removed the `git-operations-specialist` skill as it is no longer needed.
+
 ## [4.0.1] - 2026-06-01
 
 ### Changed
