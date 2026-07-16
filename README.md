@@ -1,6 +1,6 @@
 # CCCP - Claude Code Command Pack
 
-A plugin for Claude Code that provides Git operations specialist, Git workflow commands, and task planning and execution workflow (todo-task-planning/todo-task-run).
+A plugin for Claude Code that provides Git workflow commands and task planning and execution workflow (todo-task-planning/todo-task-run).
 
 ## Overview
 
@@ -8,7 +8,6 @@ This plugin provides Claude Code with an integrated development support centered
 
 | Feature | Description | Options |
 |---------|-------------|---------|
-| **git-operations-specialist** | Expert Git operations including history analysis, conflict resolution, branch strategy, and GitHub CLI operations | - |
 | **project-manager** | Project management and task organization specialist | - |
 | **micro-commit** | Create fine-grained commits following Lucas Rocha's micro-commit methodology | - |
 | **todo-task-planning** | Plan and organize tasks with todo lists | `<filepath>` - TODO file path<br>`--pr` - Create PR<br>`--branch [name]` - Create branch |
@@ -117,16 +116,6 @@ For more information about agent skills, visit the [OpenAI Codex Skills Document
 
 This plugin provides a unified collection of skills:
 
-### Git Operations Specialist (`/git-operations-specialist`)
-
-Expert Git operations including:
-
-- **Git History Analysis**: Analyze commit history, branch relationships, and file changes
-- **Conflict Resolution**: Guide through merge conflicts with appropriate strategies
-- **Branch Strategy**: Recommend and implement branching workflows (GitFlow, GitHub Flow)
-- **Advanced Git Operations**: Interactive rebase, cherry-picking, stash management, reflog operations
-- **GitHub CLI Operations**: PR creation/management, issue tracking, API operations
-
 ### Project Manager (`/project-manager`)
 
 Project management and task organization specialist.
@@ -194,8 +183,7 @@ Template skills provide reference materials and standard formats:
 All skills are invoked using the slash command syntax:
 
 ```
-# Git and project management
-/git-operations-specialist        # Invoke Git operations specialist
+# Project management
 /project-manager                  # Invoke project manager
 
 # Git workflow commands
@@ -228,7 +216,6 @@ cccp/
 ├── .claude-plugin/
 │   └── plugin.json                    # Plugin configuration
 ├── skills/                            # All skills (agents, commands, templates)
-│   ├── git-operations-specialist/     # Git operations skill
 │   ├── project-manager/               # Project management agent skill
 │   ├── micro-commit/                  # Micro-commit command skill
 │   ├── todo-task-planning/            # Task planning command skill
