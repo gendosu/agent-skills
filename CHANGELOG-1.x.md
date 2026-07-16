@@ -85,7 +85,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Initial version with git-operations-specialist agent
 - commit, micro-commit, pull-request commands
 - todo-task-planning and todo-task-run commands
 - project-manager agent

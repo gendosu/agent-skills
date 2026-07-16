@@ -105,7 +105,7 @@ Closes #123
 ```
 
 ```
-fix(skill): resolve git-operations-specialist parameter handling
+fix(skill): resolve parameter handling error
 
 Update parameter parsing to handle optional branch names correctly.
 ```

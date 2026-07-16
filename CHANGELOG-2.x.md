@@ -7,14 +7,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.2.0] - 2026-01-31
 
-### Added
-
-- **git-operations-specialist**: Enhanced Japanese language support with additional trigger words
-  - Added "コミット" (commit) trigger word
-  - Added "プッシュ" (push) trigger word
-  - Added "プルリク" (pull request, short form) trigger word
-  - Added "プルリクエスト" (pull request, full form) trigger word
-
 ## [2.1.2] - 2026-01-29
 
 ### Changed
@@ -71,7 +63,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Removed PR creation/update functionality (use `/pull-request` separately)
   - Removed git push operations from task execution workflow
   - Removed git fetch from initial setup
-  - Removed `git-operations-specialist` agent type from classification rules
   - Removed `/micro-commit` usage from task completion procedures
 
 ### Changed

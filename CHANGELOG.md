@@ -11,15 +11,7 @@ For older versions, see [CHANGELOG-2.x.md](./CHANGELOG-2.x.md) and [CHANGELOG-1.
 
 ## [5.0.0] - 2026-07-16
 
-### Removed
-
-- **git-operations-specialist**: Removed the `git-operations-specialist` skill as it is no longer needed.
-
 ## [4.0.1] - 2026-06-01
-
-### Changed
-
-- **git-operations-specialist**: Optimized performance by making `/key-guidelines` loading conditional (only for commit operations), limiting `git status` to operations that depend on working tree state, and simplifying reports to the minimum required per task type (simple/state-changing/destructive)
 
 ## [4.0.0] - 2026-05-29
 
@@ -34,40 +26,19 @@ For older versions, see [CHANGELOG-2.x.md](./CHANGELOG-2.x.md) and [CHANGELOG-1.
 
 - **Settings**: Added `.claude/settings.json` with deny rules to prevent access to sensitive files (`.env`, `.env.*`, `*.pem`, `*.key`, `id_rsa*`, `id_ed25519*`, `*.p12`, `*.pfx`, `credentials.json`, `*secret*`)
 
-### Changed
-
-- **git-operations-specialist**: Now dispatches sub-agents using the `haiku` model to reduce cost and improve performance for Git/GitHub operations
-
 ## [3.5.6] - 2026-04-23
 
-### Fixed
-
-- **git-operations-specialist**: Fixed "Agent type 'cccp:git-operations-specialist' not found" error by explicitly specifying `subagent_type: "general-purpose"` in the Agent tool call template. The model was incorrectly inferring the skill name as the agent type.
-
 ## [3.5.5] - 2026-04-23
-
-### Changed
-
-- **git-operations-specialist**: Required sub-agent dispatching for all Git/GitHub operations to prevent git operation details from being exposed in the main chat session
 
 ## [3.5.4] - 2026-04-22
 
 ### Changed
 
-- **micro-commit**: Changed to isolate git operations from the main session and delegate them to a Haiku sub-agent. Removed the `git-operations-specialist` invocation via the `Skill` tool and replaced it with the `Agent` tool (`model: "haiku"`) to launch a sub-agent, preventing git operation details from being exposed in the main chat session.
+- **micro-commit**: Changed to isolate git operations from the main session and delegate them to a Haiku sub-agent. Replaced the previous `Skill` tool invocation with the `Agent` tool (`model: "haiku"`) to launch a sub-agent, preventing git operation details from being exposed in the main chat session.
 
 ## [3.5.3] - 2026-03-18
 
-### Changed
-
-- **Skills**: Improved git-operations-specialist description for better triggering accuracy
-- **Skills**: Removed unsupported frontmatter fields (`model`, `trigger_words`, `context`) from git-operations-specialist
-
 ## [3.5.2] - 2026-03-05
-
-### Changed
-
-- **Skills**: Added guideline to git-operations-specialist to use temporary files with `--body-file` when creating or updating PRs/issues via `gh` command
 
 ## [3.5.1] - 2026-02-17
 
@@ -79,7 +50,6 @@ For older versions, see [CHANGELOG-2.x.md](./CHANGELOG-2.x.md) and [CHANGELOG-1.
 
 ### Changed
 
-- **Skills**: Added context fork note to git-operations-specialist skill
 - **Documentation**: Refactored PHASE-1-TODO-READING.md to reference detail files
 
 ## [3.5.0] - 2026-02-13
@@ -441,7 +411,7 @@ For older versions, see [CHANGELOG-2.x.md](./CHANGELOG-2.x.md) and [CHANGELOG-1.
 - **Documentation**: Standardized terminology across all skill documentation files
   - Unified "agent" terminology to proper context-specific terms:
     - Task tool subagents: "agent" → "subagent" (Explore, Plan, general-purpose)
-    - Skill tool skills: "agent" → "skill" (git-operations-specialist, project-manager)
+    - Skill tool skills: "agent" → "skill" (project-manager)
   - Updated section headers for consistency:
     - `## Agents` → `## Dependencies` (in commit, micro-commit, pull-request skills)
     - `## Agent Instructions` → `## Instructions` (in commit, micro-commit skills)
@@ -465,7 +435,6 @@ For older versions, see [CHANGELOG-2.x.md](./CHANGELOG-2.x.md) and [CHANGELOG-1.
 - **Documentation**: Completed terminology standardization from "agent" to "skill"
   - Updated skills/project-manager/SKILL.md (3 occurrences in description field)
   - Updated skills/todo-task-planning/SKILL.md (8 references to "project-manager agent")
-  - Updated skills/git-operations-specialist/SKILL.md (2 occurrences)
   - This completes the standardization work started in commit 1625667
   - Ensures consistent terminology across all skill documentation
 
@@ -489,15 +458,6 @@ For older versions, see [CHANGELOG-2.x.md](./CHANGELOG-2.x.md) and [CHANGELOG-1.
   - Added argument display templates using `$ARGUMENTS` variable for better user experience
 
 ## [3.0.4] - 2026-02-06
-
-### Changed
-
-- **Documentation**: Updated terminology from "agent" to "skill" for git-operations-specialist across documentation
-  - Updated skills/pull-request/SKILL.md (2 locations)
-  - Updated skills/micro-commit/SKILL.md (3 locations, including "Task tool" → "Skill tool")
-  - Updated skills/commit/SKILL.md (3 locations, including "Task tool" → "Skill tool")
-  - Updated CONTRIBUTING.md commit message example
-  - Updated README.md and README.ja.md directory structure comments
 
 ## [3.0.3] - 2026-02-06
 
@@ -553,7 +513,6 @@ For older versions, see [CHANGELOG-2.x.md](./CHANGELOG-2.x.md) and [CHANGELOG-1.
 ### Breaking Changes
 
 - **Repository Structure**: Migrated all agents and commands to unified skills architecture
-  - Moved `agents/git-operations-specialist.md` → `skills/git-operations-specialist/SKILL.md`
   - Moved `agents/project-manager.md` → `skills/project-manager/SKILL.md`
   - Moved `commands/commit.md` → `skills/commit/SKILL.md`
   - Moved `commands/micro-commit.md` → `skills/micro-commit/SKILL.md`

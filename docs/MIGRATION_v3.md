@@ -18,7 +18,6 @@ agent-skills/
 ├── .claude-plugin/
 │   └── plugin.json          # v2.2.0
 ├── agents/
-│   ├── git-operations-specialist.md
 │   └── project-manager.md
 ├── commands/
 │   ├── commit.md
@@ -38,7 +37,6 @@ agent-skills/
 │   └── plugin.json          # v3.0.0
 └── skills/
     ├── commit/
-    ├── git-operations-specialist/
     ├── key-guidelines/
     ├── micro-commit/
     ├── project-manager/
@@ -57,7 +55,6 @@ agent-skills/
   "version": "2.2.0",
   "description": "Git operations specialist agent and workflow commands...",
   "agents": [
-    "./agents/git-operations-specialist.md",
     "./agents/project-manager.md"
   ],
   "commands": [
@@ -93,28 +90,26 @@ agent-skills/
 **v2.x frontmatter (agents/)**:
 ```yaml
 ---
-name: git-operations-specialist
+name: my-agent
 description: >
-  Use this agent when you need to perform Git operations...
+  Use this agent when you need to perform a specialized task...
 model: Haiku
 trigger_words:
-  - git
-  - commit
-  - branch
+  - example
+  - trigger
 ---
 ```
 
 **v3.0.0 frontmatter (skills/)**:
 ```yaml
 ---
-name: git-operations-specialist
+name: my-agent
 description: >
-  Use this agent when you need to perform Git operations...
+  Use this agent when you need to perform a specialized task...
 model: Haiku
 trigger_words:
-  - git
-  - commit
-  - branch
+  - example
+  - trigger
 context: fork
 user-invocable: true
 ---
@@ -183,14 +178,12 @@ Plugin users need to take **no action**. The following are guaranteed:
 **v2.x**:
 ```
 /commit
-/git-operations-specialist
 /todo-task-planning
 ```
 
 **v3.0.0** (same):
 ```
 /commit
-/git-operations-specialist
 /todo-task-planning
 ```
 
@@ -349,11 +342,10 @@ rm -rf commands/
 
 ## Impact on Existing Skills
 
-### All 9 Skills Migrated Successfully
+### All 8 Skills Migrated Successfully
 
 | Skill Name | Type | Migration Path | Status |
 |------------|------|----------------|--------|
-| git-operations-specialist | Agent | `agents/` → `skills/git-operations-specialist/` | ✅ |
 | project-manager | Agent | `agents/` → `skills/project-manager/` | ✅ |
 | commit | Command | `commands/` → `skills/commit/` | ✅ |
 | micro-commit | Command | `commands/` → `skills/micro-commit/` | ✅ |
@@ -365,8 +357,8 @@ rm -rf commands/
 
 ### Functionality Preserved
 
-- ✅ **Trigger words**: Agent auto-invocation works (git-operations-specialist, project-manager)
-- ✅ **Model preferences**: Custom model settings preserved (Haiku for git-operations-specialist)
+- ✅ **Trigger words**: Agent auto-invocation works (project-manager)
+- ✅ **Model preferences**: Custom model settings preserved
 - ✅ **Internal references**: All `/*` references working
 - ✅ **Documentation**: Skill bodies unchanged
 
