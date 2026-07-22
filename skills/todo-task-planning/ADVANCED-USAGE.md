@@ -34,19 +34,19 @@ Used by main Claude executor in Phase 0.3:
 - **Trade-off evaluation**: Comparing different solutions
 - The Plan subagent builds on Explore subagent findings to create actionable plans
 
-### When to Use project-manager Skill (Phase 0.4)
-Used by main Claude executor in Phase 0.4:
+### Building the Strategic Plan (Phase 6: Breakdown)
+Performed by the main Claude executor directly during Phase 6, using the Explore and Plan results:
 - **Strategic organization**: Organizing tasks by feasibility (✅⏳🔍🚧)
 - **User question extraction**: Identifying specification ambiguities
 - **Checklist structure preparation**: Creating structured checklist format
 - **YAGNI validation**: Ensuring only necessary tasks are included
-- The project-manager skill integrates Explore and Plan results into actionable structure
+- Phase 6 integrates Explore and Plan results directly into the `strategic_plan` structure — no separate skill call is needed
 
 ### Workflow Example (Phase 0)
 1. **Phase 0.2: Explore Subagent** → Find all salary-related files and their relationships (thoroughness: medium)
 2. **Phase 0.3: Plan Subagent** (after Explore completes) → Design implementation approach for adding calculation period feature
-3. **Phase 0.4: project-manager Skill** (after Plan completes) → Organize tasks by feasibility and prepare checklist structure
-4. **Phase 1-5** → Use skill results to execute remaining phases and update $ARGUMENTS file
+3. **Phase 6: Breakdown** (after Plan completes) → Organize tasks by feasibility and build the `strategic_plan` checklist structure
+4. **Phase 1-5** → Use results to execute remaining phases and update $ARGUMENTS file
 
 ### [WARNING] Common Mistakes to Avoid
 
@@ -87,27 +87,14 @@ if (!planning_results) {
   throw new Error("Plan subagent failed");
 }
 
-// NOW we can safely call project-manager skill for strategic organization
-const strategic_plan_output = await Skill({
-  skill: "project-manager",
-  args: `
-    ## Context
-    ### Exploration Results Summary
-    ${exploration_results.summary}
-
-    ### Planning Results Summary
-    ${planning_results.approach_summary}
-
-    ## Required Deliverables
-    - tasks_by_feasibility: Categorize tasks as {ready, pending, research, blocked}
-    - user_questions: List questions with structured options
-    - checklist_structure: Complete markdown checklist format
-    - implementation_recommendations: Next actions and quality metrics
-  `
-});
-
-// Parse the skill output to extract strategic_plan
-const strategic_plan = parseProjectManagerOutput(strategic_plan_output);
+// NOW proceed to Phase 6 (Breakdown), which builds the strategic_plan
+// directly from exploration_results and planning_results — see PHASE-7-BREAKDOWN.md
+const strategic_plan = {
+  tasks_by_feasibility: { ready: [], pending: [], research: [], blocked: [] },
+  user_questions: [],
+  checklist_structure: "",
+  implementation_recommendations: [],
+};
 ```
 
 **Key Points:**

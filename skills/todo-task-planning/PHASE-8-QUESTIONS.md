@@ -1,15 +1,15 @@
-# Phase 8: Question Management
+# Phase 7: Question Management
 
-[← Previous: Phase 7](PHASE-7-BREAKDOWN.md) | [Main](SKILL.md) | [Next: Phase 9 →](PHASE-9-UPDATE.md)
+[← Previous: Phase 6](PHASE-7-BREAKDOWN.md) | [Main](SKILL.md) | [Next: Phase 8 →](PHASE-9-UPDATE.md)
 
 ---
 
-### Phase 8: Thorough Question Management, User Confirmation, and Specification Recommendations
+### Phase 7: Thorough Question Management, User Confirmation, and Specification Recommendations
 
 6. **Question Extraction (Only What Is Necessary to Achieve the Objective)**
-   - **Utilizing Phase 0 Strategic Plan**
+   - **Utilizing the Strategic Plan**
      - Check extracted questions from `strategic_plan.user_questions`
-     - Base on questions identified by project-manager skill in Phase 0.4
+     - Base on questions identified during Phase 6 (Breakdown)
    - **🚨 Important Constraint**: Extract only questions that are truly necessary to achieve the objective
    - **Required**: Extract concrete unclear points from the researched files and implementation
    - **Duplicate Question Check**: Check past question history in docs/memory to avoid duplicates
@@ -76,7 +76,7 @@
 
    **Triggers**:
    - `strategic_plan.user_questions` exists and contains questions
-   - Questions were extracted during Phase 3 analysis
+   - Questions were extracted during Phase 6 (Breakdown)
    - Unclear specifications or multiple valid approaches identified
 
    **🚨 MANDATORY**: You MUST execute AskUserQuestion tool before proceeding to Phase 8
@@ -122,7 +122,7 @@
 
    **⚠️ MANDATORY**: If there are genuinely no questions or uncertainties:
    - [ ] Proceed directly to Phase 8
-   - [ ] **REQUIRED**: Document in Phase 5 summary why no questions were needed
+   - [ ] **REQUIRED**: Document in the Phase 9 summary why no questions were needed
    - [ ] Explain what made the requirements clear enough to skip user interaction
 
    ---
@@ -139,4 +139,4 @@
 
 ---
 
-[← Previous: Phase 7](PHASE-7-BREAKDOWN.md) | [Main](SKILL.md) | [Next: Phase 9 →](PHASE-9-UPDATE.md)
+[← Previous: Phase 6](PHASE-7-BREAKDOWN.md) | [Main](SKILL.md) | [Next: Phase 8 →](PHASE-9-UPDATE.md)

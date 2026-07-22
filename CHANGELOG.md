@@ -9,6 +9,10 @@ For older versions, see [CHANGELOG-2.x.md](./CHANGELOG-2.x.md) and [CHANGELOG-1.
 
 ## [Unreleased]
 
+### Removed
+
+- **project-manager**: Removed the `project-manager` skill. The `todo-task-planning` skill's Phase 4 (which called project-manager to build the `strategic_plan`) was removed and its logic was folded into Phase 6 (Breakdown), which already performed overlapping feasibility analysis. Downstream phases were renumbered accordingly (old Phase 5-10 → new Phase 4-9).
+
 ## [5.0.0] - 2026-07-16
 
 ### Removed

@@ -1,24 +1,24 @@
-# Phase 6: File Analysis
+# Phase 5: File Analysis
 
-[← Previous: Phase 5](PHASE-5-VERIFICATION.md) | [Main](SKILL.md) | [Next: Phase 7 →](PHASE-7-BREAKDOWN.md)
+[← Previous: Phase 4](PHASE-5-VERIFICATION.md) | [Main](SKILL.md) | [Next: Phase 6 →](PHASE-7-BREAKDOWN.md)
 
 ---
 
-### Phase 6: Thorough File Analysis and Existing Status Confirmation
+### Phase 5: Thorough File Analysis and Existing Status Confirmation
 
 **【CRITICAL - MUST NOT SKIP】**
 
-**⛔ DO NOT PROCEED TO PHASE 8 WITHOUT COMPLETING PHASE 5 ⛔**
+**⛔ DO NOT PROCEED TO PHASE 7 WITHOUT COMPLETING PHASE 4 ⛔**
 
-**WARNING: Skipping Phase 5-6 will cause serious problems:**
+**WARNING: Skipping Phase 4-5 will cause serious problems:**
 - **Loss of Existing Progress**: Existing tasks and progress status will be overwritten
 - **Duplicate Tasks**: Same tasks will be created multiple times, causing confusion
 - **Context Loss**: Critical information from $ARGUMENTS file will be ignored
-- **Workflow Violation**: Phase 4 → Phase 8 direct transitions are PROHIBITED
+- **Workflow Violation**: Phase 3 → Phase 7 direct transitions are PROHIBITED
 
-**You MUST complete Phase 5-6 before proceeding to Phase 8, even if Phase 0-4 have been completed.**
+**You MUST complete Phase 4-5 before proceeding to Phase 7, even if Phase 0-3 have been completed.**
 
-**🔍 Starting Phase 6: Existing TODO.md Analysis**
+**🔍 Starting Phase 5: Existing TODO.md Analysis**
 **This phase is MANDATORY to preserve existing progress.**
 
 1. **$ARGUMENTS File Reading**
@@ -43,14 +43,14 @@
 Proceeding to Phase 6...
 ```
 
-2. **Utilizing Phase 0-4 Results**
+2. **Utilizing Phase 0-3 Results**
    - **Referencing Exploration Results**
-     - Check key files, patterns, dependencies from `exploration_results` variable (from Phase 1)
+     - Check key files, patterns, dependencies from `exploration_results` variable (from Phase 2)
      - Reference `docs/memory/explorations/YYYY-MM-DD-[feature]-exploration.md`
-     - Utilize research results conducted by Explore subagent in Phase 1
+     - Utilize research results conducted by Explore subagent in Phase 2
    - **Duplicate Check**: Check existing research results in docs/memory to avoid duplicate research
-   - **Additional Research**: Conduct supplementary research if information is missing from Phase 0-4
+   - **Additional Research**: Conduct supplementary research if information is missing from Phase 0-3
 
 ---
 
-[← Previous: Phase 5](PHASE-5-VERIFICATION.md) | [Main](SKILL.md) | [Next: Phase 7 →](PHASE-7-BREAKDOWN.md)
+[← Previous: Phase 4](PHASE-5-VERIFICATION.md) | [Main](SKILL.md) | [Next: Phase 6 →](PHASE-7-BREAKDOWN.md)

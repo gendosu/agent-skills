@@ -15,7 +15,7 @@ Phase 2 calls the Explore subagent to discover related files, patterns, and depe
 - Call the Explore Task tool in THIS message
 - **STOP** after calling the Task tool
 - **WAIT** for the tool result to arrive in the NEXT message
-- **DO NOT** call Plan or project-manager in the same message
+- **DO NOT** call Plan in the same message
 
 ---
 
@@ -37,7 +37,7 @@ Before starting Phase 1, verify:
 2. **STOP** after calling the Task tool
 3. **WAIT** for the tool result to arrive
 4. Verify `exploration_results` contains valid data
-5. **DO NOT** call Plan or project-manager Task tools in the same message
+5. **DO NOT** call the Plan Task tool in the same message
 
 **Task tool execution example**:
 ```typescript

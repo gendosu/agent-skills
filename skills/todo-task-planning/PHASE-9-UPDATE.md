@@ -1,10 +1,10 @@
-# Phase 9: File Update
+# Phase 8: File Update
 
-[← Previous: Phase 8](PHASE-8-QUESTIONS.md) | [Main](SKILL.md) | [Next: Phase 10 →](PHASE-10-VERIFICATION.md)
+[← Previous: Phase 7](PHASE-8-QUESTIONS.md) | [Main](SKILL.md) | [Next: Phase 9 →](PHASE-10-VERIFICATION.md)
 
 ---
 
-### Phase 9: $ARGUMENTS File Update
+### Phase 8: $ARGUMENTS File Update
 
 **⚠️ VERIFICATION REQUIRED**: Before proceeding, execute all verification protocols defined in [VERIFICATION-PROTOCOLS.md](VERIFICATION-PROTOCOLS.md):
 - [Phase 4 Entrance Gate Verification](VERIFICATION-PROTOCOLS.md#phase-4-entrance-gate-verification)
@@ -45,9 +45,9 @@ The following files MUST be created by the Main Claude executor (NOT by subagent
    - Format: Q&A format with questions and selected answers
 
 **Timeline:**
-- **Phase 0.2-0.4**: Subagents return data as variables (`exploration_results`, `planning_results`, `strategic_plan`)
-- **Phase 0.5**: Verify subagent completion and data variables exist
-- **👉 Phase 4 (THIS PHASE)**: Main Claude executor creates persistent docs/memory files using Write tool
+- **Phase 2-3**: Subagents return data as variables (`exploration_results`, `planning_results`)
+- **Phase 6**: `strategic_plan` is built from the breakdown results (`tasks_by_feasibility`, `user_questions`, `checklist_structure`, `implementation_recommendations`)
+- **👉 Phase 8 (THIS PHASE)**: Main Claude executor creates persistent docs/memory files using Write tool
 - **Phase 9**: Verify file creation and report to user
 
 **Why Subagents Cannot Create Files:**
@@ -544,7 +544,7 @@ The following files MUST be created by the Main Claude executor (NOT by subagent
 
 ## Post-Implementation Verification Checklist
 
-After modifying Phase 9 implementation, verify the following:
+After modifying Phase 8 implementation, verify the following:
 
 - [ ] **Variable Retrieval Verification (Step 9.5)**
   - [ ] Conversation history search for "Phase 1 Variables Summary" works
@@ -595,4 +595,4 @@ After modifying Phase 9 implementation, verify the following:
 
 ---
 
-[← Previous: Phase 8](PHASE-8-QUESTIONS.md) | [Main](SKILL.md) | [Next: Phase 10 →](PHASE-10-VERIFICATION.md)
+[← Previous: Phase 7](PHASE-8-QUESTIONS.md) | [Main](SKILL.md) | [Next: Phase 9 →](PHASE-10-VERIFICATION.md)

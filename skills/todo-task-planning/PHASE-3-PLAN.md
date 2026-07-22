@@ -1,6 +1,6 @@
 # Phase 3: Plan Subagent
 
-[← Previous: Phase 2](PHASE-2-EXPLORE.md) | [Next: Phase 4 →](PHASE-4-PROJECT-MANAGER.md)
+[← Previous: Phase 2](PHASE-2-EXPLORE.md) | [Next: Phase 4 →](PHASE-5-VERIFICATION.md)
 
 ---
 
@@ -15,7 +15,6 @@ Phase 2 calls the Plan subagent to design implementation strategy based on explo
 - Call the Plan Task tool in THIS message
 - **STOP** after calling the Task tool
 - **WAIT** for the tool result to arrive in the NEXT message
-- **DO NOT** call project-manager in the same message
 
 ---
 
@@ -63,7 +62,6 @@ if (!exploration_results) {
 3. **STOP** after calling the Task tool
 4. **WAIT** for the tool result to arrive
 5. Verify `planning_results` contains valid data
-6. **DO NOT** call project-manager Task tool in the same message
 
 **Task tool execution example**:
 ```typescript
@@ -104,7 +102,7 @@ Task({
 
 **THIS IS A MANDATORY CHECKPOINT - DO NOT PROCEED UNTIL VERIFIED:**
 
-Before proceeding to Phase 3, ensure:
+Before proceeding to Phase 4, ensure:
 - [ ] Plan subagent Task tool has completed successfully
 - [ ] You have **RECEIVED** the Task tool result in the conversation
 - [ ] `planning_results` variable contains valid data
@@ -112,12 +110,12 @@ Before proceeding to Phase 3, ensure:
 - [ ] NO errors occurred during planning
 
 **IF ANY OF THE ABOVE ARE NOT TRUE:**
-- [PROHIBITED] **STOP** - Do not proceed to Phase 3
+- [PROHIBITED] **STOP** - Do not proceed to Phase 4
 - Investigate what went wrong
 - Fix the issue before continuing
 
-**ONLY after confirming ALL of the above in a NEW message, proceed to Phase 3 (project-manager).**
+**ONLY after confirming ALL of the above in a NEW message, proceed to Phase 4 (Verification).**
 
 ---
 
-[← Previous: Phase 2](PHASE-2-EXPLORE.md) | [Next: Phase 4 →](PHASE-4-PROJECT-MANAGER.md)
+[← Previous: Phase 2](PHASE-2-EXPLORE.md) | [Next: Phase 4 →](PHASE-5-VERIFICATION.md)

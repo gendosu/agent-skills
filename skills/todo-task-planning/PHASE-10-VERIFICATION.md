@@ -1,10 +1,10 @@
-# Phase 10: Verification
+# Phase 9: Verification
 
-[← Previous: Phase 9](PHASE-9-UPDATE.md) | [Main](SKILL.md)
+[← Previous: Phase 8](PHASE-9-UPDATE.md) | [Main](SKILL.md)
 
 ---
 
-### Phase 10: Thorough Verification and Feedback
+### Phase 9: Thorough Verification and Feedback
 
 11. **Multi-faceted Update Result Verification**
     - **Required**: Reload and confirm the updated file
@@ -54,4 +54,4 @@
 
 ---
 
-[← Previous: Phase 9](PHASE-9-UPDATE.md) | [Main](SKILL.md)
+[← Previous: Phase 8](PHASE-9-UPDATE.md) | [Main](SKILL.md)
