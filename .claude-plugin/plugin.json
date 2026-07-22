@@ -1,6 +1,6 @@
 {
   "name": "cccp",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Workflow commands (micro-commit, todo tasks) for Claude Code",
   "skills": "./skills/"
 }

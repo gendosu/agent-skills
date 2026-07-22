@@ -9,6 +9,12 @@ For older versions, see [CHANGELOG-2.x.md](./CHANGELOG-2.x.md) and [CHANGELOG-1.
 
 ## [Unreleased]
 
+## [5.0.1] - 2026-07-22
+
+### Changed
+
+- **project-manager**: Removed persona and generic project-management prose from `SKILL.md`, keeping only the `/key-guidelines` reference and a link to `todo-output-template` for the feasibility markers (✅⏳🔍🚧), which were previously duplicated in both files.
+
 ## [5.0.0] - 2026-07-16
 
 ### Removed
