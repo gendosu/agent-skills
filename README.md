@@ -8,7 +8,6 @@ This plugin provides Claude Code with an integrated development support centered
 
 | Feature | Description | Options |
 |---------|-------------|---------|
-| **project-manager** | Project management and task organization specialist | - |
 | **micro-commit** | Create fine-grained commits following Lucas Rocha's micro-commit methodology | - |
 | **todo-task-planning** | Plan and organize tasks with todo lists | `<filepath>` - TODO file path<br>`--pr` - Create PR<br>`--branch [name]` - Create branch |
 | **todo-task-run** | Execute planned tasks from todo lists | `<filepath>` - TODO file path |
@@ -116,10 +115,6 @@ For more information about agent skills, visit the [OpenAI Codex Skills Document
 
 This plugin provides a unified collection of skills:
 
-### Project Manager (`/project-manager`)
-
-Project management and task organization specialist.
-
 ### Micro-Commit Command (`/micro-commit`)
 - Create fine-grained commits following test-driven development cycles
 - Group related changes logically
@@ -183,9 +178,6 @@ Template skills provide reference materials and standard formats:
 All skills are invoked using the slash command syntax:
 
 ```
-# Project management
-/project-manager                  # Invoke project manager
-
 # Git workflow commands
 /micro-commit                     # Create fine-grained commits
 
@@ -216,7 +208,6 @@ cccp/
 ├── .claude-plugin/
 │   └── plugin.json                    # Plugin configuration
 ├── skills/                            # All skills (agents, commands, templates)
-│   ├── project-manager/               # Project management agent skill
 │   ├── micro-commit/                  # Micro-commit command skill
 │   ├── todo-task-planning/            # Task planning command skill
 │   ├── todo-task-run/                 # Task execution command skill

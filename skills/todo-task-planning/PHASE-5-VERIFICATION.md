@@ -1,12 +1,12 @@
-# Phase 5: Verification
+# Phase 4: Verification
 
-[← Previous: Phase 4](PHASE-4-PROJECT-MANAGER.md) | [Next: Phase 6 →](PHASE-6-ANALYSIS.md)
+[← Previous: Phase 3](PHASE-3-PLAN.md) | [Next: Phase 5 →](PHASE-6-ANALYSIS.md)
 
 ---
 
 ## Overview
 
-Phase 4 verifies that all subagents (Phase 2-4) completed successfully and prepares for subsequent phases.
+Phase 4 verifies that the Explore and Plan subagents (Phase 2-3) completed successfully and prepares for subsequent phases.
 
 **Purpose:**
 - Verify sequential execution order
@@ -21,19 +21,16 @@ Phase 4 verifies that all subagents (Phase 2-4) completed successfully and prepa
 ### 1. Subagent Execution Verification
 
 **[WARNING] Verify Sequential Execution Order**
-- [ ] Phase 1 (Explore) completed FIRST
-- [ ] Phase 2 (Plan) completed SECOND (after Explore)
-- [ ] Phase 3 (project-manager) completed THIRD (after Plan)
+- [ ] Phase 2 (Explore) completed FIRST
+- [ ] Phase 3 (Plan) completed SECOND (after Explore)
 
 **Confirm all subagents completed successfully**
 - [ ] No errors in Explore subagent execution
 - [ ] No errors in Plan subagent execution
-- [ ] No errors in project-manager skill execution
 
 **Verify Variable Dependencies**
 - [ ] `exploration_results` exists and contains valid data
 - [ ] `planning_results` exists and contains valid data
-- [ ] `strategic_plan` exists and contains valid data
 
 **Report to user if there are errors**
 - Clearly state which phase failed
@@ -64,9 +61,8 @@ Phase 4 verifies that all subagents (Phase 2-4) completed successfully and prepa
 
 ### 3. Preparation for Next Phase
 
-- If `strategic_plan.user_questions` exists, use in Phase 7
-- Use `strategic_plan.checklist_structure` in Phase 8
-- Retain `exploration_results` and `planning_results` as reference information
+- Retain `exploration_results` and `planning_results` for use in Phase 5 (File Analysis) and Phase 6 (Breakdown)
+- `strategic_plan` (`tasks_by_feasibility`, `user_questions`, `checklist_structure`, `implementation_recommendations`) is generated later, in Phase 6 (Breakdown)
 
 ### 4. Proceed to Phase 5
 
@@ -76,12 +72,11 @@ After verification completes successfully, proceed to Phase 5 (File Analysis) in
 
 ## Variable Persistence Reminder
 
-All variables from Phase 0-4 persist and are available in Phase 5-9:
+All variables from Phase 0-3 persist and are available in Phase 4-9:
 - `HAS_PR_OPTION`, `HAS_BRANCH_OPTION`, `BRANCH_NAME`, `IS_AUTO_GENERATED` (from Phase 0)
-- `exploration_results` (from Phase 1)
-- `planning_results` (from Phase 2)
-- `strategic_plan` (from Phase 3)
+- `exploration_results` (from Phase 2)
+- `planning_results` (from Phase 3)
 
 ---
 
-[← Previous: Phase 4](PHASE-4-PROJECT-MANAGER.md) | [Next: Phase 6 →](PHASE-6-ANALYSIS.md)
+[← Previous: Phase 3](PHASE-3-PLAN.md) | [Next: Phase 5 →](PHASE-6-ANALYSIS.md)
