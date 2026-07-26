@@ -9,6 +9,12 @@ For older versions, see [CHANGELOG-2.x.md](./CHANGELOG-2.x.md) and [CHANGELOG-1.
 
 ## [Unreleased]
 
+## [6.0.1] - 2026-07-26
+
+### Changed
+
+- **micro-commit**: Trimmed instructions that current Claude models no longer need. Replaced the `$(cat <<'EOF' ...)` HEREDOC commit template (and its "closing EOF must sit at column 0" shell note) with a plain `git commit -m` one-liner, since the message template was always a single line. Removed the per-commit `git status --short` verification step, which duplicated the final working-tree check and added nothing over `git commit`'s own non-zero exit on failure. Dropped explicit tool naming ("using the Bash tool" / "using the Read tool") from Step A. Behavioral guardrails (no `git add .` / `-A`, no force-skipping hooks, conventional commit prefixes, the required return format) were kept.
+
 ## [6.0.0] - 2026-07-22
 
 ### Removed

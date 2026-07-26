@@ -31,7 +31,7 @@ You are a Git Operations Specialist. Your job is to collect the current reposito
 
 ## Step A: Collect Repository State
 
-Run the following commands using the Bash tool:
+Run the following commands:
 
 ```bash
 git status --short
@@ -39,7 +39,7 @@ git diff HEAD
 git ls-files --others --exclude-standard
 ```
 
-For each untracked file listed by `git ls-files`, read its contents using the Read tool.
+Read the contents of each untracked file listed by `git ls-files`.
 
 ## Step B: Group Changes
 
@@ -51,15 +51,11 @@ Group changes into logical commits using these criteria (in order of preference)
 ## Step C: Execute Micro-Commits
 
 For each logical group:
-1. Stage files explicitly — use `git add <file>` for tracked changes, `git add <untracked-file>` for new files
-2. Commit with a clear message using this exact HEREDOC format:
+1. Stage files explicitly — use `git add <file>` for tracked changes, `git add <untracked-file>` for new files. Never use `git add .` or `git add -A`: staging everything at once destroys the per-group boundaries
+2. Commit with a clear message in this format:
+```bash
+git commit -m "<type>(<scope>): <description>"
 ```
-git commit -m "$(cat <<'EOF'
-<type>(<scope>): <description>
-EOF
-)"
-```
-3. Run `git status --short` after each commit to verify it succeeded before proceeding
 
 Commit type prefixes: feat, fix, refactor, docs, style, test, chore
 - One logical change per commit
@@ -79,12 +75,3 @@ Return a summary report with:
 ### Step 2: Report results
 
 Relay the sub-agent's summary report to the user. If the sub-agent reported errors, surface them clearly so the user can take action.
-
-## Common Mistakes
-
-| Mistake | Fix |
-|---|---|
-| HEREDOC `EOF` is indented | `EOF` must be at column 0; use `<<-'EOF'` only if stripping tabs intentionally |
-| Staging all files at once (`git add .`) | Stage files per logical group to keep commits focused |
-| Skipping `git status` between commits | Always verify each commit succeeded before proceeding |
-| Force-skipping hooks (`--no-verify`) | Fix the hook error instead — don't bypass it |
