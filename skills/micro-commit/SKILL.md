@@ -18,13 +18,17 @@ Splits uncommitted changes into small, logical commits — one per feature, fix,
 
 ## Instructions
 
-**IMPORTANT: ALL git operations (status checks, staging, committing) MUST be delegated to a Haiku sub-agent via the `Agent` tool. Do NOT execute any git commands directly in the main session.**
+When delegation is available and permitted by the host environment, delegate all Git operations (status checks, staging, committing) to one sub-agent using the host's supported delegation tool. If delegation is unavailable or prohibited, execute the same workflow directly in the main session.
+
+## Model Selection
+
+When the host agent supports model selection for the sub-agent, prefer a low-cost, fast model from those available in that environment, provided it can reliably review diffs, group changes, and execute Git operations. Use the host's documented model identifiers and selection mechanism; do not assume a particular provider or invent model names or parameters. Respect explicit user and project model settings. If model selection is unavailable or no suitable alternative is known, omit the model override and use the host's default or inherited model. For direct execution, keep the current model.
 
 Execute the following steps:
 
-### Step 1: Launch a Haiku sub-agent
+### Step 1: Run the Git operations workflow
 
-Use the `Agent` tool with `model: "haiku"` and pass the following prompt verbatim:
+Use the host's delegation tool with the model selected above and pass the following prompt. If delegation is unavailable or prohibited, follow the prompt directly:
 
 ````
 You are a Git Operations Specialist. Your job is to collect the current repository state, group changes into logical units, and execute micro-commits.
@@ -74,4 +78,4 @@ Return a summary report with:
 
 ### Step 2: Report results
 
-Relay the sub-agent's summary report to the user. If the sub-agent reported errors, surface them clearly so the user can take action.
+Relay the summary report to the user, whether the workflow ran in a sub-agent or the main session. Surface any errors clearly so the user can take action.

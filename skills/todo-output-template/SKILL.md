@@ -3,12 +3,15 @@ name: todo-output-template
 description: |
   TODO.md file output template examples for todo-task-planning command.
   Provides structured checklist format with task classification, status indicators, and research rationale.
-model: Haiku
 ---
 
 # TODO Output Template
 
 This template shows the expected output format for `/todo-task-planning` command results.
+
+## Model Selection
+
+When the host agent supports model selection for this task, prefer a low-cost, fast model from those available in that environment, provided it can perform the task reliably. Use the host's documented model identifiers and selection mechanism; do not assume a particular provider or invent model names or parameters. Respect explicit user and project model settings. If model selection is unavailable or no suitable alternative is known, keep the current model. Using this template within a larger planning task does not require switching models or launching a sub-agent.
 
 ## Overview
 
