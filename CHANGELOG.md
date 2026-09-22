@@ -9,6 +9,13 @@ For older versions, see [CHANGELOG-2.x.md](./CHANGELOG-2.x.md) and [CHANGELOG-1.
 
 ## [Unreleased]
 
+## [6.0.2] - 2026-09-22
+
+### Fixed
+
+- **key-guidelines / todo-output-template / micro-commit**: モデル選択を各エージェント環境に対応させ、Haiku 固定の指定を削除。環境で利用可能なモデルと明示的なユーザー・プロジェクト設定を尊重し、モデル選択が利用できない場合は現在または既定のモデルを使用するよう改善。
+- **micro-commit**: サブエージェントへの委任が利用できない、または禁止されている環境では、メインセッションで同じ Git 操作手順を実行できるよう修正。
+
 ## [6.0.1] - 2026-07-26
 
 ### Changed
